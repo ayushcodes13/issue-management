@@ -128,6 +128,20 @@ or:
 skills/weekly-linear-issue-review/scripts/send-dms.sh --send --yes
 ```
 
+End-to-end DM workflow:
+
+1. `./run.sh` fetches Linear issues, sends all active issues plus the SOP to
+   Azure OpenAI, and generates `results/summary.md`, `results/dms/*.md`,
+   `results/dm-drafts.json`, and `results/report.md`.
+2. `./send_dms.sh` previews generated DMs and sends nothing.
+3. `./send_dms.sh --validate-users` checks Slack user resolution and sends
+   nothing.
+4. `./send_dms.sh --send --yes` sends generated DM drafts and updates
+   `state/history.json` after successful issue-level DM sends.
+
+Important: `./run.sh` does not send DMs. `./post.sh` does not send DMs. Only
+`./send_dms.sh --send --yes` sends DMs.
+
 ## Results
 
 Each run replaces these files:

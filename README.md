@@ -121,6 +121,41 @@ To send every reviewed draft:
 Successful DM sends update `state/history.json` for issue-level nudges. Dry-runs
 never update state.
 
+## End-to-End DM Workflow
+
+DMs are implemented end to end, but they are not automatic by default.
+
+1. `./run.sh`
+   Fetches Linear issues, sends all active issues plus the SOP to Azure OpenAI,
+   and generates:
+   - `results/summary.md`
+   - `results/dms/*.md`
+   - `results/dm-drafts.json`
+   - `results/report.md`
+
+2. `./send_dms.sh`
+   Previews generated DMs only. It shows who would receive messages and sends
+   nothing.
+
+3. `./send_dms.sh --validate-users`
+   Checks Slack user resolution for draft recipients and sends nothing.
+
+4. `./send_dms.sh --send --yes`
+   Sends each generated DM draft, opens Slack DMs as needed, and updates
+   `state/history.json` after successful issue-level DM sends.
+
+To send only one person:
+
+```bash
+./send_dms.sh --recipient "Devayush Rout" --send --yes
+```
+
+Safety summary:
+
+- `./run.sh` does not send DMs.
+- `./post.sh` does not send DMs.
+- Only `./send_dms.sh --send --yes` sends DMs.
+
 ## Results
 
 `results/` is committed to the repo. Each run replaces the folder contents with the latest report.
