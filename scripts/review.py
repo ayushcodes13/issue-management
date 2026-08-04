@@ -1,8 +1,7 @@
 import os
 from pathlib import Path
 
-from lib.checks import run_checks
-from lib.ai import analyze_flagged_issues
+from lib.ai import findings_from_analysis, review_issues_with_ai
 from lib.linear import fetch_active_issues
 from lib.report import write_reports
 
@@ -15,13 +14,11 @@ def main():
     issues = fetch_active_issues()
     print(f"Fetched {len(issues)} active issues.")
 
-    print("Running deterministic hygiene checks...")
-    findings = run_checks(issues)
-    flagged_issue_count = len({item["issueId"] for item in findings if item.get("issueId") != "owner-summary"})
-    print(f"Flagged {flagged_issue_count} issues for review.")
-
-    print("Generating suggestions...")
-    analysis = analyze_flagged_issues(issues, findings)
+    print("Reviewing all active issues against the local SOP with Azure OpenAI...")
+    analysis = review_issues_with_ai(issues)
+    findings = findings_from_analysis(issues, analysis)
+    suggestion_count = len({item["issueId"] for item in findings if item.get("issueId") != "owner-summary"})
+    print(f"Generated suggestions for {suggestion_count} issues.")
 
     print("Writing results...")
     team_summary = write_reports(out_dir, issues, findings, analysis, mode)

@@ -2,7 +2,7 @@
 
 Simple weekly Linear issue review.
 
-The run is read-only for Linear. It fetches active issues, checks them against the SOP, writes the latest report into `results/`, and can post the short summary to one Slack channel.
+The run is read-only for Linear. It fetches active issues, asks Azure OpenAI to review them against the local SOP Markdown, writes the latest report into `results/`, and can post the short summary to one Slack channel.
 
 The source of truth is the repo copy of the SOP:
 
@@ -10,7 +10,7 @@ The source of truth is the repo copy of the SOP:
 docs/how-we-use-linear.md
 ```
 
-Do not use the public Notion URL or add checks that are not stated in that file.
+Do not use the public Notion URL. Do not add rules that are not stated in that file.
 
 ## Files
 
@@ -39,10 +39,15 @@ SLACK_BOT_TOKEN
 SLACK_CHANNEL_ID
 ```
 
-Optional:
+Required for review generation:
 
 ```text
 AZURE_OPENAI_API_KEY
+```
+
+Optional:
+
+```text
 SOP_DOC_PATH=docs/how-we-use-linear.md
 ```
 
@@ -54,7 +59,7 @@ AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
 AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
 ```
 
-If `AZURE_OPENAI_API_KEY` is missing, the review still runs with local checks only.
+If `AZURE_OPENAI_API_KEY` is missing, the run writes a "no AI review" report instead of pretending local checks are enough.
 
 ## Local Run
 

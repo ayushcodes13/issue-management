@@ -45,12 +45,14 @@ def render_team_summary(issues, findings, analysis, mode):
     ) or "- No suggestions this run"
     theme_lines = "\n".join(f"- {theme}" for theme in analysis.get("teamThemes", [])[:6])
 
-    source_note = "AI-assisted review" if analysis.get("source") == "azure-openai" else "Local checks only"
+    source_note = "AI SOP review" if analysis.get("source") == "azure-openai" else "No AI review"
     return f"""Weekly Linear issue management check - {mode}
 
 Reviewed {len(issues)} active Linear issues across Backlog, Todo, In Progress, and In Review.
 
 Review mode: {source_note}
+
+This is an AI-assisted helper, not a compliance report. Issues without suggestions should not be treated as automatically clean.
 
 Status mix:
 - Backlog: {statuses.get("Backlog", 0)}
@@ -61,10 +63,10 @@ Status mix:
 Main themes:
 {theme_lines or "- No major themes this run."}
 
-Suggestions by owner:
+AI suggestions by owner:
 {owner_lines}
 
-This check is read-only. No Linear changes were made.
+This review is read-only. No Linear changes were made.
 
 Reply with:
 - show <name>
@@ -96,6 +98,8 @@ def render_owner_details(issues, findings, analysis, mode):
         f"Mode: `{mode}`",
         f"Analysis source: `{analysis.get('source')}`",
         "",
+        "This is AI-assisted. Missing suggestions do not mean the issue is clean.",
+        "",
     ]
     for owner in owners:
         note = notes_by_owner.get(owner, {})
@@ -115,11 +119,11 @@ def render_owner_details(issues, findings, analysis, mode):
             lines.append("")
         owner_findings = findings_by_owner.get(owner, [])
         if owner_findings:
-            lines.append("Flagged issues:")
+            lines.append("Issues with AI suggestions:")
             for item in owner_findings:
                 lines.append(f"- {item.get('issueId')}: {item.get('title')} - {item.get('noticed')}")
         else:
-            lines.append("No flagged issues from this run.")
+            lines.append("No AI suggestions from this run.")
         lines.append("")
     return "\n".join(lines)
 
@@ -137,6 +141,8 @@ def render_issue_improvements(findings, analysis, mode):
         "",
         f"Mode: `{mode}`",
         f"Analysis source: `{analysis.get('source')}`",
+        "",
+        "This is AI-assisted. Treat suggestions as review prompts, not final judgement.",
         "",
     ]
     for issue_id in sorted(grouped):

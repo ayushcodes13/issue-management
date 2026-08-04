@@ -1,6 +1,6 @@
 ---
 name: weekly-linear-issue-review
-description: Run a reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, audit Linear hygiene against the local How we use Linear SOP, run weekly issue management checks, update the results folder, post a short Slack summary, or answer follow-ups like show Devayush, show Nikhil, improve BYN-123, improve BYN-67, examples, missing owners, missing priorities, missing type labels, missing definitions of done, missing acceptance criteria, or Spike shape.
+description: Run a reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, review Linear hygiene against the local How we use Linear SOP with Azure OpenAI, update the results folder, post a short Slack summary, or answer follow-ups like show Devayush, show Nikhil, improve BYN-123, improve BYN-67, examples, missing owners, missing priorities, missing type labels, missing definitions of done, missing acceptance criteria, or Spike shape.
 ---
 
 # Weekly Linear Issue Review
@@ -21,8 +21,8 @@ The flow is:
 
 1. Fetch active, non-archived Linear issues in `Backlog`, `Todo`, `In Progress`, and `In Review`.
 2. Read `docs/how-we-use-linear.md`.
-3. Run deterministic local SOP checks derived only from that file.
-4. If `AZURE_OPENAI_API_KEY` exists, send only flagged issues plus the local SOP text to Azure OpenAI in one batched call.
+3. Send all active issues plus the local SOP text to Azure OpenAI in one batched call.
+4. Ask Azure OpenAI to return useful suggestions only, without treating omitted issues as clean.
 5. Replace the contents of `results/` with the latest report.
 6. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
 
@@ -34,7 +34,7 @@ AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
 AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
 ```
 
-Read `references/sop-checks.md` before changing checks. Read `references/slack-workflow.md` before changing Slack behavior.
+Read `references/ai-review-policy.md` before changing review behavior. Read `references/slack-workflow.md` before changing Slack behavior.
 
 ## Required Environment
 
@@ -44,7 +44,7 @@ Required for every run:
 LINEAR_API_KEY
 ```
 
-Required only for AI-assisted suggestions:
+Required for review generation:
 
 ```text
 AZURE_OPENAI_API_KEY
@@ -68,7 +68,7 @@ AUDIT_OUT_DIR
 SOP_DOC_PATH
 ```
 
-If `AZURE_OPENAI_API_KEY` is missing, still run the review using deterministic checks and fallback wording.
+If `AZURE_OPENAI_API_KEY` is missing, write a "no AI review" report instead of producing deterministic hygiene results.
 
 ## Commands
 
@@ -111,6 +111,8 @@ Each run replaces these files:
 Use `owners.md` for `show <name>`.
 Use `issues.md` for `improve <issue id>`.
 Use `report.md` for the full review.
+
+Do not describe this as a deterministic compliance report. It is an AI-assisted review prompt grounded in the local SOP.
 
 ## Safety
 

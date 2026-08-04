@@ -1,7 +1,9 @@
-"""Azure OpenAI analysis for flagged Linear issues only.
+"""Azure OpenAI SOP review for all active Linear issues.
 
-This module sends only issues already flagged by local checks. It does not send
-the full Linear issue list, and it makes one batched request for the run.
+This module does not run deterministic hygiene checks. It sends the local SOP
+Markdown plus all fetched active issues to Azure OpenAI and asks for cautious,
+gentle suggestions. The model may return zero or more issue notes, but the
+report must not treat omitted issues as "clean".
 """
 
 import json
@@ -20,39 +22,59 @@ DEFAULT_AZURE_API_VERSION = "2025-03-01-preview"
 DEFAULT_AZURE_DEPLOYMENT = "gpt-5.5"
 DEFAULT_SOP_DOC_PATH = "docs/how-we-use-linear.md"
 
+NETWORK_ERRORS = (TimeoutError, urllib.error.URLError, ConnectionError)
 
-def analyze_flagged_issues(issues, findings):
-    flagged = flagged_issue_payloads(issues, findings)
+
+def review_issues_with_ai(issues):
     config = azure_config()
     if not config["api_key"]:
-        return fallback_analysis(flagged, findings, "AZURE_OPENAI_API_KEY is not set")
-    if not flagged:
-        return {
-            "source": "azure-openai",
-            "teamThemes": ["No flagged issues from the local SOP checks."],
-            "ownerNotes": [],
-            "issueNotes": [],
-        }
+        return no_review("AZURE_OPENAI_API_KEY is not set")
 
-    prompt = build_prompt(flagged, load_sop_text())
+    prompt = build_prompt(issue_payloads(issues), load_sop_text())
     try:
         body = request_azure_response(config, prompt)
     except NETWORK_ERRORS as exc:
-        return fallback_analysis(flagged, findings, f"Azure OpenAI network error: {exc}")
+        return no_review(f"Azure OpenAI network error: {exc}")
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
-        return fallback_analysis(flagged, findings, f"Azure OpenAI API failed with HTTP {exc.code}: {detail[:500]}")
+        return no_review(f"Azure OpenAI API failed with HTTP {exc.code}: {detail[:500]}")
 
     try:
         parsed = json.loads(extract_response_text(json.loads(body)))
     except (json.JSONDecodeError, RuntimeError) as exc:
-        return fallback_analysis(flagged, findings, f"Could not parse Azure OpenAI response: {exc}")
+        return no_review(f"Could not parse Azure OpenAI response: {exc}")
 
+    parsed.setdefault("teamThemes", [])
+    parsed.setdefault("ownerNotes", [])
+    parsed.setdefault("issueNotes", [])
     parsed["source"] = "azure-openai"
     return parsed
 
 
-NETWORK_ERRORS = (TimeoutError, urllib.error.URLError, ConnectionError)
+def findings_from_analysis(issues, analysis):
+    issues_by_id = {issue.get("identifier"): issue for issue in issues}
+    findings = []
+    for note in analysis.get("issueNotes", []):
+        issue_id = note.get("issueId")
+        issue = issues_by_id.get(issue_id)
+        if not issue:
+            continue
+        findings.append(
+            {
+                "issueId": issue_id,
+                "title": issue.get("title"),
+                "url": issue.get("url"),
+                "owner": owner_of(issue),
+                "status": status_of(issue),
+                "severity": note.get("severity") or "gentle_suggestion",
+                "category": note.get("category") or "ai_sop_suggestion",
+                "noticed": note.get("currentRead") or "This issue may benefit from a small SOP cleanup.",
+                "why": note.get("whatToImprove") or "The SOP review found a possible improvement.",
+                "nextEdit": note.get("suggestedNextEdit") or "Make the smallest useful edit.",
+                "confidence": note.get("confidence") or "medium",
+            }
+        )
+    return findings
 
 
 def request_azure_response(config, prompt):
@@ -69,7 +91,7 @@ def request_azure_response(config, prompt):
         },
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=120) as response:
+    with urllib.request.urlopen(request, timeout=180) as response:
         return response.read().decode("utf-8")
 
 
@@ -98,24 +120,15 @@ def azure_responses_url(endpoint, api_version):
     return f"{endpoint.rstrip('/')}/openai/responses?api-version={quote(api_version)}"
 
 
-def flagged_issue_payloads(issues, findings):
-    findings_by_issue = {}
-    for item in findings:
-        issue_id = item.get("issueId")
-        if issue_id and issue_id != "owner-summary":
-            findings_by_issue.setdefault(issue_id, []).append(item)
-
+def issue_payloads(issues):
     payloads = []
     for issue in issues:
-        issue_id = issue.get("identifier")
-        if issue_id not in findings_by_issue:
-            continue
         description = (issue.get("description") or "").strip()
-        if len(description) > 1000:
-            description = description[:1000] + "\n...[truncated]"
+        if len(description) > 1500:
+            description = description[:1500] + "\n...[truncated]"
         payloads.append(
             {
-                "identifier": issue_id,
+                "identifier": issue.get("identifier"),
                 "title": issue.get("title"),
                 "status": status_of(issue),
                 "priority": priority_of(issue),
@@ -127,7 +140,6 @@ def flagged_issue_payloads(issues, findings):
                 "updatedAt": issue.get("updatedAt"),
                 "url": issue.get("url"),
                 "description": description,
-                "findings": findings_by_issue[issue_id],
             }
         )
     return payloads
@@ -140,14 +152,18 @@ def load_sop_text():
     return path.read_text(encoding="utf-8")
 
 
-def build_prompt(flagged, sop_text):
+def build_prompt(issues, sop_text):
     return f"""You are running a lightweight weekly Linear issue-management review for Bynd.
-
-You will receive only the issues flagged by local deterministic SOP checks, not all issues.
 
 The only source of truth is the local SOP document below. Do not introduce checks, advice, or rules that are not stated in this document.
 
-Write concise, gentle, owner-specific recommendations. Do not shame people. Do not use words like violation, non-compliant, wrong, invalid, bad issue, failed, worst, or offender.
+Review all active issues provided. Return only useful suggestions; do not claim omitted issues are clean or compliant. Be cautious: if a problem is uncertain, phrase it as "worth checking" and use low or medium confidence.
+
+Important tone rules:
+- Do not shame people.
+- Do not use words like violation, non-compliant, wrong, invalid, bad issue, failed, worst, or offender.
+- Prefer concrete one-line edits.
+- Keep recommendations small enough to act on quickly.
 
 Return only valid JSON in this exact shape:
 {{
@@ -162,6 +178,9 @@ Return only valid JSON in this exact shape:
   "issueNotes": [
     {{
       "issueId": "BYN-123",
+      "severity": "needs_fix|should_improve|gentle_suggestion",
+      "category": "short_snake_case_category",
+      "confidence": "high|medium|low",
       "currentRead": "one sentence",
       "whatToImprove": "one sentence",
       "suggestedNextEdit": "one concrete edit",
@@ -172,62 +191,24 @@ Return only valid JSON in this exact shape:
   ]
 }}
 
-Issues:
-{json.dumps(flagged, indent=2)}
+Active Linear issues:
+{json.dumps(issues, indent=2)}
 
 Local SOP document:
 {sop_text}
 """
 
 
-def fallback_analysis(flagged, findings, reason):
-    themes = []
-    category_counts = {}
-    for item in findings:
-        category = item.get("category")
-        category_counts[category] = category_counts.get(category, 0) + 1
-    if category_counts.get("missing_owner"):
-        themes.append("Some active work needs clearer ownership.")
-    if category_counts.get("missing_priority"):
-        themes.append("Some Todo or active items may not be ready because priority is missing.")
-    if category_counts.get("missing_acceptance_criteria"):
-        themes.append("Some ready or active issues could use clearer acceptance criteria.")
-    if category_counts.get("missing_type_label"):
-        themes.append("Some issues need exactly one SOP type label.")
-
-    owner_counts = {}
-    for issue in flagged:
-        owner_counts[issue["owner"]] = owner_counts.get(issue["owner"], 0) + 1
-
+def no_review(reason):
     return {
-        "source": "fallback",
+        "source": "no-ai-review",
         "fallbackReason": reason,
-        "teamThemes": themes or ["No major themes found."],
-        "ownerNotes": [
-            {
-                "owner": owner,
-                "summary": f"{count} flagged issue{'s' if count != 1 else ''} to review.",
-                "suggestedFocus": ["Review the issue notes and make the smallest useful cleanup edit."],
-            }
-            for owner, count in sorted(owner_counts.items(), key=lambda item: (-item[1], item[0].lower()))
+        "teamThemes": [
+            "No SOP review was generated because Azure OpenAI was unavailable. This run should not be treated as a hygiene result."
         ],
-        "issueNotes": [
-            {
-                "issueId": issue["identifier"],
-                "currentRead": first_finding(issue).get("noticed", "This issue was flagged by the local SOP checks."),
-                "whatToImprove": first_finding(issue).get("why", "Make the issue easier to understand and verify."),
-                "suggestedNextEdit": first_finding(issue).get("nextEdit", "Add the missing issue detail."),
-                "suggestedTitle": "",
-                "suggestedDefinitionOfDone": "",
-                "suggestedAcceptanceCriteria": [],
-            }
-            for issue in flagged
-        ],
+        "ownerNotes": [],
+        "issueNotes": [],
     }
-
-
-def first_finding(issue):
-    return (issue.get("findings") or [{}])[0]
 
 
 def extract_response_text(response):
