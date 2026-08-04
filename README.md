@@ -62,30 +62,43 @@ SLACK_APP_TOKEN
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-export LINEAR_API_KEY="..."
-python src/post_weekly_audit.py --preview
+cp .env.example .env
+```
+
+Open `.env` and fill `LINEAR_API_KEY`.
+
+Then run:
+
+```bash
+./run_manual.sh
 ```
 
 This writes:
 
 ```text
-audit-output/team-summary.md
-audit-output/audit.json
-audit-output/slack-blocks.json
+results/team-summary.md
+results/audit.json
+results/slack-blocks.json
 ```
 
 ## Slack Posting
 
 Only enable this after reviewing the exact generated output.
 
-```bash
-export LINEAR_API_KEY="..."
-export SLACK_BOT_TOKEN="..."
-export DEV_SMOKE_CHANNEL_ID="..."
-export POST_TO_SLACK=true
-export AUDIT_MODE=dev-smoke
-python src/post_weekly_audit.py --post
+For local dev-smoke posting, fill these values in `.env`:
+
+```text
+SLACK_BOT_TOKEN=<slack-bot-token>
+DEV_SMOKE_CHANNEL_ID=<private-channel-id>
 ```
+
+Then run:
+
+```bash
+./post_dev_smoke.sh
+```
+
+This posts only to `DEV_SMOKE_CHANNEL_ID`.
 
 ## Interactive Bot
 
