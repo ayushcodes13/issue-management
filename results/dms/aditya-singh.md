@@ -1,16 +1,16 @@
 Hi Aditya Singh, here are a few Linear SOP suggestions from this week's AI-assisted review.
-This is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.
+These are the items most worth tightening so the work is easier to start or verify.
 
 1. BYN-11: Update DB to support project-in-poject architecture
    Link: https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture
-   Noticed: This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.
-   One-line fix: Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.
+   Noticed: This Todo item is unassigned and has an empty description, no priority, and no labels.
+   One-line fix: Move to Backlog and fix the title typo when it is next scoped.
    SOP reference: Backlog-to-Todo
 
 2. BYN-36: Add support for Bi-Weekly newsletter on Frontend
    Link: https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend
-   Noticed: This Todo has owner, priority, and type label, but the description does not define completion or checks.
-   One-line fix: Add a Definition of done and two acceptance criteria for the cadence setup UI.
+   Noticed: This Todo item has a short description but no Definition of done or Acceptance criteria.
+   One-line fix: Add a one-sentence Definition of done and two frontend verification checks.
    SOP reference: Backlog-to-Todo
 
 If a rule seems wrong or slows you down, raise it at standup or the Friday review.

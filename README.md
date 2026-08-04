@@ -106,6 +106,15 @@ Use `summary.md` for the public/shadow Slack post. It contains aggregate counts 
 
 Use `results/dms/` for per-person DM drafts. Issue-suggestion drafts are capped at three items. If someone has no issue-level nudge but the AI produced a useful owner note, the draft can be a light "no specific nudge this week" message.
 
+DM suggestions use two tiers:
+
+- `should_have`: missing description, Definition of done, or Acceptance criteria
+  on Todo/In Progress work; work that should move back to Backlog until scoped;
+  or more than three In Progress items.
+- `nice_to_have`: missing labels or missing priority.
+
+Silence is acceptable when there is no genuinely useful nudge.
+
 Use `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific edits, `friction-notes.md` for repeat-suppression notes, and `report.md` for the full review.
 
 `state/history.json` is committed and not replaced each run. It is used to suppress repeat DM items once actual DM sending starts updating state.

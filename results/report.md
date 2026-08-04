@@ -15,17 +15,17 @@ Status mix:
 - In Review: 0
 
 Main themes:
-- Several Todo and In Progress issues need the Backlog-to-Todo fields added before they are easy for someone else to start or verify.
-- Type labels are missing on many issues, especially older Company Reports, Extract, and unassigned items.
-- A few In Progress issues are unassigned or rely on sub-issues for clarity, so ownership and the parent done state are worth tightening.
+- Several Todo and In Progress items have useful context but need an explicit Definition of done and Acceptance criteria before they are easy to verify.
+- A few Todo items look like captured ideas rather than ready-this-week work, so they may be better parked in Backlog until scoped.
+- The clearest issues pair a one-sentence outcome with observable checks that another teammate could use to close the loop.
 
 Suggested follow-ups:
-- 20 issues have AI suggestions.
-- 9 people have short DM drafts in `results/dms/`.
+- 14 issues have AI suggestions.
+- 5 people have short DM drafts in `results/dms/`.
 
 Positive example to copy:
 - BYN-66: Update industry report pipeline to new blob output structure - https://linear.app/byndai/issue/BYN-66/update-industry-report-pipeline-to-new-blob-output-structure
-  Why: It has a clear done state, concrete acceptance checks, and a verification path worth copying.
+  Why: It has a clear Definition of done, concrete acceptance criteria, and a simple verification step worth copying.
 
 A few people may get short DMs with specific suggestions. Feel free to ignore anything the review got wrong.
 
@@ -34,14 +34,10 @@ This review is read-only. No Linear changes were made.
 ## DM Drafts
 
 - Aditya Singh: 2 items
-- Ishan Patel: 1 item
 - Mrinal Kanwar: 1 item
 - Nikhil: 2 items
-- Pratham Batra: 2 items
 - Sanidhya: 3 items
 - Shashank Rajak: 3 items
-- kabir bahl: 1 item
-- Devayush Rout: 0 items
 
 Suppressed repeat DM items: 0
 
@@ -54,89 +50,83 @@ This is AI-assisted. Missing suggestions do not mean the issue is clean.
 
 ## Shashank Rajak
 
-Several Company Reports items are in Todo or In Progress before the SOP-ready fields are present.
+Several Company Reports items are captured, but the Todo/In Progress ones need scoping before they are easy to start or close.
 
 Suggested focus:
-- Add type labels to BYN-56, BYN-59, BYN-60, and BYN-61
-- For Todo items, either add priority plus Definition of done and Acceptance criteria or move them back to Backlog
+- Move empty Todo items back to Backlog until they have a description, Definition of done, and acceptance criteria.
+- Add type/product labels and priority to the In Progress items when they remain committed work.
 
 Issues with AI suggestions:
-- BYN-61: Integrate PPT Agent into the main company reports application - This Todo has no priority, type label, description, Definition of done, or acceptance criteria.
-- BYN-60: Add examples for standard templates across different persona for the layout designer agent - This Todo has no priority, type label, description, Definition of done, or acceptance criteria.
-- BYN-59: Plan out UI/UX for the PPT export workflow - This Todo has no priority, type label, description, Definition of done, or acceptance criteria.
-- BYN-56: PPT Exports - This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.
-- BYN-55: Data connectors broker architecture - PoC - This In Progress issue has strong verification detail, but no type label and no priority.
-- BYN-58: Integrate Validation Service - This backlog issue has a Reports label but no type label.
-
-## Unassigned
-
-A few unassigned issues are in active statuses or read like starter/template content rather than current Bynd work.
-
-Suggested focus:
-- Assign an owner before keeping BYN-43 and BYN-44 In Progress
-- Worth checking whether BYN-1, BYN-2, BYN-3, and BYN-4 should be canceled with a one-line reason
-
-Issues with AI suggestions:
-- BYN-44: Deterministic figure verification and highlighting in Download Financials - This issue is In Progress but unassigned.
-- BYN-43: Native-text vs OCR/scanned classification for Download Financials - This issue is In Progress but unassigned.
-- BYN-51: eme Sources - This backlog title is too terse for someone else to understand, and it has no type label.
-- BYN-11: Update DB to support project-in-poject architecture - This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.
-- BYN-3: Import your data - This reads like Linear starter guidance rather than a current Bynd task.
+- BYN-61: Integrate PPT Agent into the main company reports application - This Todo item has an empty description, no priority, and no labels.
+- BYN-60: Add examples for standard templates across different persona for the layout designer agent - This Todo item has an empty description, no priority, and no labels.
+- BYN-59: Plan out UI/UX for the PPT export workflow - This Todo item has an empty description, no priority, and no labels.
+- BYN-56: PPT Exports - This In Progress item describes the feature but has no explicit Definition of done or Acceptance criteria.
+- BYN-55: Data connectors broker architecture - PoC - This In Progress issue has strong verification detail but no type or product labels and no priority.
 
 ## Sanidhya
 
-The Chat and Intelligence delivery issues would be easier to verify with explicit done states and checks.
+The Chat and Intelligence items are pointed at useful work; a few Todo items need crisp completion checks.
 
 Suggested focus:
-- Add Definition of done and Acceptance criteria to BYN-35, BYN-36, BYN-54, and BYN-19
-- For Improvement issues, include the measured current state and target state
+- Add Definition of done and Acceptance criteria headings to the Todo items that are ready this week.
+- For Improvement items, add the current state and target state where practical.
 
 Issues with AI suggestions:
-- BYN-68: Get Bynd added to the Azure alert group - The issue has useful verification detail, but the done state is not separated under the required heading.
-- BYN-54: Change citation loading approach in chat view pane - This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.
-- BYN-35: Add support for Bi-Weekly newsletter runs - This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.
-- BYN-19: Plan new architecture for agent flow - This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.
+- BYN-68: Get Bynd added to the Azure alert group - The issue has a useful verify note, but the Definition of done and Acceptance criteria are not written as explicit sections.
+- BYN-54: Change citation loading approach in chat view pane - This Todo Improvement has a proposed approach but no explicit outcome or acceptance checks.
+- BYN-35: Add support for Bi-Weekly newsletter runs - This Todo item states the backend task but does not yet include finish criteria.
+- BYN-19: Plan new architecture for agent flow - This Todo Improvement describes the problem but does not yet define the planning deliverable or verification checks.
 
 ## Nikhil
 
-The two HDFC Expansion Todo items are actionable ideas but need type labels plus done and verification text.
+The HDFC Expansion Todo items have useful context; a quick finish-and-verify pass would make them easier to act on this week.
 
 Suggested focus:
-- Add a type label to BYN-79 and BYN-78
-- Add one Definition of done sentence and 1-2 acceptance checks to each
+- Add one Definition of done line to BYN-79 and BYN-78.
+- Add 2-3 acceptance checks for what counts as complete.
 
 Issues with AI suggestions:
-- BYN-79: Connect with Sanjay - This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.
-- BYN-78: Draft press release - This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.
+- BYN-79: Connect with Sanjay - This Todo item has context but no explicit Definition of done or Acceptance criteria.
+- BYN-78: Draft press release - This Todo item describes activities but does not yet say what finished looks like.
 
 ## Aditya Singh
 
-Issues with AI suggestions:
-- BYN-36: Add support for Bi-Weekly newsletter on Frontend - This Todo has owner, priority, and type label, but the description does not define completion or checks.
+The bi-weekly newsletter frontend item is clear at a high level; adding verification checks would make it ready to close later.
 
-## kabir bahl
+Suggested focus:
+- Add a one-sentence Definition of done to BYN-36.
+- Add 2 acceptance checks for saving and displaying the bi-weekly cadence.
 
 Issues with AI suggestions:
-- BYN-76: Metric retrieval accuracy - This backlog benchmark issue has product-surface labels, but no type label.
+- BYN-36: Add support for Bi-Weekly newsletter on Frontend - This Todo item has a short description but no Definition of done or Acceptance criteria.
 
 ## Mrinal Kanwar
 
-The parent validation issue in progress leans on sub-issues and could use its own observable done state.
+The validation roll-up is helpful context, and it is worth checking that the parent issue has its own close-out criteria.
 
 Suggested focus:
-- Add a parent Definition of done to BYN-72
-- Add acceptance criteria that summarize what proves the bundle is complete
+- Add a parent-level Definition of done to BYN-72.
+- Add acceptance criteria that reference the linked sub-issues.
 
 Issues with AI suggestions:
-- BYN-72: Validation speed and coverage improvements, - This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.
+- BYN-72: Validation speed and coverage improvements, - Worth checking: the parent issue points to sub-issues for details, but the parent does not have its own close-out criteria.
+
+## Unassigned
+
+One Todo item is empty and unowned, so it is worth parking until someone scopes it.
+
+Suggested focus:
+- Move BYN-11 back to Backlog until it has an owner and outcome.
+- Fix the title typo when it is next edited.
+
+Issues with AI suggestions:
+- BYN-11: Update DB to support project-in-poject architecture - This Todo item is unassigned and has an empty description, no priority, and no labels.
 
 ## Devayush Rout
 
-Most owned validation items are well scoped; a couple of backlog items mainly need type labels for SOP consistency.
+No AI suggestions from this run.
 
-Suggested focus:
-- Add a type label to BYN-27
-- Keep using the BYN-66 structure for future validation delivery issues
+## kabir bahl
 
 No AI suggestions from this run.
 
@@ -158,36 +148,30 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture
 - SOP section: Backlog-to-Todo
-- Current read: This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.
-- What to improve: Move it to Backlog unless it is ready to start this week with all required fields.
-- Suggested next edit: Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.
+- Current read: This Todo item is unassigned and has an empty description, no priority, and no labels.
+- What to improve: Park it in Backlog until it has an owner, outcome, and acceptance criteria.
+- Suggested next edit: Move to Backlog and fix the title typo when it is next scoped.
 - Suggested title: Update DB to support project-in-project architecture
+- Suggested Definition of done: The Vault database supports project-in-project relationships as required by the scoped architecture.
+- Suggested Acceptance criteria:
+  - The required parent-child project relationship is documented.
+  - Database changes are implemented or planned in a linked issue.
+  - A verification query or test confirms the relationship works.
 
 ## BYN-19: Plan new architecture for agent flow
 
 - Owner: Sanidhya
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-19/plan-new-architecture-for-agent-flow
-- SOP section: Issue types
-- Current read: This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.
-- What to improve: Frame the planning work as a concrete architecture recommendation or document.
-- Suggested next edit: Add a Definition of done that makes the output a reviewed architecture plan.
-- Suggested title: Recommend Chat agent architecture for 50+ documents
-- Suggested Definition of done: A proposed Chat agent architecture for 50+ documents is documented with expected latency impact and next implementation steps.
+- SOP section: Definition of done
+- Current read: This Todo Improvement describes the problem but does not yet define the planning deliverable or verification checks.
+- What to improve: Make the architecture plan itself the observable output.
+- Suggested next edit: Add a Definition of done that names the document or recommendation to be produced.
+- Suggested Definition of done: A proposed Chat agent architecture for 50+ documents is documented with expected latency impact and the next decision needed.
 - Suggested Acceptance criteria:
-  - The plan covers agent fan-out and response-latency reduction.
-  - The plan states the current 20-30 document limit and the 50+ document target.
-  - Next implementation issues are created or linked.
-
-## BYN-3: Import your data
-
-- Owner: Unassigned
-- Status: `Todo`
-- Link: https://linear.app/byndai/issue/BYN-3/import-your-data
-- SOP section: What goes in Linear
-- Current read: This reads like Linear starter guidance rather than a current Bynd task.
-- What to improve: Worth checking whether this should remain in active work tracking.
-- Suggested next edit: If this is not a current Bynd task, move it to Canceled with a one-line reason.
+  - Current 20-30 document behavior is captured as the baseline.
+  - The proposed fan-out and reduction approach is documented.
+  - The plan is shared with the intended decision-makers.
 
 ## BYN-35: Add support for Bi-Weekly newsletter runs
 
@@ -195,14 +179,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-35/add-support-for-bi-weekly-newsletter-runs
 - SOP section: Backlog-to-Todo
-- Current read: This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.
-- What to improve: Define what backend support for bi-weekly runs includes and how PropEquity migration will be checked.
-- Suggested next edit: Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.
-- Suggested Definition of done: The backend supports bi-weekly newsletter runs, and PropEquity newsletters are configured to use the bi-weekly cadence.
+- Current read: This Todo item states the backend task but does not yet include finish criteria.
+- What to improve: Add checks that prove bi-weekly runs work and PropEquity is shifted.
+- Suggested next edit: Add Definition of done and Acceptance criteria headings to the description.
+- Suggested Definition of done: Backend newsletter scheduling supports bi-weekly runs, and PropEquity newsletters use that cadence.
 - Suggested Acceptance criteria:
-  - A bi-weekly newsletter cadence can be configured on the backend.
-  - PropEquity is set to the bi-weekly cadence.
-  - A test run confirms the configured cadence is used.
+  - A bi-weekly newsletter run can be scheduled and created by the backend.
+  - PropEquity's newsletter configuration is set to bi-weekly.
+  - The next scheduled run date reflects the bi-weekly cadence.
 
 ## BYN-36: Add support for Bi-Weekly newsletter on Frontend
 
@@ -210,69 +194,38 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend
 - SOP section: Backlog-to-Todo
-- Current read: This Todo has owner, priority, and type label, but the description does not define completion or checks.
-- What to improve: State the frontend behavior that proves bi-weekly cadence support exists.
-- Suggested next edit: Add a Definition of done and two acceptance criteria for the cadence setup UI.
-- Suggested Definition of done: Users can set up a bi-weekly newsletter cadence from the Intelligence frontend.
+- Current read: This Todo item has a short description but no Definition of done or Acceptance criteria.
+- What to improve: Add the exact frontend outcome and checks for bi-weekly cadence setup.
+- Suggested next edit: Add a one-sentence Definition of done and two frontend verification checks.
+- Suggested Definition of done: Intelligence frontend users can configure a bi-weekly newsletter cadence.
 - Suggested Acceptance criteria:
-  - Bi-weekly appears as a cadence option in the newsletter setup flow.
-  - Saving the setup sends the bi-weekly cadence value to the backend.
-
-## BYN-43: Native-text vs OCR/scanned classification for Download Financials
-
-- Owner: Unassigned
-- Status: `In Progress`
-- Link: https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials
-- SOP section: Issue statuses
-- Current read: This issue is In Progress but unassigned.
-- What to improve: Assign the active owner so the status reflects someone currently working on it.
-- Suggested next edit: Set the assignee to the person actively working on native-text versus OCR classification.
-
-## BYN-44: Deterministic figure verification and highlighting in Download Financials
-
-- Owner: Unassigned
-- Status: `In Progress`
-- Link: https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download
-- SOP section: Issue statuses
-- Current read: This issue is In Progress but unassigned.
-- What to improve: Assign the active owner so the person accountable for closing the loop is clear.
-- Suggested next edit: Set the assignee to the person actively working on deterministic figure verification.
-
-## BYN-51: eme Sources
-
-- Owner: Unassigned
-- Status: `Backlog`
-- Link: https://linear.app/byndai/issue/BYN-51/eme-sources
-- SOP section: Creating an issue
-- Current read: This backlog title is too terse for someone else to understand, and it has no type label.
-- What to improve: Rewrite the title as the remembered task and add a type label.
-- Suggested next edit: Replace the title with a clear task phrase and add the matching type label.
+  - A user can select bi-weekly cadence in the newsletter setup flow.
+  - The selected cadence is saved and shown correctly when the setup is reopened.
 
 ## BYN-54: Change citation loading approach in chat view pane
 
 - Owner: Sanidhya
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-54/change-citation-loading-approach-in-chat-view-pane
-- SOP section: Issue types
-- Current read: This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.
-- What to improve: Add the current state and target state in terms someone can verify after the citation loading change.
-- Suggested next edit: Add an Acceptance criteria section with the page-window behavior and expected loading behavior.
-- Suggested title: Load only the cited PDF page window in chat citations
-- Suggested Definition of done: Clicking a citation loads only the cited page plus the defined surrounding page buffer, with additional pages loaded as the user scrolls.
+- SOP section: Backlog-to-Todo
+- Current read: This Todo Improvement has a proposed approach but no explicit outcome or acceptance checks.
+- What to improve: Add a measurable target for the citation loading change and checks for pagination behavior.
+- Suggested next edit: Add Definition of done and Acceptance criteria headings before implementation continues.
+- Suggested Definition of done: Citation clicks load only the cited page plus the agreed buffer, and additional pages load as the user scrolls.
 - Suggested Acceptance criteria:
-  - Clicking a citation loads the cited page plus three pages before and after when available.
-  - Scrolling loads additional pages through pagination.
-  - The full PDF is not loaded on the initial citation click.
+  - Clicking a citation loads the cited page with the three-page buffer above and below.
+  - Scrolling through the PDF loads the next page range without reloading the whole PDF.
+  - Current full-PDF load behavior and the target behavior are recorded on the issue.
 
 ## BYN-55: Data connectors broker architecture - PoC
 
 - Owner: Shashank Rajak
 - Status: `In Progress`
 - Link: https://linear.app/byndai/issue/BYN-55/data-connectors-broker-architecture-poc
-- SOP section: Issue types
-- Current read: This In Progress issue has strong verification detail, but no type label and no priority.
-- What to improve: Add the issue type and priority so the active work matches the SOP fields.
-- Suggested next edit: Add the most fitting type label, likely Spike if the output is an architecture recommendation rather than shipped code.
+- SOP section: Creating an issue
+- Current read: This In Progress issue has strong verification detail but no type or product labels and no priority.
+- What to improve: Add the missing labels and priority so it is easier to scan and prioritise.
+- Suggested next edit: Add one type label, one product surface label if applicable, and the priority Nikhil has communicated.
 
 ## BYN-56: PPT Exports
 
@@ -280,25 +233,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `In Progress`
 - Link: https://linear.app/byndai/issue/BYN-56/ppt-exports
 - SOP section: Backlog-to-Todo
-- Current read: This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.
-- What to improve: Add the fields that would have made it ready before active work started.
-- Suggested next edit: Add a type label and Acceptance criteria for a successful PPT export.
+- Current read: This In Progress item describes the feature but has no explicit Definition of done or Acceptance criteria.
+- What to improve: Add the export outcome and checks that prove the PPT export works.
+- Suggested next edit: Add Definition of done and Acceptance criteria headings to the description.
 - Suggested Definition of done: Users can export a generated company report as a PPT using their branding and templates.
 - Suggested Acceptance criteria:
   - A generated report can be exported in PPT format.
-  - The export applies the selected branding or template.
-  - The exported PPT opens successfully for review.
-
-## BYN-58: Integrate Validation Service
-
-- Owner: Shashank Rajak
-- Status: `Backlog`
-- Link: https://linear.app/byndai/issue/BYN-58/integrate-validation-service
-- SOP section: Issue types
-- Current read: This backlog issue has a Reports label but no type label.
-- What to improve: Add the type label so the work category is clear at a glance.
-- Suggested next edit: Add a type label, likely Spike if the immediate output is an integration plan.
-- Suggested title: Plan validation service integration for company reports
+  - Branding and template inputs are reflected in the exported PPT.
+  - The exported file opens successfully and contains the expected report content.
 
 ## BYN-59: Plan out UI/UX for the PPT export workflow
 
@@ -306,15 +248,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow
 - SOP section: Backlog-to-Todo
-- Current read: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.
-- What to improve: Make the planning output observable, such as a UI/UX spec or decision note.
-- Suggested next edit: Add a Definition of done that names the UI/UX artifact to be produced.
-- Suggested title: Write UI/UX plan for the PPT export workflow
-- Suggested Definition of done: A UI/UX plan for the PPT export workflow is documented and ready for implementation discussion.
+- Current read: This Todo item has an empty description, no priority, and no labels.
+- What to improve: Define the UI/UX planning output before treating it as ready-this-week work.
+- Suggested next edit: Move to Backlog until scoped, or add the plan deliverable under Definition of done.
+- Suggested Definition of done: A UI/UX plan for the PPT export workflow is documented and ready for implementation scoping.
 - Suggested Acceptance criteria:
-  - The planned user flow is documented.
-  - The export entry point and output behavior are covered.
-  - Open implementation questions are listed.
+  - Main user steps for PPT export are documented.
+  - Open design or product decisions are listed.
+  - Follow-up implementation issues are created or linked if needed.
 
 ## BYN-60: Add examples for standard templates across different persona for the layout designer agent
 
@@ -322,15 +263,15 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the
 - SOP section: Backlog-to-Todo
-- Current read: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.
-- What to improve: Turn the template examples work into a verifiable deliverable before keeping it in Todo.
-- Suggested next edit: Add a type label and a Definition of done that states where the examples will live.
-- Suggested title: Add standard layout-template examples by persona
+- Current read: This Todo item has an empty description, no priority, and no labels.
+- What to improve: Add the expected examples and verification checks before keeping it in Todo.
+- Suggested next edit: Move to Backlog until scoped, or add the standard Definition of done and Acceptance criteria sections.
+- Suggested title: Add standard template examples across personas for the layout designer agent
 - Suggested Definition of done: The layout designer agent has standard template examples for the agreed personas.
 - Suggested Acceptance criteria:
-  - The agreed personas are listed in the issue.
+  - The agreed persona list is captured on the issue.
   - Each persona has at least one standard template example.
-  - The examples are available where the layout designer agent uses or references them.
+  - The examples are available where the layout designer agent can use them.
 
 ## BYN-61: Integrate PPT Agent into the main company reports application
 
@@ -338,14 +279,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-61/integrate-ppt-agent-into-the-main-company-reports-application
 - SOP section: Backlog-to-Todo
-- Current read: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.
-- What to improve: Either make it ready for this week or keep it as captured work in Backlog.
-- Suggested next edit: Move it to Backlog unless priority and the ready-to-start fields are added now.
-- Suggested Definition of done: The PPT Agent is integrated into the main company reports application and can be used from the intended workflow.
+- Current read: This Todo item has an empty description, no priority, and no labels.
+- What to improve: Either scope it with a defined outcome and checks, or move it back to Backlog until ready.
+- Suggested next edit: Move to Backlog unless it is ready this week, then add description, Definition of done, Acceptance criteria, labels, and priority.
+- Suggested Definition of done: The PPT Agent is integrated into the main company reports application and can generate a PPT export from an existing report.
 - Suggested Acceptance criteria:
-  - The main company reports application can call the PPT Agent.
-  - A generated company report can be exported through the integrated flow.
-  - The integration path is documented or linked in the issue.
+  - A generated company report can be exported through the integrated PPT Agent.
+  - The export path works from the main application flow.
+  - Any known limitations are captured on the issue.
 
 ## BYN-68: Get Bynd added to the Azure alert group
 
@@ -353,14 +294,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-68/get-bynd-added-to-the-azure-alert-group
 - SOP section: Definition of done
-- Current read: The issue has useful verification detail, but the done state is not separated under the required heading.
-- What to improve: Turn the current text into a Definition of done plus Acceptance criteria so another person can verify it quickly.
-- Suggested next edit: Add a Definition of done heading before the verification text.
-- Suggested Definition of done: Bynd receives Azure tenant alerts at the configured Bynd email address.
+- Current read: The issue has a useful verify note, but the Definition of done and Acceptance criteria are not written as explicit sections.
+- What to improve: Turn the existing verification idea into the standard finish-and-check format.
+- Suggested next edit: Add a Definition of done heading above the alert outcome and move the manual trigger step under Acceptance criteria.
+- Suggested Definition of done: Bynd receives Azure alert emails from HDFC's tenant-level alert group.
 - Suggested Acceptance criteria:
-  - Yogesh confirms the tenant-level alert group configuration.
-  - A manual az cli alert test is triggered.
-  - The Bynd email address receives the alert.
+  - Manually trigger an Azure alert through az cli.
+  - Confirm the alert email lands in the Bynd email address.
+  - Record any tenant-level config owner needed for future changes.
 
 ## BYN-72: Validation speed and coverage improvements,
 
@@ -368,24 +309,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `In Progress`
 - Link: https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements
 - SOP section: Definition of done
-- Current read: This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.
-- What to improve: Add a short parent-level outcome so the bundle can be closed without rereading every sub-issue.
-- Suggested next edit: Add one Definition of done sentence that summarizes the combined speed and coverage outcome.
-- Suggested Definition of done: Validation speed and coverage improvements from the linked sub-issues are implemented and verified together.
+- Current read: Worth checking: the parent issue points to sub-issues for details, but the parent does not have its own close-out criteria.
+- What to improve: Add a short roll-up Definition of done and acceptance checks so the parent can be closed cleanly.
+- Suggested next edit: Add one roll-up Definition of done line plus acceptance criteria that reference the relevant sub-issues.
+- Suggested Definition of done: Validation speed and coverage improvements are complete when the linked parallelism, text-fact, and blob-PDF work are finished and verified together.
 - Suggested Acceptance criteria:
-  - Linked sub-issues for parallelism, text checks, and blob PDF reads are completed or explicitly deferred.
-  - The combined verification evidence is linked from this parent issue.
-
-## BYN-76: Metric retrieval accuracy
-
-- Owner: kabir bahl
-- Status: `Backlog`
-- Link: https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy
-- SOP section: Issue types
-- Current read: This backlog benchmark issue has product-surface labels, but no type label.
-- What to improve: Add the issue type so it is clear whether this is a Spike, Chore, or other work type.
-- Suggested next edit: If this is research, add the Spike label plus a Question, Timebox, and Output.
-- Suggested title: Benchmark financial metric retrieval accuracy across models
+  - Linked sub-issues for parallelism, text-fact handling, and blob PDF reads are complete.
+  - Combined verification result is recorded on the parent issue.
+  - Any remaining follow-up work is linked or created separately.
 
 ## BYN-78: Draft press release
 
@@ -393,15 +324,14 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-78/draft-press-release
 - SOP section: Backlog-to-Todo
-- Current read: This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.
-- What to improve: Clarify whether done means a draft only, publisher outreach only, or both.
-- Suggested next edit: Add a Definition of done sentence that names the completed press-release artifact and outreach status.
-- Suggested title: Draft and route HDFC deployment press release
-- Suggested Definition of done: A joint Bynd and HDFC Capital press release draft is ready for review, and the target media outreach list is captured.
+- Current read: This Todo item describes activities but does not yet say what finished looks like.
+- What to improve: Define the draft and outreach output that makes the work complete.
+- Suggested next edit: Add a Definition of done line and a short Acceptance criteria list.
+- Suggested Definition of done: A draft joint Bynd/HDFC Capital press release and a publisher outreach list are ready for review.
 - Suggested Acceptance criteria:
-  - Press release draft link is added to the issue.
-  - HDFC/Bynd reviewers are identified.
-  - Target media agencies or publishers are listed with owner for outreach.
+  - Press release draft is shared with the agreed reviewers.
+  - Target media agencies or publishers are listed with contact status.
+  - Any open approvals or edits are captured on the issue.
 
 ## BYN-79: Connect with Sanjay
 
@@ -409,12 +339,11 @@ This is AI-assisted. Treat suggestions as review prompts, not final judgement.
 - Status: `Todo`
 - Link: https://linear.app/byndai/issue/BYN-79/connect-with-sanjay
 - SOP section: Backlog-to-Todo
-- Current read: This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.
-- What to improve: Make the outreach outcome and verification explicit before treating it as ready-to-start work.
-- Suggested next edit: Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.
-- Suggested title: Align with Sanjay on HDFC phase two scope
-- Suggested Definition of done: Sanjay has confirmed the next step for HDFC phase two scope, and the Mumbai investment team follow-up is either scheduled or documented.
+- Current read: This Todo item has context but no explicit Definition of done or Acceptance criteria.
+- What to improve: Add the outcome and the checks that show the Sanjay follow-up is complete.
+- Suggested next edit: Add headings for Definition of done and Acceptance criteria under the existing description.
+- Suggested Definition of done: A phase-two scope discussion with Sanjay is completed or scheduled, and the next action for the HDFC investment team is recorded.
 - Suggested Acceptance criteria:
-  - Sanjay confirms whether a call is needed.
-  - If a call is needed, calendar invite and agenda are shared.
-  - If no call is needed, the agreed next step is recorded in the issue.
+  - Sanjay is contacted with the phase-two scope ask.
+  - Call date or decision not to schedule a call is recorded on the issue.
+  - Next owner and next step are captured after the conversation.

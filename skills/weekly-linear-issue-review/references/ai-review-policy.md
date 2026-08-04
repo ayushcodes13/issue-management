@@ -18,6 +18,20 @@ Do not use the public Notion URL during a run.
 - Ask for one positive example issue when the model can identify one.
 - Ask for the relevant SOP section on each suggestion so DM drafts can point
   people back to the rulebook.
+- Silence is better than noise. Only return issue suggestions that are
+  genuinely useful.
+
+## Priority Tiers
+
+Use two tiers:
+
+- `should_have`: Todo or In Progress issues missing description, Definition of
+  done, or Acceptance criteria; issues that should move back to Backlog until
+  scoped; or more than three In Progress items for one owner.
+- `nice_to_have`: missing labels or missing priority.
+
+Future idea only: cross-reference GitHub activity against open tickets. Do not
+create findings for this yet.
 
 ## Language
 
@@ -30,3 +44,7 @@ Use gentle language:
 Avoid language like violation, non-compliant, wrong, invalid, bad issue, or failed.
 
 Every suggestion should include a small next edit someone can make quickly.
+
+If an owner has only `nice_to_have` suggestions, the DM should open with light
+praise and then offer the suggestions. If an owner has `should_have`
+suggestions, the DM can be more direct while staying gentle.

@@ -130,6 +130,7 @@ def dm_item(finding, recipient):
         "title": finding.get("title"),
         "url": finding.get("url"),
         "category": finding.get("category"),
+        "tier": finding.get("tier") or infer_tier(finding),
         "severity": finding.get("severity"),
         "confidence": finding.get("confidence"),
         "noticed": finding.get("noticed"),
@@ -139,9 +140,11 @@ def dm_item(finding, recipient):
 
 
 def finding_sort_key(finding):
+    tier_order = {"should_have": 0, "nice_to_have": 1}
     severity_order = {"needs_fix": 0, "should_improve": 1, "gentle_suggestion": 2}
     confidence_order = {"high": 0, "medium": 1, "low": 2}
     return (
+        tier_order.get(finding.get("tier"), 2),
         severity_order.get(finding.get("severity"), 3),
         confidence_order.get(finding.get("confidence"), 3),
         finding.get("issueId") or "",
@@ -329,11 +332,18 @@ def render_friction_notes(suppressed):
 
 
 def render_dm_text(recipient, items):
-    lines = [
-        f"Hi {recipient}, here are a few Linear SOP suggestions from this week's AI-assisted review.",
-        "This is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.",
-        "",
-    ]
+    if items and all(item.get("tier") == "nice_to_have" for item in items):
+        lines = [
+            f"Hi {recipient}, your Linear issues mostly look okay from this week's SOP review.",
+            "A couple of small nice-to-have cleanups could make them easier to scan:",
+            "",
+        ]
+    else:
+        lines = [
+            f"Hi {recipient}, here are a few Linear SOP suggestions from this week's AI-assisted review.",
+            "These are the items most worth tightening so the work is easier to start or verify.",
+            "",
+        ]
     for idx, item in enumerate(items, start=1):
         lines.append(f"{idx}. {item.get('issueId')}: {item.get('title')}")
         if item.get("url"):
@@ -371,6 +381,18 @@ def render_owner_note_dm_text(note):
         ]
     )
     return "\n".join(lines)
+
+
+def infer_tier(item):
+    severity = item.get("severity")
+    category = (item.get("category") or "").lower()
+    if severity == "needs_fix":
+        return "should_have"
+    if any(key in category for key in ("description", "acceptance", "definition", "done", "scope", "in_progress_limit")):
+        return "should_have"
+    if any(key in category for key in ("label", "priority")):
+        return "nice_to_have"
+    return "nice_to_have" if severity == "gentle_suggestion" else "should_have"
 
 
 def write_dm_files(dms_dir, dm_drafts):

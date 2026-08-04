@@ -68,6 +68,7 @@ def findings_from_analysis(issues, analysis):
                 "owner": owner_of(issue),
                 "status": status_of(issue),
                 "severity": note.get("severity") or "gentle_suggestion",
+                "tier": note.get("tier") or infer_tier(note),
                 "category": note.get("category") or "ai_sop_suggestion",
                 "noticed": note.get("currentRead") or "This issue may benefit from a small SOP cleanup.",
                 "why": note.get("whatToImprove") or "The SOP review found a possible improvement.",
@@ -77,6 +78,18 @@ def findings_from_analysis(issues, analysis):
             }
         )
     return findings
+
+
+def infer_tier(note):
+    severity = note.get("severity")
+    category = (note.get("category") or "").lower()
+    if severity == "needs_fix":
+        return "should_have"
+    if any(key in category for key in ("description", "acceptance", "definition", "done", "scope", "in_progress_limit")):
+        return "should_have"
+    if any(key in category for key in ("label", "priority")):
+        return "nice_to_have"
+    return "nice_to_have" if severity == "gentle_suggestion" else "should_have"
 
 
 def request_azure_response(config, prompt):
@@ -166,6 +179,16 @@ Important tone rules:
 - Do not use words like violation, non-compliant, wrong, invalid, bad issue, failed, worst, or offender.
 - Prefer concrete one-line edits.
 - Keep recommendations small enough to act on quickly.
+- Silence is better than noise. Only return an issue note when the nudge is genuinely useful.
+
+Priority tiers:
+- should_have: Todo or In Progress items missing description, Definition of done, or Acceptance criteria; issues that should move back to Backlog until scoped; or more than 3 In Progress items for one owner.
+- nice_to_have: missing labels or missing priority.
+- future_only: cross-referencing GitHub activity against tickets is a future idea; do not create findings for it yet.
+
+Message tone guidance:
+- If an owner only has nice_to_have findings, make the owner note praise-first and light.
+- If an owner has should_have findings, make the issue note direct but gentle.
 
 Return only valid JSON in this exact shape:
 {{
@@ -187,6 +210,7 @@ Return only valid JSON in this exact shape:
     {{
       "issueId": "BYN-123",
       "severity": "needs_fix|should_improve|gentle_suggestion",
+      "tier": "should_have|nice_to_have",
       "category": "short_snake_case_category",
       "confidence": "high|medium|low",
       "sopSection": "short name of the relevant SOP section",

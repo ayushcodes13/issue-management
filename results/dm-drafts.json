@@ -9,11 +9,12 @@
         "issueId": "BYN-11",
         "title": "Update DB to support project-in-poject architecture",
         "url": "https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture",
-        "category": "todo_readiness",
+        "category": "empty_todo_item",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.",
-        "nextEdit": "Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.",
+        "noticed": "This Todo item is unassigned and has an empty description, no priority, and no labels.",
+        "nextEdit": "Move to Backlog and fix the title typo when it is next scoped.",
         "sopSection": "Backlog-to-Todo"
       },
       {
@@ -21,35 +22,16 @@
         "issueId": "BYN-36",
         "title": "Add support for Bi-Weekly newsletter on Frontend",
         "url": "https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend",
-        "category": "todo_readiness",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This Todo has owner, priority, and type label, but the description does not define completion or checks.",
-        "nextEdit": "Add a Definition of done and two acceptance criteria for the cadence setup UI.",
+        "noticed": "This Todo item has a short description but no Definition of done or Acceptance criteria.",
+        "nextEdit": "Add a one-sentence Definition of done and two frontend verification checks.",
         "sopSection": "Backlog-to-Todo"
       }
     ],
-    "text": "Hi Aditya Singh, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-11: Update DB to support project-in-poject architecture\n   Link: https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture\n   Noticed: This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.\n   One-line fix: Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-36: Add support for Bi-Weekly newsletter on Frontend\n   Link: https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend\n   Noticed: This Todo has owner, priority, and type label, but the description does not define completion or checks.\n   One-line fix: Add a Definition of done and two acceptance criteria for the cadence setup UI.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
-  },
-  {
-    "recipient": "Ishan Patel",
-    "kind": "issue_suggestions",
-    "itemCount": 1,
-    "items": [
-      {
-        "recipient": "Ishan Patel",
-        "issueId": "BYN-51",
-        "title": "eme Sources",
-        "url": "https://linear.app/byndai/issue/BYN-51/eme-sources",
-        "category": "unclear_backlog_title",
-        "severity": "should_improve",
-        "confidence": "high",
-        "noticed": "This backlog title is too terse for someone else to understand, and it has no type label.",
-        "nextEdit": "Replace the title with a clear task phrase and add the matching type label.",
-        "sopSection": "Creating an issue"
-      }
-    ],
-    "text": "Hi Ishan Patel, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-51: eme Sources\n   Link: https://linear.app/byndai/issue/BYN-51/eme-sources\n   Noticed: This backlog title is too terse for someone else to understand, and it has no type label.\n   One-line fix: Replace the title with a clear task phrase and add the matching type label.\n   SOP reference: Creating an issue\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    "text": "Hi Aditya Singh, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThese are the items most worth tightening so the work is easier to start or verify.\n\n1. BYN-11: Update DB to support project-in-poject architecture\n   Link: https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture\n   Noticed: This Todo item is unassigned and has an empty description, no priority, and no labels.\n   One-line fix: Move to Backlog and fix the title typo when it is next scoped.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-36: Add support for Bi-Weekly newsletter on Frontend\n   Link: https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend\n   Noticed: This Todo item has a short description but no Definition of done or Acceptance criteria.\n   One-line fix: Add a one-sentence Definition of done and two frontend verification checks.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
   },
   {
     "recipient": "Mrinal Kanwar",
@@ -61,15 +43,16 @@
         "issueId": "BYN-72",
         "title": "Validation speed and coverage improvements,",
         "url": "https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements",
-        "category": "parent_issue_clarity",
+        "category": "missing_parent_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "should_improve",
         "confidence": "medium",
-        "noticed": "This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.",
-        "nextEdit": "Add one Definition of done sentence that summarizes the combined speed and coverage outcome.",
+        "noticed": "Worth checking: the parent issue points to sub-issues for details, but the parent does not have its own close-out criteria.",
+        "nextEdit": "Add one roll-up Definition of done line plus acceptance criteria that reference the relevant sub-issues.",
         "sopSection": "Definition of done"
       }
     ],
-    "text": "Hi Mrinal Kanwar, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-72: Validation speed and coverage improvements,\n   Link: https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements\n   Noticed: This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.\n   One-line fix: Add one Definition of done sentence that summarizes the combined speed and coverage outcome.\n   SOP reference: Definition of done\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    "text": "Hi Mrinal Kanwar, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThese are the items most worth tightening so the work is easier to start or verify.\n\n1. BYN-72: Validation speed and coverage improvements,\n   Link: https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements\n   Noticed: Worth checking: the parent issue points to sub-issues for details, but the parent does not have its own close-out criteria.\n   One-line fix: Add one roll-up Definition of done line plus acceptance criteria that reference the relevant sub-issues.\n   SOP reference: Definition of done\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
   },
   {
     "recipient": "Nikhil",
@@ -81,11 +64,12 @@
         "issueId": "BYN-78",
         "title": "Draft press release",
         "url": "https://linear.app/byndai/issue/BYN-78/draft-press-release",
-        "category": "todo_readiness",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.",
-        "nextEdit": "Add a Definition of done sentence that names the completed press-release artifact and outreach status.",
+        "noticed": "This Todo item describes activities but does not yet say what finished looks like.",
+        "nextEdit": "Add a Definition of done line and a short Acceptance criteria list.",
         "sopSection": "Backlog-to-Todo"
       },
       {
@@ -93,47 +77,16 @@
         "issueId": "BYN-79",
         "title": "Connect with Sanjay",
         "url": "https://linear.app/byndai/issue/BYN-79/connect-with-sanjay",
-        "category": "todo_readiness",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.",
-        "nextEdit": "Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.",
+        "noticed": "This Todo item has context but no explicit Definition of done or Acceptance criteria.",
+        "nextEdit": "Add headings for Definition of done and Acceptance criteria under the existing description.",
         "sopSection": "Backlog-to-Todo"
       }
     ],
-    "text": "Hi Nikhil, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-78: Draft press release\n   Link: https://linear.app/byndai/issue/BYN-78/draft-press-release\n   Noticed: This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.\n   One-line fix: Add a Definition of done sentence that names the completed press-release artifact and outreach status.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-79: Connect with Sanjay\n   Link: https://linear.app/byndai/issue/BYN-79/connect-with-sanjay\n   Noticed: This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.\n   One-line fix: Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
-  },
-  {
-    "recipient": "Pratham Batra",
-    "kind": "issue_suggestions",
-    "itemCount": 2,
-    "items": [
-      {
-        "recipient": "Pratham Batra",
-        "issueId": "BYN-43",
-        "title": "Native-text vs OCR/scanned classification for Download Financials",
-        "url": "https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials",
-        "category": "in_progress_owner",
-        "severity": "needs_fix",
-        "confidence": "high",
-        "noticed": "This issue is In Progress but unassigned.",
-        "nextEdit": "Set the assignee to the person actively working on native-text versus OCR classification.",
-        "sopSection": "Issue statuses"
-      },
-      {
-        "recipient": "Pratham Batra",
-        "issueId": "BYN-44",
-        "title": "Deterministic figure verification and highlighting in Download Financials",
-        "url": "https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download",
-        "category": "in_progress_owner",
-        "severity": "needs_fix",
-        "confidence": "high",
-        "noticed": "This issue is In Progress but unassigned.",
-        "nextEdit": "Set the assignee to the person actively working on deterministic figure verification.",
-        "sopSection": "Issue statuses"
-      }
-    ],
-    "text": "Hi Pratham Batra, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-43: Native-text vs OCR/scanned classification for Download Financials\n   Link: https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials\n   Noticed: This issue is In Progress but unassigned.\n   One-line fix: Set the assignee to the person actively working on native-text versus OCR classification.\n   SOP reference: Issue statuses\n\n2. BYN-44: Deterministic figure verification and highlighting in Download Financials\n   Link: https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download\n   Noticed: This issue is In Progress but unassigned.\n   One-line fix: Set the assignee to the person actively working on deterministic figure verification.\n   SOP reference: Issue statuses\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    "text": "Hi Nikhil, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThese are the items most worth tightening so the work is easier to start or verify.\n\n1. BYN-78: Draft press release\n   Link: https://linear.app/byndai/issue/BYN-78/draft-press-release\n   Noticed: This Todo item describes activities but does not yet say what finished looks like.\n   One-line fix: Add a Definition of done line and a short Acceptance criteria list.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-79: Connect with Sanjay\n   Link: https://linear.app/byndai/issue/BYN-79/connect-with-sanjay\n   Noticed: This Todo item has context but no explicit Definition of done or Acceptance criteria.\n   One-line fix: Add headings for Definition of done and Acceptance criteria under the existing description.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
   },
   {
     "recipient": "Sanidhya",
@@ -145,23 +98,25 @@
         "issueId": "BYN-19",
         "title": "Plan new architecture for agent flow",
         "url": "https://linear.app/byndai/issue/BYN-19/plan-new-architecture-for-agent-flow",
-        "category": "improvement_scope",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.",
-        "nextEdit": "Add a Definition of done that makes the output a reviewed architecture plan.",
-        "sopSection": "Issue types"
+        "noticed": "This Todo Improvement describes the problem but does not yet define the planning deliverable or verification checks.",
+        "nextEdit": "Add a Definition of done that names the document or recommendation to be produced.",
+        "sopSection": "Definition of done"
       },
       {
         "recipient": "Sanidhya",
         "issueId": "BYN-35",
         "title": "Add support for Bi-Weekly newsletter runs",
         "url": "https://linear.app/byndai/issue/BYN-35/add-support-for-bi-weekly-newsletter-runs",
-        "category": "todo_readiness",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.",
-        "nextEdit": "Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.",
+        "noticed": "This Todo item states the backend task but does not yet include finish criteria.",
+        "nextEdit": "Add Definition of done and Acceptance criteria headings to the description.",
         "sopSection": "Backlog-to-Todo"
       },
       {
@@ -169,15 +124,16 @@
         "issueId": "BYN-54",
         "title": "Change citation loading approach in chat view pane",
         "url": "https://linear.app/byndai/issue/BYN-54/change-citation-loading-approach-in-chat-view-pane",
-        "category": "improvement_scope",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.",
-        "nextEdit": "Add an Acceptance criteria section with the page-window behavior and expected loading behavior.",
-        "sopSection": "Issue types"
+        "noticed": "This Todo Improvement has a proposed approach but no explicit outcome or acceptance checks.",
+        "nextEdit": "Add Definition of done and Acceptance criteria headings before implementation continues.",
+        "sopSection": "Backlog-to-Todo"
       }
     ],
-    "text": "Hi Sanidhya, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-19: Plan new architecture for agent flow\n   Link: https://linear.app/byndai/issue/BYN-19/plan-new-architecture-for-agent-flow\n   Noticed: This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.\n   One-line fix: Add a Definition of done that makes the output a reviewed architecture plan.\n   SOP reference: Issue types\n\n2. BYN-35: Add support for Bi-Weekly newsletter runs\n   Link: https://linear.app/byndai/issue/BYN-35/add-support-for-bi-weekly-newsletter-runs\n   Noticed: This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.\n   One-line fix: Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.\n   SOP reference: Backlog-to-Todo\n\n3. BYN-54: Change citation loading approach in chat view pane\n   Link: https://linear.app/byndai/issue/BYN-54/change-citation-loading-approach-in-chat-view-pane\n   Noticed: This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.\n   One-line fix: Add an Acceptance criteria section with the page-window behavior and expected loading behavior.\n   SOP reference: Issue types\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    "text": "Hi Sanidhya, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThese are the items most worth tightening so the work is easier to start or verify.\n\n1. BYN-19: Plan new architecture for agent flow\n   Link: https://linear.app/byndai/issue/BYN-19/plan-new-architecture-for-agent-flow\n   Noticed: This Todo Improvement describes the problem but does not yet define the planning deliverable or verification checks.\n   One-line fix: Add a Definition of done that names the document or recommendation to be produced.\n   SOP reference: Definition of done\n\n2. BYN-35: Add support for Bi-Weekly newsletter runs\n   Link: https://linear.app/byndai/issue/BYN-35/add-support-for-bi-weekly-newsletter-runs\n   Noticed: This Todo item states the backend task but does not yet include finish criteria.\n   One-line fix: Add Definition of done and Acceptance criteria headings to the description.\n   SOP reference: Backlog-to-Todo\n\n3. BYN-54: Change citation loading approach in chat view pane\n   Link: https://linear.app/byndai/issue/BYN-54/change-citation-loading-approach-in-chat-view-pane\n   Noticed: This Todo Improvement has a proposed approach but no explicit outcome or acceptance checks.\n   One-line fix: Add Definition of done and Acceptance criteria headings before implementation continues.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
   },
   {
     "recipient": "Shashank Rajak",
@@ -189,11 +145,12 @@
         "issueId": "BYN-56",
         "title": "PPT Exports",
         "url": "https://linear.app/byndai/issue/BYN-56/ppt-exports",
-        "category": "in_progress_readiness",
+        "category": "missing_dod_and_acceptance_criteria",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.",
-        "nextEdit": "Add a type label and Acceptance criteria for a successful PPT export.",
+        "noticed": "This In Progress item describes the feature but has no explicit Definition of done or Acceptance criteria.",
+        "nextEdit": "Add Definition of done and Acceptance criteria headings to the description.",
         "sopSection": "Backlog-to-Todo"
       },
       {
@@ -201,11 +158,12 @@
         "issueId": "BYN-59",
         "title": "Plan out UI/UX for the PPT export workflow",
         "url": "https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow",
-        "category": "todo_readiness",
+        "category": "empty_todo_item",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
-        "nextEdit": "Add a Definition of done that names the UI/UX artifact to be produced.",
+        "noticed": "This Todo item has an empty description, no priority, and no labels.",
+        "nextEdit": "Move to Backlog until scoped, or add the plan deliverable under Definition of done.",
         "sopSection": "Backlog-to-Todo"
       },
       {
@@ -213,41 +171,15 @@
         "issueId": "BYN-60",
         "title": "Add examples for standard templates across different persona for the layout designer agent",
         "url": "https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the",
-        "category": "todo_readiness",
+        "category": "empty_todo_item",
+        "tier": "should_have",
         "severity": "needs_fix",
         "confidence": "high",
-        "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
-        "nextEdit": "Add a type label and a Definition of done that states where the examples will live.",
+        "noticed": "This Todo item has an empty description, no priority, and no labels.",
+        "nextEdit": "Move to Backlog until scoped, or add the standard Definition of done and Acceptance criteria sections.",
         "sopSection": "Backlog-to-Todo"
       }
     ],
-    "text": "Hi Shashank Rajak, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-56: PPT Exports\n   Link: https://linear.app/byndai/issue/BYN-56/ppt-exports\n   Noticed: This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.\n   One-line fix: Add a type label and Acceptance criteria for a successful PPT export.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-59: Plan out UI/UX for the PPT export workflow\n   Link: https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow\n   Noticed: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.\n   One-line fix: Add a Definition of done that names the UI/UX artifact to be produced.\n   SOP reference: Backlog-to-Todo\n\n3. BYN-60: Add examples for standard templates across different persona for the layout designer agent\n   Link: https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the\n   Noticed: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.\n   One-line fix: Add a type label and a Definition of done that states where the examples will live.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
-  },
-  {
-    "recipient": "kabir bahl",
-    "kind": "issue_suggestions",
-    "itemCount": 1,
-    "items": [
-      {
-        "recipient": "kabir bahl",
-        "issueId": "BYN-76",
-        "title": "Metric retrieval accuracy",
-        "url": "https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy",
-        "category": "missing_type_label",
-        "severity": "should_improve",
-        "confidence": "medium",
-        "noticed": "This backlog benchmark issue has product-surface labels, but no type label.",
-        "nextEdit": "If this is research, add the Spike label plus a Question, Timebox, and Output.",
-        "sopSection": "Issue types"
-      }
-    ],
-    "text": "Hi kabir bahl, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-76: Metric retrieval accuracy\n   Link: https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy\n   Noticed: This backlog benchmark issue has product-surface labels, but no type label.\n   One-line fix: If this is research, add the Spike label plus a Question, Timebox, and Output.\n   SOP reference: Issue types\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
-  },
-  {
-    "recipient": "Devayush Rout",
-    "kind": "owner_note",
-    "itemCount": 0,
-    "items": [],
-    "text": "Hi Devayush Rout, no specific Linear SOP nudge for you this week.\n\nThe review noted that most owned validation items are well scoped; a couple of backlog items mainly need type labels for SOP consistency.\nA couple of light follow-ups:\n- Add a type label to BYN-27\n- Keep using the BYN-66 structure for future validation delivery issues\n\nThis is a draft/helper, not a judgement. If a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    "text": "Hi Shashank Rajak, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThese are the items most worth tightening so the work is easier to start or verify.\n\n1. BYN-56: PPT Exports\n   Link: https://linear.app/byndai/issue/BYN-56/ppt-exports\n   Noticed: This In Progress item describes the feature but has no explicit Definition of done or Acceptance criteria.\n   One-line fix: Add Definition of done and Acceptance criteria headings to the description.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-59: Plan out UI/UX for the PPT export workflow\n   Link: https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow\n   Noticed: This Todo item has an empty description, no priority, and no labels.\n   One-line fix: Move to Backlog until scoped, or add the plan deliverable under Definition of done.\n   SOP reference: Backlog-to-Todo\n\n3. BYN-60: Add examples for standard templates across different persona for the layout designer agent\n   Link: https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the\n   Noticed: This Todo item has an empty description, no priority, and no labels.\n   One-line fix: Move to Backlog until scoped, or add the standard Definition of done and Acceptance criteria sections.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
   }
 ]

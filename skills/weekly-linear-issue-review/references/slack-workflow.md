@@ -40,9 +40,13 @@ results/dms/
 Rules:
 
 - Only people with useful suggestions get a draft.
+- Silence is better than noise; do not create a DM just to prove the bot ran.
 - Issue-suggestion drafts have max three items per person.
 - If the AI has an owner note but no issue-level nudge, generate a short "no
   specific nudge this week" draft with the useful focus items.
+- If a DM has only `nice_to_have` suggestions, open with light praise before the
+  suggestions. If it has `should_have` suggestions, make the nudge direct but
+  gentle.
 - Each item should include the issue link, what was noticed, one concrete fix,
   and the SOP section/reference.
 - DM the assignee; if unassigned, fall back to the creator.

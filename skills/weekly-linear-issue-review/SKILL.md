@@ -119,6 +119,13 @@ Use `results/dms/` for per-person DM drafts. Some drafts may be light owner-note
 messages when there is no specific issue-level nudge.
 Use `report.md` for the full review.
 
+DM suggestions use two tiers:
+
+- `should_have`: missing description, Definition of done, or Acceptance criteria
+  on Todo/In Progress work; work that should move back to Backlog until scoped;
+  or more than three In Progress items.
+- `nice_to_have`: missing labels or missing priority.
+
 `state/history.json` is not replaced during normal runs. It is reserved for
 tracking successfully sent DM suggestions so the same issue/category is not
 nudge-sent to the same person twice.

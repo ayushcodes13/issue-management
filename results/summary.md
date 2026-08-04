@@ -13,17 +13,17 @@ Status mix:
 - In Review: 0
 
 Main themes:
-- Several Todo and In Progress issues need the Backlog-to-Todo fields added before they are easy for someone else to start or verify.
-- Type labels are missing on many issues, especially older Company Reports, Extract, and unassigned items.
-- A few In Progress issues are unassigned or rely on sub-issues for clarity, so ownership and the parent done state are worth tightening.
+- Several Todo and In Progress items have useful context but need an explicit Definition of done and Acceptance criteria before they are easy to verify.
+- A few Todo items look like captured ideas rather than ready-this-week work, so they may be better parked in Backlog until scoped.
+- The clearest issues pair a one-sentence outcome with observable checks that another teammate could use to close the loop.
 
 Suggested follow-ups:
-- 20 issues have AI suggestions.
-- 9 people have short DM drafts in `results/dms/`.
+- 14 issues have AI suggestions.
+- 5 people have short DM drafts in `results/dms/`.
 
 Positive example to copy:
 - BYN-66: Update industry report pipeline to new blob output structure - https://linear.app/byndai/issue/BYN-66/update-industry-report-pipeline-to-new-blob-output-structure
-  Why: It has a clear done state, concrete acceptance checks, and a verification path worth copying.
+  Why: It has a clear Definition of done, concrete acceptance criteria, and a simple verification step worth copying.
 
 A few people may get short DMs with specific suggestions. Feel free to ignore anything the review got wrong.
 
