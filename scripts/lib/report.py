@@ -1,19 +1,23 @@
 import json
 from collections import Counter, defaultdict
 
-from lib.linear_client import owner_of, status_of
+from lib.linear import owner_of, status_of
 
 
 def write_reports(out_dir, issues, findings, analysis, mode):
     out_dir.mkdir(parents=True, exist_ok=True)
+    for old_file in out_dir.iterdir():
+        if old_file.is_file():
+            old_file.unlink()
+
     team_summary = render_team_summary(issues, findings, analysis, mode)
     artifacts = {
-        "team-summary.md": team_summary,
-        "owner-details.md": render_owner_details(issues, findings, analysis, mode),
-        "issue-improvements.md": render_issue_improvements(findings, analysis, mode),
-        "full-report.md": render_full_report(team_summary, issues, findings, analysis, mode),
-        "slack-blocks.json": json.dumps(render_slack_blocks(team_summary), indent=2),
-        "audit.json": json.dumps(
+        "summary.md": team_summary,
+        "owners.md": render_owner_details(issues, findings, analysis, mode),
+        "issues.md": render_issue_improvements(findings, analysis, mode),
+        "report.md": render_full_report(team_summary, issues, findings, analysis, mode),
+        "slack.json": json.dumps(render_slack_blocks(team_summary), indent=2),
+        "data.json": json.dumps(
             {
                 "mode": mode,
                 "issueCount": len(issues),
@@ -23,8 +27,7 @@ def write_reports(out_dir, issues, findings, analysis, mode):
             },
             indent=2,
         ),
-        "analysis.json": json.dumps(analysis, indent=2),
-        "issues.json": json.dumps(issues, indent=2),
+        "linear.json": json.dumps(issues, indent=2),
     }
     for name, content in artifacts.items():
         (out_dir / name).write_text(content.rstrip() + "\n", encoding="utf-8")

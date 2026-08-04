@@ -11,7 +11,7 @@ if [ -f ".env" ]; then
 fi
 
 missing=0
-for key in LINEAR_API_KEY SLACK_BOT_TOKEN DEV_SMOKE_CHANNEL_ID; do
+for key in LINEAR_API_KEY SLACK_BOT_TOKEN SLACK_CHANNEL_ID; do
   if [ -z "${!key:-}" ]; then
     echo "Missing ${key}."
     missing=1
@@ -32,5 +32,5 @@ if [ -x ".venv/bin/python" ]; then
   python_bin=".venv/bin/python"
 fi
 
-"${python_bin}" scripts/main.py
-"${python_bin}" scripts/post_slack.py
+"${python_bin}" scripts/review.py
+"${python_bin}" scripts/post.py

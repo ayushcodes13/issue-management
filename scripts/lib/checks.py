@@ -1,6 +1,6 @@
 from collections import Counter
 
-from lib.linear_client import labels_of, owner_of, priority_of, status_of
+from lib.linear import labels_of, owner_of, priority_of, status_of
 
 
 TYPE_LABELS = {"Bug", "Feature", "Improvement", "Chore", "Spike"}

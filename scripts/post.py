@@ -8,21 +8,17 @@ from slack_sdk.errors import SlackApiError
 
 def main():
     out_dir = Path(os.environ.get("AUDIT_OUT_DIR", "results"))
-    text_path = out_dir / "team-summary.md"
-    blocks_path = out_dir / "slack-blocks.json"
+    text_path = out_dir / "summary.md"
+    blocks_path = out_dir / "slack.json"
 
     token = os.environ.get("SLACK_BOT_TOKEN")
-    channel = (
-        os.environ.get("SLACK_SHADOW_CHANNEL_ID")
-        or os.environ.get("DEV_SMOKE_CHANNEL_ID")
-        or os.environ.get("SHADOW_CHANNEL_ID")
-    )
+    channel = os.environ.get("SLACK_CHANNEL_ID")
     if not token:
         raise RuntimeError("SLACK_BOT_TOKEN is required")
     if not channel:
-        raise RuntimeError("SLACK_SHADOW_CHANNEL_ID or DEV_SMOKE_CHANNEL_ID is required")
+        raise RuntimeError("SLACK_CHANNEL_ID is required")
     if not text_path.exists():
-        raise RuntimeError(f"Missing {text_path}; run scripts/main.py first")
+        raise RuntimeError(f"Missing {text_path}; run scripts/review.py first")
 
     text = text_path.read_text(encoding="utf-8")
     blocks = None

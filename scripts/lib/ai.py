@@ -4,7 +4,7 @@ import re
 import urllib.error
 import urllib.request
 
-from lib.linear_client import labels_of, owner_of, priority_of, status_of
+from lib.linear import labels_of, owner_of, priority_of, status_of
 
 
 OPENAI_RESPONSES_ENDPOINT = "https://api.openai.com/v1/responses"

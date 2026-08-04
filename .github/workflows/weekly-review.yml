@@ -11,6 +11,9 @@ on:
         required: false
         default: "false"
 
+permissions:
+  contents: write
+
 jobs:
   weekly-review:
     runs-on: ubuntu-latest
@@ -29,18 +32,27 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4o-mini' }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_SHADOW_CHANNEL_ID: ${{ secrets.SLACK_SHADOW_CHANNEL_ID }}
-          DEV_SMOKE_CHANNEL_ID: ${{ secrets.DEV_SMOKE_CHANNEL_ID }}
-          AUDIT_MODE: "dev-smoke"
-          AUDIT_OUT_DIR: "audit-output"
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          AUDIT_MODE: "weekly"
+          AUDIT_OUT_DIR: "results"
           WORKFLOW_POST_TO_SLACK: ${{ github.event_name == 'schedule' && 'true' || inputs.post_to_slack }}
         run: |
-          python scripts/main.py
-          if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && { [ -n "${SLACK_SHADOW_CHANNEL_ID}" ] || [ -n "${DEV_SMOKE_CHANNEL_ID}" ]; }; then
-            python scripts/post_slack.py
+          python scripts/review.py
+          if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && [ -n "${SLACK_CHANNEL_ID}" ]; then
+            python scripts/post.py
+          fi
+
+      - name: Save latest results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results
+          if ! git diff --cached --quiet; then
+            git commit -m "Update weekly Linear results"
+            git push
           fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: weekly-linear-issue-review
-          path: audit-output
+          name: results
+          path: results

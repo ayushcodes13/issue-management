@@ -1,4 +1,4 @@
 interface:
   display_name: "Weekly Linear Issue Review"
   short_description: "Run a weekly Linear SOP review and post a short Slack summary."
-  default_prompt: "Run the weekly Linear issue review, generate the reports, and post the short summary to the configured Slack shadow channel."
+  default_prompt: "Run the weekly Linear issue review, update the results folder, and post the short summary to the configured Slack channel."

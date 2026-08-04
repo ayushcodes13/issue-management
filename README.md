@@ -1,74 +1,41 @@
-# Weekly Linear Issue Review Skill
+# Weekly Linear Review
 
-Reusable weekly Linear issue-management skill.
+Simple weekly Linear issue review.
 
-This repo is intentionally simple: a scheduled agent-style workflow fetches Linear issues, runs local SOP checks, optionally sends only flagged issues to OpenAI for gentle wording/suggestions, writes Markdown reports, and can post a short summary to Slack.
+The run is read-only for Linear. It fetches active issues, checks them against the SOP, writes the latest report into `results/`, and can post the short summary to one Slack channel.
 
-## What It Does
-
-- Fetches active, non-archived Linear issues.
-- Reviews `Backlog`, `Todo`, `In Progress`, and `In Review`.
-- Checks SOP hygiene such as owners, priority, type labels, Definition of done, and Acceptance criteria.
-- Optionally makes one batched OpenAI call for flagged issues only, not one call per issue.
-- Writes audit artifacts for review.
-- Posts a short owner-grouped summary to Slack when Slack secrets are configured.
-- Keeps full details in Markdown files instead of dumping everything into Slack.
-
-## Reusable Skill
-
-The reusable skill instructions live in:
+## Files
 
 ```text
 skills/weekly-linear-issue-review/SKILL.md
+scripts/review.py
+scripts/post.py
+results/
 ```
 
-Use that file when running this from Codex, Claude, or another agent.
+## Secrets
 
-## Thursday Cron
-
-The workflow runs every Thursday at 9:00 AM IST:
-
-```yaml
-cron: "30 3 * * 4"
-```
-
-It can also be run manually from GitHub Actions with `workflow_dispatch`.
-
-On scheduled runs, the workflow posts to Slack only when `SLACK_BOT_TOKEN` and `DEV_SMOKE_CHANNEL_ID` are configured. Otherwise it still generates artifacts.
-
-## Required Secrets
-
-Add secrets in:
-
-```text
-GitHub repo -> Settings -> Secrets and variables -> Actions -> New repository secret
-```
-
-Required to fetch Linear:
+Required:
 
 ```text
 LINEAR_API_KEY
 ```
 
-Optional for AI-written coaching notes:
-
-```text
-OPENAI_API_KEY
-```
-
-Required for scheduled Slack posting:
+Required only for Slack posting:
 
 ```text
 SLACK_BOT_TOKEN
-DEV_SMOKE_CHANNEL_ID
+SLACK_CHANNEL_ID
 ```
 
-Needed later for shadow/public rollout:
+Optional:
 
 ```text
-SHADOW_CHANNEL_ID
-ISSUE_MANAGEMENT_CHANNEL_ID
+OPENAI_API_KEY
+OPENAI_MODEL
 ```
+
+If `OPENAI_API_KEY` is missing, the review still runs with local checks only.
 
 ## Local Run
 
@@ -79,86 +46,47 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Open `.env` and fill `LINEAR_API_KEY`.
-
-If you want the AI-assisted notes, also fill `OPENAI_API_KEY`.
-
-Then run:
+Fill `.env`, then run:
 
 ```bash
-./run_manual.sh
+./run.sh
 ```
 
-This writes:
-
-```text
-results/team-summary.md
-results/owner-details.md
-results/issue-improvements.md
-results/full-report.md
-results/issues.json
-results/audit.json
-results/slack-blocks.json
-```
-
-Use `team-summary.md` for the short Slack-style message.
-Use `full-report.md` for review with Mrinal.
-Use `owner-details.md` when people ask what applies to them.
-Use `issue-improvements.md` when someone asks how to improve a specific issue.
-
-If `OPENAI_API_KEY` is not set, the reports still run using local checks only and mark the analysis source as fallback.
-
-## Local Slack Posting
-
-Use this for dev-smoke testing before relying on the Thursday cron.
-
-For local dev-smoke posting, fill these values in `.env`:
-
-```text
-SLACK_BOT_TOKEN=<slack-bot-token>
-DEV_SMOKE_CHANNEL_ID=<private-channel-id>
-```
-
-Then run:
+To post the latest summary to Slack:
 
 ```bash
-./post_dev_smoke.sh
+./post.sh
 ```
 
-This posts only to `DEV_SMOKE_CHANNEL_ID`.
+## Results
 
-If Slack returns `channel_not_found`, invite the bot to the private channel first:
+`results/` is committed to the repo. Each run replaces the folder contents with the latest report.
 
 ```text
-/invite @issuemanagement
+results/summary.md
+results/owners.md
+results/issues.md
+results/report.md
+results/data.json
+results/linear.json
+results/slack.json
 ```
 
-Then run `./post_dev_smoke.sh` again.
+Use `summary.md` for Slack, `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific edits, and `report.md` for the full review.
 
-To verify bot access without sending the full audit:
+## GitHub Action
 
-```bash
-.venv/bin/python check_slack_access.py
-```
-
-## Follow-Up Answers
-
-For v2, keep Slack simple: post the short weekly summary, then use the generated files for follow-up answers.
+The workflow runs every Thursday at 9:00 AM IST:
 
 ```text
-results/owner-details.md
-results/issue-improvements.md
-results/full-report.md
+.github/workflows/weekly-review.yml
 ```
 
-If someone asks for `show Devayush`, answer from `owner-details.md`.
-If someone asks for `improve BYN-67`, answer from `issue-improvements.md`.
-If the team later wants a fully interactive Slackbot, add it as a separate layer on top of these JSON/Markdown artifacts.
+It writes the new `results/`, commits the updated results back to `main`, uploads the same folder as an artifact, and posts to Slack only when Slack secrets are configured.
 
 ## Safety
 
 - No Linear mutations.
 - No Linear comments.
 - No auto-assignment.
-- No auto-status changes.
-- No Slack posting unless you run `./post_dev_smoke.sh` locally or the scheduled GitHub Action has Slack secrets configured.
+- No status changes.

@@ -20,9 +20,9 @@ def load_env():
 def main():
     load_env()
     token = os.environ.get("SLACK_BOT_TOKEN")
-    channel = os.environ.get("DEV_SMOKE_CHANNEL_ID")
+    channel = os.environ.get("SLACK_CHANNEL_ID")
     print("SLACK_BOT_TOKEN:", "set" if token else "missing")
-    print("DEV_SMOKE_CHANNEL_ID:", "set" if channel else "missing")
+    print("SLACK_CHANNEL_ID:", "set" if channel else "missing")
     if channel:
         print("channel_prefix:", channel[:1])
         print("channel_length:", len(channel))

@@ -10,14 +10,14 @@ Use Slack as the lightweight interface.
 
 ## Posting Rule
 
-Post only `team-summary.md` to Slack. Keep detailed reports in artifacts or local files.
+Post only `results/summary.md` to Slack. Keep detailed reports in `results/`.
 
 ## Follow-Up Commands
 
 Support these as conventions:
 
-- `show <name>`: answer from `owner-details.md`
-- `improve <issue id>`: answer from `issue-improvements.md`
+- `show <name>`: answer from `results/owners.md`
+- `improve <issue id>`: answer from `results/issues.md`
 - `examples`: show a good Linear issue shape
 
-The simple Thursday cron generates the report and posts the summary. A continuously interactive bot requires Socket Mode and `SLACK_APP_TOKEN`; that is optional and not required for the weekly cron.
+The simple Thursday cron generates the report, commits the latest `results/` folder, and posts the summary when Slack secrets are configured.

@@ -1,95 +1,65 @@
 ---
 name: weekly-linear-issue-review
-description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, run local SOP checks, optionally send flagged issues to OpenAI for gentle coaching notes, generate owner-grouped Markdown reports, post a short Slack shadow-channel summary, or support follow-up prompts like show a person and improve an issue id.
+description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, run SOP checks, optionally use OpenAI for gentle coaching notes, write the latest results folder, post a short Slack summary, or answer follow-ups from owner and issue reports.
 ---
 
 # Weekly Linear Issue Review
 
 ## Overview
 
-Use this skill to run a lightweight weekly Linear issue-management check. The workflow is intentionally simple: fetch active Linear issues, run local SOP checks, optionally use one batched OpenAI call for flagged issues, generate Markdown reports, and post a short Slack summary to the configured shadow channel.
+Use this skill to run a lightweight weekly Linear issue-management check. Keep Linear read-only.
 
-This is not a production service. Keep Linear read-only and use Slack only for the short summary.
-
-## Workflow
+The flow is:
 
 1. Fetch active, non-archived Linear issues in `Backlog`, `Todo`, `In Progress`, and `In Review`.
-2. Check issue hygiene against the Linear SOP locally.
-3. If `OPENAI_API_KEY` is configured, send only flagged issues to OpenAI in one batched call for gentle coaching notes.
-4. Write Markdown and JSON artifacts.
-5. Post only the short summary to Slack when explicitly running the post command or when the configured Thursday cron runs.
-6. Use detailed Markdown files for follow-up answers.
+2. Run local SOP checks.
+3. If `OPENAI_API_KEY` exists, send only flagged issues to OpenAI in one batched call.
+4. Replace the contents of `results/` with the latest report.
+5. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
 
-Read `references/sop-checks.md` before changing the checks. Read `references/slack-workflow.md` before changing Slack behavior.
+Read `references/sop-checks.md` before changing checks. Read `references/slack-workflow.md` before changing Slack behavior.
 
 ## Commands
 
-From the repo root, or by using the skill wrapper scripts:
+From the repo root:
 
 ```bash
-./run_manual.sh
+./run.sh
 ```
 
 or:
 
 ```bash
-skills/weekly-linear-issue-review/scripts/run-review.sh
+skills/weekly-linear-issue-review/scripts/run.sh
 ```
 
-This writes:
-
-- `results/team-summary.md`
-- `results/full-report.md`
-- `results/owner-details.md`
-- `results/issue-improvements.md`
-- `results/issues.json`
-- `results/audit.json`
-- `results/slack-blocks.json`
-
-To post the short summary to the configured Slack shadow channel:
+To post the short summary:
 
 ```bash
-./post_dev_smoke.sh
+./post.sh
 ```
 
 or:
 
 ```bash
-skills/weekly-linear-issue-review/scripts/post-summary.sh
+skills/weekly-linear-issue-review/scripts/post.sh
 ```
 
-## Slack Message
+## Results
 
-Post only the short summary. Do not paste the full report into Slack.
+Each run replaces these files:
 
-Good shape:
+- `results/summary.md`
+- `results/owners.md`
+- `results/issues.md`
+- `results/report.md`
+- `results/data.json`
+- `results/linear.json`
+- `results/slack.json`
 
-```text
-Weekly Linear issue-management check
-
-Reviewed <n> active issues.
-
-Main themes:
-- <theme>
-- <theme>
-- <theme>
-
-Suggestions by owner:
-- <Owner>: <n> issues, <n> suggestions
-
-Reply with:
-- show <name>
-- improve <issue id>
-- examples
-```
-
-## Follow-Ups
-
-If someone asks `show <name>`, answer from `results/owner-details.md`.
-
-If someone asks `improve <issue id>`, answer from `results/issue-improvements.md`.
-
-If someone asks for the full report, use `results/full-report.md`.
+Use `owners.md` for `show <name>`.
+Use `issues.md` for `improve <issue id>`.
+Use `report.md` for the full review.
 
 ## Safety
 
@@ -97,5 +67,5 @@ If someone asks for the full report, use `results/full-report.md`.
 - Do not comment on Linear issues.
 - Do not auto-assign owners.
 - Do not move issue statuses.
-- Do not post detailed owner reports to Slack unless explicitly asked.
+- Do not post detailed reports to Slack unless explicitly asked.
 - Keep `.env` local and ignored by git.
