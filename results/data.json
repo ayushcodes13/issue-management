@@ -1,7 +1,7 @@
 {
-  "mode": "weekly",
+  "mode": "manual-preview",
   "issueCount": 52,
-  "analysisSource": "fallback",
+  "analysisSource": "azure-openai",
   "findings": [
     {
       "issueId": "BYN-79",
@@ -1266,441 +1266,513 @@
     }
   ],
   "analysis": {
-    "source": "fallback",
-    "fallbackReason": "AZURE_OPENAI_API_KEY is not set",
     "teamThemes": [
-      "Some active work needs clearer ownership.",
-      "Some Todo items may not be ready to start because priority is missing.",
-      "Some ready or active issues could use clearer acceptance criteria.",
-      "Some issues need exactly one SOP type label.",
-      "Some issues look like default, stale, or underspecified placeholders."
+      "Several issues would be easier to scan with exactly one type label such as Feature, Improvement, Chore, Bug, or Spike.",
+      "Todo and In Progress work often needs a short outcome sentence plus 2-4 observable checks.",
+      "A few active or ready items are unassigned or still look like Linear setup placeholders and could be cleaned up."
     ],
     "ownerNotes": [
       {
-        "owner": "Unassigned",
-        "summary": "18 flagged issues to review.",
-        "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
-        ]
-      },
-      {
-        "owner": "Shashank Rajak",
-        "summary": "7 flagged issues to review.",
-        "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
-        ]
-      },
-      {
-        "owner": "Sanidhya",
-        "summary": "6 flagged issues to review.",
-        "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
-        ]
-      },
-      {
-        "owner": "Aditya Singh",
-        "summary": "2 flagged issues to review.",
-        "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
-        ]
-      },
-      {
-        "owner": "Mrinal Kanwar",
-        "summary": "2 flagged issues to review.",
-        "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
-        ]
-      },
-      {
         "owner": "Nikhil",
-        "summary": "2 flagged issues to review.",
+        "summary": "Your HDFC expansion items have useful context and would benefit from type labels and clearer completion checks.",
         "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
-        ]
-      },
-      {
-        "owner": "Devayush Rout",
-        "summary": "1 flagged issue to review.",
-        "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
+          "Add one type label to each Todo item",
+          "Add a Definition of Done and 2-4 acceptance checks for each outreach or PR task"
         ]
       },
       {
         "owner": "kabir bahl",
-        "summary": "1 flagged issue to review.",
+        "summary": "The benchmarking issue is well scoped and just needs a single type label for easier filtering.",
         "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
+          "Add Spike or Improvement as the type label",
+          "Keep the metric list as the verification basis"
+        ]
+      },
+      {
+        "owner": "Mrinal Kanwar",
+        "summary": "Your validation and research items already have direction; a crisp outcome sentence would make handoff simpler.",
+        "suggestedFocus": [
+          "Add one Definition of Done per active or Todo item",
+          "Turn research outputs into observable acceptance checks"
+        ]
+      },
+      {
+        "owner": "Sanidhya",
+        "summary": "Your chat and monitoring work is strong on context and would be easier to close with clearer priorities and checks.",
+        "suggestedFocus": [
+          "Set priority before Todo work starts, or move uncertain work to Backlog",
+          "Add measurable acceptance criteria for performance, alerting, and architecture tasks"
+        ]
+      },
+      {
+        "owner": "Shashank Rajak",
+        "summary": "The Company Reports roadmap has many useful items that would benefit from labels, priorities, and outcome detail.",
+        "suggestedFocus": [
+          "Add one type label to each Company Reports issue",
+          "Prioritize Todo items or move them to Backlog until sequencing is clear"
+        ]
+      },
+      {
+        "owner": "Unassigned",
+        "summary": "Several unassigned items look useful but need ownership or cleanup before they are easy for the team to act on.",
+        "suggestedFocus": [
+          "Assign owners for Todo and In Progress work",
+          "Archive or rename default Linear setup items if they are not real Bynd work"
+        ]
+      },
+      {
+        "owner": "Aditya Singh",
+        "summary": "The Intelligence frontend work has clear intent and would be easier to verify with explicit done criteria.",
+        "suggestedFocus": [
+          "Add one-sentence Definitions of Done",
+          "Add acceptance checks for UI behavior and generated outputs"
+        ]
+      },
+      {
+        "owner": "Devayush Rout",
+        "summary": "The validation rollout items are already well structured and mainly need a single type label.",
+        "suggestedFocus": [
+          "Add Improvement, Chore, or Spike labels as appropriate",
+          "Keep linking follow-up work from validation reviews"
         ]
       },
       {
         "owner": "Piyush Khurana",
-        "summary": "1 flagged issue to review.",
+        "summary": "The citation placement item has clear acceptance criteria and just needs a type label for consistency.",
         "suggestedFocus": [
-          "Review the issue notes and make the smallest useful cleanup edit."
+          "Add an Improvement label",
+          "Keep the regex-based verification note visible"
         ]
       }
     ],
     "issueNotes": [
       {
         "issueId": "BYN-79",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This reads as outreach to Sanjay about HDFC phase-two scope and a possible call.",
+        "whatToImprove": "Add one type label and define what will be true once the conversation is complete.",
+        "suggestedNextEdit": "Add the Chore label and a short Definition of Done under the description.",
+        "suggestedTitle": "Sanjay phase-two scope discussion completed",
+        "suggestedDefinitionOfDone": "Done when Sanjay has confirmed the phase-two scope discussion path and either a call is scheduled or next steps are documented.",
+        "suggestedAcceptanceCriteria": [
+          "Sanjay has been contacted",
+          "Phase-two scope questions are shared or discussed",
+          "Call details or documented next steps are added to the issue"
+        ]
       },
       {
         "issueId": "BYN-78",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This reads as a joint Bynd and HDFC Capital press release task plus publisher outreach.",
+        "whatToImprove": "Add one type label and make the expected deliverable easier to verify.",
+        "suggestedNextEdit": "Add the Chore label and list the press release draft, approval, and outreach checks.",
+        "suggestedTitle": "Joint HDFC deployment press release ready for outreach",
+        "suggestedDefinitionOfDone": "Done when a shareable press release draft is prepared and the intended media outreach path is documented.",
+        "suggestedAcceptanceCriteria": [
+          "Press release draft is written",
+          "HDFC/Bynd review owner or approval path is noted",
+          "Target media agencies or publishers are listed"
+        ]
       },
       {
         "issueId": "BYN-76",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
+        "currentRead": "This reads as a benchmark comparing financial metric retrieval across Claude, ChatGPT, and Bynd AI.",
+        "whatToImprove": "Add one type label so the work is easier to filter.",
+        "suggestedNextEdit": "Add the Spike label.",
+        "suggestedTitle": "Financial metric retrieval benchmark across models",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-72",
-        "currentRead": "This In Progress issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
+        "currentRead": "This active validation issue points to sub-issues for the details and checks.",
+        "whatToImprove": "Add a parent-level outcome sentence so the aggregate result is clear.",
+        "suggestedNextEdit": "Add a Definition of Done summarizing the combined speed, coverage, and blob-PDF result.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
+        "suggestedDefinitionOfDone": "Done when validation runs faster, covers the noted text/table cases, and pulls PDFs from blob as described in the linked sub-issues.",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-68",
-        "currentRead": "This Todo issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
+        "currentRead": "This reads as a tenant-level Azure alert routing task with a manual verification step.",
+        "whatToImprove": "Add a concise outcome sentence covering alert receipt by the Bynd email address.",
+        "suggestedNextEdit": "Add the Definition of Done after the verification paragraph.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
+        "suggestedDefinitionOfDone": "Done when the Bynd email address receives HDFC Azure alerts after a manually triggered test alert.",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-67",
-        "currentRead": "This Todo issue does not show a priority.",
-        "whatToImprove": "Todo work should be prioritized before someone starts it.",
-        "suggestedNextEdit": "If priority is known, add it. Otherwise consider Backlog.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This reads as a one-hour spike on Azure code-level observability for the HDFC private VPC deployment.",
+        "whatToImprove": "Set a priority and make the research output and follow-up issue checks explicit.",
+        "suggestedNextEdit": "Set priority to Medium if the timing is still current, then add 3 acceptance checks.",
+        "suggestedTitle": "Azure code-level observability recommendation delivered",
+        "suggestedDefinitionOfDone": "Done when a recommendation is shared in #hdfc-capital and the implementation path is captured in Linear.",
+        "suggestedAcceptanceCriteria": [
+          "Research is timeboxed to 1 hour",
+          "Recommendation and rationale are posted in #hdfc-capital",
+          "Implementation issue is created or this issue is converted into the implementation work"
+        ]
       },
       {
         "issueId": "BYN-63",
-        "currentRead": "This In Progress issue could use clearer acceptance criteria.",
-        "whatToImprove": "Acceptance criteria make the issue verifiable.",
-        "suggestedNextEdit": "Add 2-4 observable checks.",
+        "currentRead": "This active issue covers safely bringing HDFC chat branch improvements into chat production.",
+        "whatToImprove": "Add observable checks for preserved functionality and future branch maintainability.",
+        "suggestedNextEdit": "Add 3 acceptance criteria covering regression testing, modular structure, and branch maintenance.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "suggestedAcceptanceCriteria": [
+          "Existing chat production flows still pass regression checks",
+          "HDFC branch improvements are available in the target production path",
+          "Shared code is organized so both branches can be maintained with minimal duplication"
+        ]
       },
       {
         "issueId": "BYN-61",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo item names the PPT Agent integration but has no detail yet.",
+        "whatToImprove": "Add type, priority, outcome, and verification checks before starting.",
+        "suggestedNextEdit": "Add the Feature label, set a priority, and paste a short Definition of Done with acceptance criteria.",
+        "suggestedTitle": "PPT Agent integrated into Company Reports",
+        "suggestedDefinitionOfDone": "Done when Company Reports can invoke the PPT Agent through the main application flow and return a usable PPT output.",
+        "suggestedAcceptanceCriteria": [
+          "Main Company Reports UI or backend can trigger the PPT Agent",
+          "Generated PPT output is returned to the user flow",
+          "Basic error and loading states are handled"
+        ]
       },
       {
         "issueId": "BYN-60",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo item asks for persona-specific examples for layout designer templates but has no detail yet.",
+        "whatToImprove": "Add type, priority, and concrete example coverage expectations.",
+        "suggestedNextEdit": "Add the Improvement label, set a priority, and list the personas and template examples needed.",
+        "suggestedTitle": "Persona-specific template examples added for layout designer",
+        "suggestedDefinitionOfDone": "Done when the layout designer agent has standard template examples for the agreed personas.",
+        "suggestedAcceptanceCriteria": [
+          "Target personas are listed",
+          "At least one standard template example exists per persona",
+          "Examples are accessible to the layout designer agent"
+        ]
       },
       {
         "issueId": "BYN-59",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo item is a planning task for the PPT export workflow UI/UX.",
+        "whatToImprove": "Add type, priority, and an outcome-style title with concrete planning artifacts.",
+        "suggestedNextEdit": "Add the Spike label, set a priority, and specify the expected UI/UX artifact.",
+        "suggestedTitle": "PPT export workflow UI/UX plan ready",
+        "suggestedDefinitionOfDone": "Done when the PPT export workflow has an agreed UI/UX plan that engineering can implement.",
+        "suggestedAcceptanceCriteria": [
+          "Main user steps are mapped",
+          "Key screens or wireframes are attached",
+          "Open product questions are documented"
+        ]
       },
       {
         "issueId": "BYN-58",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item describes integrating the validation service into the Company Reports agent.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-57",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
+        "currentRead": "This Backlog item describes Excel upload and processing support in Company Reports.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Feature label.",
+        "suggestedTitle": "Excel file support in Company Reports",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-56",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This active issue covers building PPT export for Company Reports.",
+        "whatToImprove": "Add type, outcome, and verification checks for export behavior.",
+        "suggestedNextEdit": "Add the Feature label and 3 acceptance criteria covering export, branding, and template use.",
+        "suggestedTitle": "PPT export feature for Company Reports",
+        "suggestedDefinitionOfDone": "Done when users can export a generated Company Report as a branded PPT using their selected template.",
+        "suggestedAcceptanceCriteria": [
+          "User can trigger PPT export from a generated report",
+          "Exported PPT reflects selected branding and template settings",
+          "Downloaded PPT opens correctly with the report content included"
+        ]
       },
       {
         "issueId": "BYN-55",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This active PoC is detailed and focused on a broker architecture for external data connectors.",
+        "whatToImprove": "Add a type label and a short top-level outcome sentence.",
+        "suggestedNextEdit": "Add the Spike label and a Definition of Done above the verification list.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
+        "suggestedDefinitionOfDone": "Done when the PoC shows that new connectors can be routed through one broker tool without changing the core agent flow.",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-54",
-        "currentRead": "This Todo issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo item proposes paginated citation PDF loading to improve chat view performance.",
+        "whatToImprove": "Add outcome and checks for page loading, scrolling, and perceived speed.",
+        "suggestedNextEdit": "Add a Definition of Done plus 3 measurable acceptance criteria.",
+        "suggestedTitle": "Citation PDF pages load incrementally in chat view",
+        "suggestedDefinitionOfDone": "Done when citation clicks load the target page plus buffer pages without fetching the full PDF upfront.",
+        "suggestedAcceptanceCriteria": [
+          "Citation click loads the cited page and configured page buffer",
+          "Additional pages load as the user scrolls",
+          "Large PDFs open noticeably faster than the current full-document load path"
+        ]
       },
       {
         "issueId": "BYN-51",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item is too thin to understand beyond the phrase 'eme Sources'.",
+        "whatToImprove": "Either rename and add context, or remove it from the working backlog if it is not needed.",
+        "suggestedNextEdit": "Clarify the title, add a description, and add one type label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-50",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item describes handling renamed sheets by matching byte-identical versions.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-49",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item describes graceful pipeline behavior for OOMs and retry limits.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-48",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
+        "currentRead": "This Backlog item describes choosing and enforcing a parallel job limit.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
+        "suggestedTitle": "Parallel job concurrency limit",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-47",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item describes alerting so pipeline errors are noticed promptly.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-46",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
+        "currentRead": "This Backlog item combines investigation of rerun cache reuse with extending cache usefulness.",
+        "whatToImprove": "Add one type label and consider an outcome-style title.",
+        "suggestedNextEdit": "Add the Spike label and rename the title around the desired caching result.",
+        "suggestedTitle": "Reruns reuse cached documents where possible",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-45",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
+        "currentRead": "This Backlog item describes highlighting the section heading for metric search results.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Feature label.",
+        "suggestedTitle": "Section headings highlighted in metric search",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-44",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This active Extract issue is detailed but currently has no visible assignee or type label.",
+        "whatToImprove": "Add an owner, type label, outcome sentence, and concise acceptance checks.",
+        "suggestedNextEdit": "Assign the owner, add the Improvement label, and add a Definition of Done near the top.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "suggestedDefinitionOfDone": "Done when Download Financials verifies printed figures deterministically on trusted native-text pages and highlights unsupported table rows.",
+        "suggestedAcceptanceCriteria": [
+          "An owner is assigned",
+          "Verification runs only on pages classified as trusted native text",
+          "Unsupported figures are highlighted in the relevant table row",
+          "Representative documents are checked end to end"
+        ]
       },
       {
         "issueId": "BYN-43",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This active Extract issue is detailed but currently has no visible assignee or type label.",
+        "whatToImprove": "Add an owner, type label, outcome sentence, and concise acceptance checks.",
+        "suggestedNextEdit": "Assign the owner, add the Improvement label, and add a Definition of Done near the top.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "suggestedDefinitionOfDone": "Done when Download Financials can classify pages as native-text or OCR/scanned before downstream figure verification trusts extracted text.",
+        "suggestedAcceptanceCriteria": [
+          "An owner is assigned",
+          "Native-text and OCR/scanned pages are classified",
+          "Classification output is available to downstream verification",
+          "Representative documents are used to validate the classification behavior"
+        ]
       },
       {
         "issueId": "BYN-39",
-        "currentRead": "This In Progress issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
+        "currentRead": "This active Intelligence issue has strong context and verification notes for one-pager generation.",
+        "whatToImprove": "Add a single Definition of Done to summarize the desired end state.",
+        "suggestedNextEdit": "Add the Definition of Done above the verification section.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
+        "suggestedDefinitionOfDone": "Done when users can select delivered news items and download a visually correct, accurate PDF one-pager from the frontend.",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-37",
-        "currentRead": "This Todo issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo spike has a timebox and output but would benefit from explicit checks.",
+        "whatToImprove": "Add a Definition of Done and acceptance criteria for the research artifact and follow-up discussion.",
+        "suggestedNextEdit": "Add 3 acceptance criteria under the current Output section.",
+        "suggestedTitle": "Claude Code and corpus indexing findings shared",
+        "suggestedDefinitionOfDone": "Done when the research artifact is shared, discussed with Nikhil and Sanidhya, and next steps are scheduled.",
+        "suggestedAcceptanceCriteria": [
+          "Research is timeboxed to 2 hours",
+          "Artifact or document is shared in Slack",
+          "Meeting with Nikhil and Sanidhya is completed or scheduled"
+        ]
       },
       {
         "issueId": "BYN-36",
-        "currentRead": "This Todo issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
+        "currentRead": "This Todo item covers frontend support for bi-weekly newsletter cadence.",
+        "whatToImprove": "Add outcome and UI acceptance checks.",
+        "suggestedNextEdit": "Add a Definition of Done and 3 acceptance criteria covering setup, display, and save behavior.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "suggestedDefinitionOfDone": "Done when Intelligence users can configure and see a bi-weekly newsletter cadence from the frontend.",
+        "suggestedAcceptanceCriteria": [
+          "Bi-weekly cadence option appears in the relevant setup UI",
+          "Selected cadence is saved correctly",
+          "Existing newsletter cadence options continue to work"
+        ]
       },
       {
         "issueId": "BYN-35",
-        "currentRead": "This Todo issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
+        "currentRead": "This Todo item covers backend support for bi-weekly newsletter runs and PropEquity migration.",
+        "whatToImprove": "Add outcome and checks for scheduling, migration, and regression coverage.",
+        "suggestedNextEdit": "Add a Definition of Done and 3 acceptance criteria.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "suggestedDefinitionOfDone": "Done when backend newsletter runs support bi-weekly cadence and PropEquity is configured on that cadence.",
+        "suggestedAcceptanceCriteria": [
+          "Backend scheduler supports bi-weekly runs",
+          "PropEquity newsletters are configured for bi-weekly cadence",
+          "Existing newsletter cadences continue to run as expected"
+        ]
       },
       {
         "issueId": "BYN-34",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item already has goal, context, and acceptance criteria for adapter modularization.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-33",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item already has goal, context, and acceptance criteria for extending validation API usage.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-32",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item already has goal, context, and acceptance criteria for a product-neutral schema.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-30",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item has clear deployed auth drills and acceptance criteria.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Chore label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-27",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item has clear validation review steps for Piyush's latest reports.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Chore label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-24",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This Backlog item has clear citation placement goals and checks.",
+        "whatToImprove": "Add one type label.",
+        "suggestedNextEdit": "Add the Improvement label.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-19",
-        "currentRead": "This Todo issue could make the defined outcome clearer.",
-        "whatToImprove": "Someone else should be able to tell what will be true when complete.",
-        "suggestedNextEdit": "Add a one-sentence Definition of done focused on the outcome.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo item describes planning a more scalable chat agent architecture.",
+        "whatToImprove": "Add an outcome sentence and checks for the architecture plan.",
+        "suggestedNextEdit": "Add a Definition of Done plus 3 acceptance criteria under the current description.",
+        "suggestedTitle": "Scalable chat agent architecture plan ready",
+        "suggestedDefinitionOfDone": "Done when a proposed architecture supports 50+ document workflows and identifies latency-reduction steps.",
+        "suggestedAcceptanceCriteria": [
+          "Architecture proposal is documented",
+          "Expected handling for 50+ documents is described",
+          "Latency reduction approach and next implementation issues are captured"
+        ]
       },
       {
         "issueId": "BYN-11",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "currentRead": "This Todo item names a DB architecture change but has no owner, priority, or description detail.",
+        "whatToImprove": "Clarify ownership and scope before keeping it in Todo.",
+        "suggestedNextEdit": "Assign an owner, set a priority, add the Feature or Improvement label, and describe the needed DB changes.",
+        "suggestedTitle": "DB supports project-in-project architecture",
+        "suggestedDefinitionOfDone": "Done when the database model supports project-in-project relationships needed by Vault.",
+        "suggestedAcceptanceCriteria": [
+          "Owner is assigned",
+          "Required schema changes are documented",
+          "Migration and compatibility notes are added"
+        ]
       },
       {
         "issueId": "BYN-3",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This appears to be a Linear onboarding placeholder rather than current Bynd product work.",
+        "whatToImprove": "Clean it up or convert it into a real migration task with owner, priority, type, outcome, and checks.",
+        "suggestedNextEdit": "If no longer needed, close or archive it; otherwise assign an owner and rewrite it for Bynd's actual import work.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-4",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This appears to be a Linear onboarding placeholder rather than current Bynd product work.",
+        "whatToImprove": "Clean it up or convert it into a real team setup task with owner, priority, type, outcome, and checks.",
+        "suggestedNextEdit": "If no longer needed, close or archive it; otherwise assign an owner and rewrite it around Bynd team setup.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-2",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This appears to be a Linear onboarding placeholder rather than current Bynd product work.",
+        "whatToImprove": "Clean it up or convert it into a real integrations task with owner, priority, type, outcome, and checks.",
+        "suggestedNextEdit": "If no longer needed, close or archive it; otherwise assign an owner and rewrite it around the specific tools Bynd wants connected.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-1",
-        "currentRead": "This issue does not show one SOP type label.",
-        "whatToImprove": "Every issue should have exactly one type label.",
-        "suggestedNextEdit": "Add one of Bug, Feature, Improvement, Chore, or Spike.",
+        "currentRead": "This appears to be a Linear onboarding placeholder rather than current Bynd product work.",
+        "whatToImprove": "Clean it up or convert it into a real onboarding task with owner, priority, type, outcome, and checks.",
+        "suggestedNextEdit": "If no longer needed, close or archive it; otherwise assign an owner and rewrite it for Bynd's Linear onboarding needs.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       }
-    ]
+    ],
+    "source": "azure-openai"
   }
 }

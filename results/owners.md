@@ -1,14 +1,15 @@
 # Owner-Specific Linear Review
 
-Mode: `weekly`
-Analysis source: `fallback`
+Mode: `manual-preview`
+Analysis source: `azure-openai`
 
 ## Unassigned
 
-18 flagged issues to review.
+Several unassigned items look useful but need ownership or cleanup before they are easy for the team to act on.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Assign owners for Todo and In Progress work
+- Archive or rename default Linear setup items if they are not real Bynd work
 
 Flagged issues:
 - BYN-51: eme Sources - This issue does not show one SOP type label.
@@ -64,10 +65,11 @@ Flagged issues:
 
 ## Shashank Rajak
 
-7 flagged issues to review.
+The Company Reports roadmap has many useful items that would benefit from labels, priorities, and outcome detail.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add one type label to each Company Reports issue
+- Prioritize Todo items or move them to Backlog until sequencing is clear
 
 Flagged issues:
 - BYN-61: Integrate PPT Agent into the main company reports application - This issue does not show one SOP type label.
@@ -93,10 +95,11 @@ Flagged issues:
 
 ## Sanidhya
 
-6 flagged issues to review.
+Your chat and monitoring work is strong on context and would be easier to close with clearer priorities and checks.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Set priority before Todo work starts, or move uncertain work to Backlog
+- Add measurable acceptance criteria for performance, alerting, and architecture tasks
 
 Flagged issues:
 - BYN-68: Get Bynd added to the Azure alert group - This Todo issue could make the defined outcome clearer.
@@ -114,10 +117,11 @@ Flagged issues:
 
 ## Nikhil
 
-2 flagged issues to review.
+Your HDFC expansion items have useful context and would benefit from type labels and clearer completion checks.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add one type label to each Todo item
+- Add a Definition of Done and 2-4 acceptance checks for each outreach or PR task
 
 Flagged issues:
 - BYN-79: Connect with Sanjay - This issue does not show one SOP type label.
@@ -129,10 +133,11 @@ Flagged issues:
 
 ## Aditya Singh
 
-2 flagged issues to review.
+The Intelligence frontend work has clear intent and would be easier to verify with explicit done criteria.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add one-sentence Definitions of Done
+- Add acceptance checks for UI behavior and generated outputs
 
 Flagged issues:
 - BYN-39: One-Pager Generation for Delivered News - This In Progress issue could make the defined outcome clearer.
@@ -141,10 +146,11 @@ Flagged issues:
 
 ## Mrinal Kanwar
 
-2 flagged issues to review.
+Your validation and research items already have direction; a crisp outcome sentence would make handoff simpler.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add one Definition of Done per active or Todo item
+- Turn research outputs into observable acceptance checks
 
 Flagged issues:
 - BYN-72: Validation speed and coverage improvements, - This In Progress issue could make the defined outcome clearer.
@@ -153,30 +159,33 @@ Flagged issues:
 
 ## Devayush Rout
 
-1 flagged issue to review.
+The validation rollout items are already well structured and mainly need a single type label.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add Improvement, Chore, or Spike labels as appropriate
+- Keep linking follow-up work from validation reviews
 
 Flagged issues:
 - BYN-27: Test validation service on Piyush’s latest reports - This issue does not show one SOP type label.
 
 ## kabir bahl
 
-1 flagged issue to review.
+The benchmarking issue is well scoped and just needs a single type label for easier filtering.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add Spike or Improvement as the type label
+- Keep the metric list as the verification basis
 
 Flagged issues:
 - BYN-76: Metric retrieval accuracy - This issue does not show one SOP type label.
 
 ## Piyush Khurana
 
-1 flagged issue to review.
+The citation placement item has clear acceptance criteria and just needs a type label for consistency.
 
 Suggested focus:
-- Review the issue notes and make the smallest useful cleanup edit.
+- Add an Improvement label
+- Keep the regex-based verification note visible
 
 Flagged issues:
 - BYN-24: Fix report-writer citation placement - This issue does not show one SOP type label.

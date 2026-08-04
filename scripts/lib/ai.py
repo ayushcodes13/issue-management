@@ -16,7 +16,7 @@ from lib.linear import labels_of, owner_of, priority_of, status_of
 
 DEFAULT_AZURE_ENDPOINT = "https://alerts-sweden-central.openai.azure.com/"
 DEFAULT_AZURE_API_VERSION = "2025-03-01-preview"
-DEFAULT_AZURE_DEPLOYMENT = "gpt-5.6-luna"
+DEFAULT_AZURE_DEPLOYMENT = "gpt-5.5"
 
 
 def analyze_flagged_issues(issues, findings):
@@ -33,24 +33,10 @@ def analyze_flagged_issues(issues, findings):
         }
 
     prompt = build_prompt(flagged)
-    payload = {
-        "model": config["deployment"],
-        "input": prompt,
-        "temperature": 0.2,
-    }
-    request = urllib.request.Request(
-        azure_responses_url(config["endpoint"], config["api_version"]),
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "api-key": config["api_key"],
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-
     try:
-        with urllib.request.urlopen(request, timeout=120) as response:
-            body = response.read().decode("utf-8")
+        body = request_azure_response(config, prompt)
+    except NETWORK_ERRORS as exc:
+        return fallback_analysis(flagged, findings, f"Azure OpenAI network error: {exc}")
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         return fallback_analysis(flagged, findings, f"Azure OpenAI API failed with HTTP {exc.code}: {detail[:500]}")
@@ -62,6 +48,27 @@ def analyze_flagged_issues(issues, findings):
 
     parsed["source"] = "azure-openai"
     return parsed
+
+
+NETWORK_ERRORS = (TimeoutError, urllib.error.URLError, ConnectionError)
+
+
+def request_azure_response(config, prompt):
+    payload = {
+        "model": config["deployment"],
+        "input": prompt,
+    }
+    request = urllib.request.Request(
+        azure_responses_url(config["endpoint"], config["api_version"]),
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "api-key": config["api_key"],
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=120) as response:
+        return response.read().decode("utf-8")
 
 
 def azure_config():

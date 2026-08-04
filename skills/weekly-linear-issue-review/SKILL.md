@@ -17,12 +17,12 @@ The flow is:
 4. Replace the contents of `results/` with the latest report.
 5. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
 
-The Azure deployment is `gpt-5.6-luna`. It is configured through:
+The Azure deployment is `gpt-5.5`. It is configured through:
 
 ```text
 AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
 AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
-AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.6-luna
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
 ```
 
 Read `references/sop-checks.md` before changing checks. Read `references/slack-workflow.md` before changing Slack behavior.

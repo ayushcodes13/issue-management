@@ -36,12 +36,12 @@ Optional:
 AZURE_OPENAI_API_KEY
 ```
 
-Azure OpenAI uses the `gpt-5.6-luna` deployment by default:
+Azure OpenAI uses the `gpt-5.5` deployment by default:
 
 ```text
 AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
 AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
-AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.6-luna
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
 ```
 
 If `AZURE_OPENAI_API_KEY` is missing, the review still runs with local checks only.
