@@ -17,6 +17,8 @@ Check for:
 - `Todo`, `In Progress`, or `In Review` issue without Acceptance criteria
 - Spike without question, timebox, or output
 - activity-style titles like `check`, `look into`, `investigate`, `research`, `work on`
+- duplicate active issue titles
+- default, stale, or very thin placeholder issues
 - more than three `In Progress` issues for one owner
 
 Use gentle language:

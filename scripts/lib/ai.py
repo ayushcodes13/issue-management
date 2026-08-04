@@ -173,6 +173,10 @@ def fallback_analysis(flagged, findings, reason):
         themes.append("Some ready or active issues could use clearer acceptance criteria.")
     if category_counts.get("missing_type_label"):
         themes.append("Some issues need exactly one SOP type label.")
+    if category_counts.get("possible_duplicate_title"):
+        themes.append("Some active issues may be duplicates or need clearer titles.")
+    if category_counts.get("stale_or_default_issue"):
+        themes.append("Some issues look like default, stale, or underspecified placeholders.")
 
     owner_counts = {}
     for issue in flagged:

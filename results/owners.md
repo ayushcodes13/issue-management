@@ -56,6 +56,11 @@ Flagged issues:
 - BYN-1: Get familiar with Linear - This Todo issue does not show a priority.
 - BYN-1: Get familiar with Linear - This Todo issue could make the defined outcome clearer.
 - BYN-1: Get familiar with Linear - This Todo issue could use clearer acceptance criteria.
+- BYN-51: eme Sources - This looks like a default, stale, or underspecified issue.
+- BYN-3: Import your data - This looks like a default, stale, or underspecified issue.
+- BYN-4: Set up your teams - This looks like a default, stale, or underspecified issue.
+- BYN-2: Connect your tools - This looks like a default, stale, or underspecified issue.
+- BYN-1: Get familiar with Linear - This looks like a default, stale, or underspecified issue.
 
 ## Shashank Rajak
 

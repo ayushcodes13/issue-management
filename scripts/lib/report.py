@@ -43,7 +43,7 @@ def render_team_summary(issues, findings, analysis, mode):
         f"- {owner}: {owner_issue_counts.get(owner, 0)} issue{'s' if owner_issue_counts.get(owner, 0) != 1 else ''}, {owner_suggestion_counts[owner]} suggestion{'s' if owner_suggestion_counts[owner] != 1 else ''}"
         for owner in owners
     ) or "- No suggestions this run"
-    theme_lines = "\n".join(f"- {theme}" for theme in analysis.get("teamThemes", [])[:4])
+    theme_lines = "\n".join(f"- {theme}" for theme in analysis.get("teamThemes", [])[:6])
 
     source_note = "AI-assisted review" if analysis.get("source") == "azure-openai" else "Local checks only"
     return f"""Weekly Linear issue management check - {mode}

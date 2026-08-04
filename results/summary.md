@@ -15,9 +15,10 @@ Main themes:
 - Some Todo items may not be ready to start because priority is missing.
 - Some ready or active issues could use clearer acceptance criteria.
 - Some issues need exactly one SOP type label.
+- Some issues look like default, stale, or underspecified placeholders.
 
 Suggestions by owner:
-- Unassigned: 18 issues, 45 suggestions
+- Unassigned: 18 issues, 50 suggestions
 - Shashank Rajak: 7 issues, 20 suggestions
 - Sanidhya: 6 issues, 12 suggestions
 - Aditya Singh: 2 issues, 3 suggestions

@@ -17,9 +17,10 @@ Main themes:
 - Some Todo items may not be ready to start because priority is missing.
 - Some ready or active issues could use clearer acceptance criteria.
 - Some issues need exactly one SOP type label.
+- Some issues look like default, stale, or underspecified placeholders.
 
 Suggestions by owner:
-- Unassigned: 18 issues, 45 suggestions
+- Unassigned: 18 issues, 50 suggestions
 - Shashank Rajak: 7 issues, 20 suggestions
 - Sanidhya: 6 issues, 12 suggestions
 - Aditya Singh: 2 issues, 3 suggestions
@@ -93,6 +94,11 @@ Flagged issues:
 - BYN-1: Get familiar with Linear - This Todo issue does not show a priority.
 - BYN-1: Get familiar with Linear - This Todo issue could make the defined outcome clearer.
 - BYN-1: Get familiar with Linear - This Todo issue could use clearer acceptance criteria.
+- BYN-51: eme Sources - This looks like a default, stale, or underspecified issue.
+- BYN-3: Import your data - This looks like a default, stale, or underspecified issue.
+- BYN-4: Set up your teams - This looks like a default, stale, or underspecified issue.
+- BYN-2: Connect your tools - This looks like a default, stale, or underspecified issue.
+- BYN-1: Get familiar with Linear - This looks like a default, stale, or underspecified issue.
 
 ## Shashank Rajak
 

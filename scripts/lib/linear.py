@@ -1,3 +1,9 @@
+"""Minimal read-only Linear GraphQL client.
+
+This module only fetches Linear issues. It does not create issues, update
+issues, assign owners, change statuses, or post comments.
+"""
+
 import json
 import os
 import urllib.error
