@@ -189,6 +189,8 @@ Priority tiers:
 Message tone guidance:
 - If an owner only has nice_to_have findings, make the owner note praise-first and light.
 - If an owner has should_have findings, make the issue note direct but gentle.
+- If an owner has no genuinely useful issue-level nudge and their Linear issues look healthy enough, include a positive owner note with messageKind "positive_no_action". It should sound human, e.g. "good work this week, nothing to do in Linear from this review."
+- Do not force positive notes for everyone. Only include them when there is a real basis in the issues reviewed.
 
 Return only valid JSON in this exact shape:
 {{
@@ -202,6 +204,7 @@ Return only valid JSON in this exact shape:
   "ownerNotes": [
     {{
       "owner": "Name",
+      "messageKind": "positive_no_action|light_suggestion|context_only",
       "summary": "one sentence",
       "suggestedFocus": ["action 1", "action 2"]
     }}

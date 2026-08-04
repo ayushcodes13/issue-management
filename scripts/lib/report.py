@@ -358,16 +358,25 @@ def render_dm_text(recipient, items):
 
 def render_owner_note_dm_text(note):
     recipient = note.get("owner")
-    summary = note.get("summary")
+    summary = clean_owner_summary(note.get("summary") or "")
+    message_kind = note.get("messageKind") or infer_owner_note_kind(note)
     focus = [item for item in note.get("suggestedFocus", []) if item]
     if not recipient or not summary:
         return ""
 
-    lines = [
-        f"Hi {recipient}, no specific Linear SOP nudge for you this week.",
-        "",
-        f"The review noted that {summary[0].lower() + summary[1:] if summary else summary}",
-    ]
+    if message_kind == "positive_no_action" and not focus:
+        lines = [
+            f"Hi {recipient}, good work this week. There is nothing specific to clean up in Linear from this review.",
+            "",
+            f"The review noted: {summary.rstrip('.')}.",
+        ]
+    else:
+        lines = [
+            f"Hi {recipient}, no specific Linear SOP nudge for you this week.",
+            "",
+            f"The review noted: {summary.rstrip('.')}.",
+        ]
+
     if focus:
         if len(focus) == 1:
             lines.append(f"The only light follow-up is to {focus[0][0].lower() + focus[0][1:] if focus[0] else focus[0]}.")
@@ -381,6 +390,43 @@ def render_owner_note_dm_text(note):
         ]
     )
     return "\n".join(lines)
+
+
+def clean_owner_summary(summary):
+    cleaned = summary.strip()
+    prefixes = (
+        "good work this week;",
+        "good work this week,",
+        "nothing to do in linear from this review;",
+        "nothing to do in linear from this review,",
+    )
+    lower = cleaned.lower()
+    for prefix in prefixes:
+        if lower.startswith(prefix):
+            cleaned = cleaned[len(prefix) :].strip()
+            break
+    trailing_phrases = (
+        "; nothing to do in linear from this review",
+        ", nothing to do in linear from this review",
+    )
+    lower = cleaned.lower()
+    for phrase in trailing_phrases:
+        if phrase in lower:
+            idx = lower.index(phrase)
+            cleaned = cleaned[:idx].strip()
+            break
+    return cleaned
+
+
+def infer_owner_note_kind(note):
+    focus = [item for item in note.get("suggestedFocus", []) if item]
+    if focus:
+        return "light_suggestion"
+    summary = (note.get("summary") or "").lower()
+    positive_words = ("good", "well", "clear", "healthy", "scoped", "solid", "nothing")
+    if any(word in summary for word in positive_words):
+        return "positive_no_action"
+    return "context_only"
 
 
 def infer_tier(item):

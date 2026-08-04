@@ -467,44 +467,6 @@
     }
   },
   {
-    "identifier": "BYN-66",
-    "title": "Update industry report pipeline to new blob output structure",
-    "description": "Definition of done:\nIndustry report validation reads the new section-level blob output structure and phase one validation works against the updated repo examples.\n\nAcceptance criteria:\n\n* Update code that depends on old output paths to read the new `output/sections/<section>/...` layout.\n* Resolve source blob URLs through `pdf_map.json` instead of expecting blob URLs directly in `fact.json`.\n* Update the 22 industry report examples in the repo to the new format.\n* Update tests to use repo examples, not live blob reads.\n\nHow to verify:\n\n* Run benchmark and full test suite successfully.",
-    "url": "https://linear.app/byndai/issue/BYN-66/update-industry-report-pipeline-to-new-blob-output-structure",
-    "updatedAt": "2026-08-03T11:06:18.860Z",
-    "priority": 2,
-    "priorityLabel": "High",
-    "state": {
-      "name": "In Progress",
-      "type": "started"
-    },
-    "assignee": {
-      "name": "Devayush Rout",
-      "email": "devayush@bynd.ai"
-    },
-    "creator": {
-      "name": "Devayush Rout",
-      "email": "devayush@bynd.ai"
-    },
-    "team": {
-      "name": "Bynd",
-      "key": "BYN"
-    },
-    "project": {
-      "name": "Validation Phase 1+2 v1 deployment"
-    },
-    "labels": {
-      "nodes": [
-        {
-          "name": "Validation"
-        },
-        {
-          "name": "Improvement"
-        }
-      ]
-    }
-  },
-  {
     "identifier": "BYN-61",
     "title": "Integrate PPT Agent into the main company reports application",
     "description": "",

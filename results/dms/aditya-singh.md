@@ -3,14 +3,14 @@ These are the items most worth tightening so the work is easier to start or veri
 
 1. BYN-11: Update DB to support project-in-poject architecture
    Link: https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture
-   Noticed: This Todo item is unassigned and has an empty description, no priority, and no labels.
-   One-line fix: Move to Backlog and fix the title typo when it is next scoped.
+   Noticed: This Todo item is empty, unassigned, has no priority, and does not show the outcome or checks.
+   One-line fix: Add owner, priority, Definition of done, Acceptance criteria, and labels before keeping it in Todo.
    SOP reference: Backlog-to-Todo
 
 2. BYN-36: Add support for Bi-Weekly newsletter on Frontend
    Link: https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend
-   Noticed: This Todo item has a short description but no Definition of done or Acceptance criteria.
-   One-line fix: Add a one-sentence Definition of done and two frontend verification checks.
+   Noticed: This Todo item has a short description, but no Definition of done or Acceptance criteria.
+   One-line fix: Add a Definition of done for configuring bi-weekly newsletters from the Intelligence frontend.
    SOP reference: Backlog-to-Todo
 
 If a rule seems wrong or slows you down, raise it at standup or the Friday review.

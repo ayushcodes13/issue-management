@@ -106,6 +106,10 @@ Use `summary.md` for the public/shadow Slack post. It contains aggregate counts 
 
 Use `results/dms/` for per-person DM drafts. Issue-suggestion drafts are capped at three items. If someone has no issue-level nudge but the AI produced a useful owner note, the draft can be a light "no specific nudge this week" message.
 
+If the AI has a positive owner note and no action item, the draft can simply say
+good work this week and that there is nothing specific to clean up in Linear
+from this review.
+
 DM suggestions use two tiers:
 
 - `should_have`: missing description, Definition of done, or Acceptance criteria

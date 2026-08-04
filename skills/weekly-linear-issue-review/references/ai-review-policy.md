@@ -48,3 +48,8 @@ Every suggestion should include a small next edit someone can make quickly.
 If an owner has only `nice_to_have` suggestions, the DM should open with light
 praise and then offer the suggestions. If an owner has `should_have`
 suggestions, the DM can be more direct while staying gentle.
+
+If an owner has no useful issue-level nudge and the reviewed issues look healthy
+enough, the AI may create a `positive_no_action` owner note. That DM should
+sound human: "good work this week, nothing specific to clean up in Linear from
+this review." Do not force this for every owner.
