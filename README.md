@@ -1,8 +1,8 @@
-# Issue Management
+# Weekly Linear Issue Review Skill
 
-Weekly Linear SOP audit for issue hygiene.
+Reusable weekly Linear issue-management skill.
 
-This repo runs a read-only Linear audit, produces Slack-ready summaries, and can later post the approved summary to Slack. The first rollout mode is preview-only, so the GitHub Action does not post to Slack by default.
+This repo is intentionally simple: a scheduled agent-style workflow fetches Linear issues, checks them against the Linear SOP, writes Markdown reports, and can post a short summary to Slack.
 
 ## What It Does
 
@@ -10,9 +10,20 @@ This repo runs a read-only Linear audit, produces Slack-ready summaries, and can
 - Reviews `Backlog`, `Todo`, `In Progress`, and `In Review`.
 - Checks SOP hygiene such as owners, priority, type labels, Definition of done, and Acceptance criteria.
 - Writes audit artifacts for review.
-- Can optionally post a short owner-grouped summary to Slack after approval.
+- Posts a short owner-grouped summary to Slack when Slack secrets are configured.
+- Keeps full details in Markdown files instead of dumping everything into Slack.
 
-## GitHub Action
+## Reusable Skill
+
+The reusable skill instructions live in:
+
+```text
+SKILL.md
+```
+
+Use that file when running this from Codex, Claude, or another agent.
+
+## Thursday Cron
 
 The workflow runs every Thursday at 9:00 AM IST:
 
@@ -22,6 +33,8 @@ cron: "30 3 * * 4"
 
 It can also be run manually from GitHub Actions with `workflow_dispatch`.
 
+On scheduled runs, the workflow posts to Slack only when `SLACK_BOT_TOKEN` and `DEV_SMOKE_CHANNEL_ID` are configured. Otherwise it still generates artifacts.
+
 ## Required Secrets
 
 Add secrets in:
@@ -30,13 +43,13 @@ Add secrets in:
 GitHub repo -> Settings -> Secrets and variables -> Actions -> New repository secret
 ```
 
-Required for preview mode:
+Required to fetch Linear:
 
 ```text
 LINEAR_API_KEY
 ```
 
-Needed only when Slack posting is enabled:
+Required for scheduled Slack posting:
 
 ```text
 SLACK_BOT_TOKEN
@@ -50,13 +63,13 @@ SHADOW_CHANNEL_ID
 ISSUE_MANAGEMENT_CHANNEL_ID
 ```
 
-Needed only for the interactive local Slackbot, not for the weekly GitHub Action:
+Needed only for the optional interactive local Slackbot:
 
 ```text
 SLACK_APP_TOKEN
 ```
 
-## Local Preview
+## Local Run
 
 ```bash
 python3 -m venv .venv
@@ -90,9 +103,9 @@ Use `full-report.md` for review with Mrinal.
 Use `owner-details.md` when people ask what applies to them.
 Use `issue-improvements.md` when someone asks how to improve a specific issue.
 
-## Slack Posting
+## Local Slack Posting
 
-Only enable this after reviewing the exact generated output.
+Use this for dev-smoke testing before relying on the Thursday cron.
 
 For local dev-smoke posting, fill these values in `.env`:
 

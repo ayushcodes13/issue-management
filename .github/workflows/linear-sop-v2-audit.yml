@@ -1,13 +1,18 @@
-name: Linear SOP V2 Audit
+name: Weekly Linear Issue Review
 
 on:
   schedule:
     # Thursdays at 9:00 AM IST
     - cron: "30 3 * * 4"
   workflow_dispatch:
+    inputs:
+      post_to_slack:
+        description: "Post the short summary to the configured Slack channel"
+        required: false
+        default: "false"
 
 jobs:
-  audit:
+  weekly-review:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,32 +23,22 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Preview audit without Slack posting
+      - name: Run Linear issue review
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
-          POST_TO_SLACK: "false"
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          DEV_SMOKE_CHANNEL_ID: ${{ secrets.DEV_SMOKE_CHANNEL_ID }}
           AUDIT_MODE: "dev-smoke"
-        run: python src/post_weekly_audit.py --preview
+          AUDIT_OUT_DIR: "audit-output"
+          WORKFLOW_POST_TO_SLACK: ${{ github.event_name == 'schedule' && 'true' || inputs.post_to_slack }}
+        run: |
+          if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && [ -n "${DEV_SMOKE_CHANNEL_ID}" ]; then
+            POST_TO_SLACK=true python src/post_weekly_audit.py --post
+          else
+            POST_TO_SLACK=false python src/post_weekly_audit.py --preview
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: linear-sop-v2-audit
+          name: weekly-linear-issue-review
           path: audit-output
-
-  # Enable this later, after reviewing the preview artifacts.
-  # post-dev-smoke:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - run: pip install -r requirements.txt
-  #     - name: Post dev-smoke audit to private channel
-  #       env:
-  #         LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
-  #         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  #         DEV_SMOKE_CHANNEL_ID: ${{ secrets.DEV_SMOKE_CHANNEL_ID }}
-  #         POST_TO_SLACK: "true"
-  #         AUDIT_MODE: "dev-smoke"
-  #       run: python src/post_weekly_audit.py --post
