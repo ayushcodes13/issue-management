@@ -8,6 +8,8 @@ The run is read-only for Linear. It fetches active issues, checks them against t
 
 ```text
 skills/weekly-linear-issue-review/SKILL.md
+skills/weekly-linear-issue-review/scripts/run-review.sh
+skills/weekly-linear-issue-review/scripts/post-summary.sh
 scripts/review.py
 scripts/post.py
 results/
@@ -34,12 +36,12 @@ Optional:
 AZURE_OPENAI_API_KEY
 ```
 
-Azure OpenAI uses the `luna` deployment by default:
+Azure OpenAI uses the `gpt-5.6-luna` deployment by default:
 
 ```text
 AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
 AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
-AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=luna
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.6-luna
 ```
 
 If `AZURE_OPENAI_API_KEY` is missing, the review still runs with local checks only.

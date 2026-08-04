@@ -1,6 +1,6 @@
 ---
 name: weekly-linear-issue-review
-description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, run SOP checks, optionally use Azure OpenAI for gentle coaching notes, write the latest results folder, post a short Slack summary, or answer follow-ups from owner and issue reports.
+description: Run a reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, audit Linear hygiene, run weekly issue management checks, update the results folder, post a short Slack summary, or answer follow-ups like show Devayush, show Nikhil, improve BYN-123, improve BYN-67, examples, duplicate issues, stale issues, missing owners, missing priorities, or missing acceptance criteria.
 ---
 
 # Weekly Linear Issue Review
@@ -12,12 +12,53 @@ Use this skill to run a lightweight weekly Linear issue-management check. Keep L
 The flow is:
 
 1. Fetch active, non-archived Linear issues in `Backlog`, `Todo`, `In Progress`, and `In Review`.
-2. Run local SOP checks.
-3. If `AZURE_OPENAI_API_KEY` exists, send only flagged issues to Azure OpenAI in one batched call using the `luna` deployment.
+2. Run deterministic local SOP checks.
+3. If `AZURE_OPENAI_API_KEY` exists, send only flagged issues to Azure OpenAI in one batched call.
 4. Replace the contents of `results/` with the latest report.
 5. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
 
+The Azure deployment is `gpt-5.6-luna`. It is configured through:
+
+```text
+AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
+AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.6-luna
+```
+
 Read `references/sop-checks.md` before changing checks. Read `references/slack-workflow.md` before changing Slack behavior.
+
+## Required Environment
+
+Required for every run:
+
+```text
+LINEAR_API_KEY
+```
+
+Required only for AI-assisted suggestions:
+
+```text
+AZURE_OPENAI_API_KEY
+AZURE_OPENAI_4_1_MODELS_ENDPOINT
+AZURE_OPENAI_4_1_MODELS_VERSION
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT
+```
+
+Required only for Slack posting:
+
+```text
+SLACK_BOT_TOKEN
+SLACK_CHANNEL_ID
+```
+
+Optional:
+
+```text
+AUDIT_MODE
+AUDIT_OUT_DIR
+```
+
+If `AZURE_OPENAI_API_KEY` is missing, still run the review using deterministic checks and fallback wording.
 
 ## Commands
 
@@ -30,7 +71,7 @@ From the repo root:
 or:
 
 ```bash
-skills/weekly-linear-issue-review/scripts/run.sh
+skills/weekly-linear-issue-review/scripts/run-review.sh
 ```
 
 To post the short summary:
@@ -42,7 +83,7 @@ To post the short summary:
 or:
 
 ```bash
-skills/weekly-linear-issue-review/scripts/post.sh
+skills/weekly-linear-issue-review/scripts/post-summary.sh
 ```
 
 ## Results

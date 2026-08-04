@@ -16,7 +16,7 @@ from lib.linear import labels_of, owner_of, priority_of, status_of
 
 DEFAULT_AZURE_ENDPOINT = "https://alerts-sweden-central.openai.azure.com/"
 DEFAULT_AZURE_API_VERSION = "2025-03-01-preview"
-DEFAULT_AZURE_DEPLOYMENT = "luna"
+DEFAULT_AZURE_DEPLOYMENT = "gpt-5.6-luna"
 
 
 def analyze_flagged_issues(issues, findings):
