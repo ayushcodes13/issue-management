@@ -21,9 +21,12 @@ Fill `.env`:
 
 ```text
 LINEAR_API_KEY=<linear-api-key>
+OPENAI_API_KEY=<openai-api-key>
 SLACK_BOT_TOKEN=<slack-bot-token>
 DEV_SMOKE_CHANNEL_ID=<private-channel-id>
 ```
+
+`OPENAI_API_KEY` is optional. Without it, the review still runs using local checks only.
 
 Run preview:
 
@@ -39,12 +42,18 @@ Post to the private dev-smoke channel:
 
 ## GitHub Secrets
 
-Add these in GitHub Actions secrets:
+Add these required GitHub Actions secrets:
 
 ```text
 LINEAR_API_KEY
 SLACK_BOT_TOKEN
 DEV_SMOKE_CHANNEL_ID
+```
+
+Optional GitHub Actions secret:
+
+```text
+OPENAI_API_KEY
 ```
 
 The Thursday cron posts to Slack only when the Slack secrets exist. If Slack secrets are missing, it still runs and uploads report artifacts.

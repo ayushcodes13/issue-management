@@ -1,23 +1,24 @@
 ---
 name: weekly-linear-issue-review
-description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, check issue hygiene against the Linear SOP, generate owner-grouped Markdown reports, post a short Slack shadow-channel summary, or support follow-up prompts like show a person and improve an issue id.
+description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, run local SOP checks, optionally send flagged issues to OpenAI for gentle coaching notes, generate owner-grouped Markdown reports, post a short Slack shadow-channel summary, or support follow-up prompts like show a person and improve an issue id.
 ---
 
 # Weekly Linear Issue Review
 
 ## Overview
 
-Use this skill to run a lightweight weekly Linear issue-management check. The workflow is intentionally simple: fetch active Linear issues, generate Markdown reports, and post a short Slack summary to the configured shadow channel.
+Use this skill to run a lightweight weekly Linear issue-management check. The workflow is intentionally simple: fetch active Linear issues, run local SOP checks, optionally use one batched OpenAI call for flagged issues, generate Markdown reports, and post a short Slack summary to the configured shadow channel.
 
 This is not a production service. Keep Linear read-only and use Slack only for the short summary.
 
 ## Workflow
 
 1. Fetch active, non-archived Linear issues in `Backlog`, `Todo`, `In Progress`, and `In Review`.
-2. Check issue hygiene against the Linear SOP.
-3. Write Markdown and JSON artifacts.
-4. Post only the short summary to Slack when explicitly running the post command or when the configured Thursday cron runs.
-5. Use detailed Markdown files for follow-up answers.
+2. Check issue hygiene against the Linear SOP locally.
+3. If `OPENAI_API_KEY` is configured, send only flagged issues to OpenAI in one batched call for gentle coaching notes.
+4. Write Markdown and JSON artifacts.
+5. Post only the short summary to Slack when explicitly running the post command or when the configured Thursday cron runs.
+6. Use detailed Markdown files for follow-up answers.
 
 Read `references/sop-checks.md` before changing the checks. Read `references/slack-workflow.md` before changing Slack behavior.
 

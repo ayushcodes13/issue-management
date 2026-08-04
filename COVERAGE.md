@@ -12,15 +12,14 @@ This is Thursday 9:00 AM IST.
 
 ## Asked: "looks at all issues in Linear"
 
-Covered by `src/audit.py`, which fetches active non-archived Linear issues via GraphQL and audits Backlog, Todo, In Progress, and In Review.
+Covered by `scripts/main.py` and `scripts/lib/linear_client.py`, which fetch active non-archived Linear issues via GraphQL and audit Backlog, Todo, In Progress, and In Review.
 
 ## Asked: "where should this skill run?"
 
 Recommended:
 
 - GitHub Actions for weekly audit and artifact generation.
-- Slack Bolt for Python with Socket Mode for interactive bot testing.
-- Later: small always-on host only if the interactive bot must be available 24/7.
+- Later: Slack Bolt or a small service only if the team wants interactive follow-ups directly inside Slack.
 
 ## Asked: "where should this skill post its results?"
 
@@ -57,16 +56,15 @@ It uses:
 
 ## Asked: "how does it help people improve?"
 
-Bot supports:
+Generated reports support:
 
-- `improve BYN-123`: gives a concrete next edit.
-- `examples`: shows a good issue shape.
-- `show <name>`: owner-specific suggestions.
-- `team themes`: gives patterns without a giant dump.
+- `results/issue-improvements.md`: concrete next edits per issue.
+- `results/owner-details.md`: owner-specific suggestions.
+- `results/full-report.md`: team themes and audit details without putting a giant dump in Slack.
 
 ## Asked: "not a large dump of text"
 
-The weekly post is short and owner-grouped. Details are available through buttons/thread replies.
+The weekly post is short and owner-grouped. Details are available in generated Markdown files; interactive buttons/thread replies can be added later.
 
 ## Asked: "public accountability"
 
@@ -77,4 +75,4 @@ The final public-beta target is `#issue-management`, with grouped owner counts. 
 - Keep the leaked Slack token revoked/replaced.
 - Store tokens as environment variables or GitHub secrets.
 - Invite `issue-management` bot to the private test channel.
-- Enable Socket Mode and create `SLACK_APP_TOKEN` only when running the interactive bot.
+- Add `OPENAI_API_KEY` if AI-written coaching notes are wanted instead of local fallback wording.

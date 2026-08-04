@@ -26,7 +26,7 @@ if [ -x ".venv/bin/python" ]; then
   python_bin=".venv/bin/python"
 fi
 
-"${python_bin}" src/post_weekly_audit.py --preview
+"${python_bin}" scripts/main.py
 
 echo
 echo "Markdown report:"

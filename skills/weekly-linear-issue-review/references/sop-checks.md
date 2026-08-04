@@ -26,3 +26,5 @@ Use gentle language:
 - `gentle_suggestion`: subjective wording or scope suggestion
 
 Avoid language like violation, non-compliant, wrong, invalid, bad issue, or failed.
+
+When `OPENAI_API_KEY` is configured, use the local checks as evidence and send only the flagged issues to OpenAI. Do not send every Linear issue if it was not flagged.

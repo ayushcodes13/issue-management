@@ -20,4 +20,4 @@ Support these as conventions:
 - `improve <issue id>`: answer from `issue-improvements.md`
 - `examples`: show a good Linear issue shape
 
-The simple Thursday cron posts the summary. A continuously interactive bot requires Socket Mode and `SLACK_APP_TOKEN`; that is optional and not required for the weekly cron.
+The simple Thursday cron generates the report and posts the summary. A continuously interactive bot requires Socket Mode and `SLACK_APP_TOKEN`; that is optional and not required for the weekly cron.

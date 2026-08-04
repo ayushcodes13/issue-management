@@ -1,0 +1,199 @@
+import json
+import os
+import re
+import urllib.error
+import urllib.request
+
+from lib.linear_client import labels_of, owner_of, priority_of, status_of
+
+
+OPENAI_RESPONSES_ENDPOINT = "https://api.openai.com/v1/responses"
+
+
+def analyze_flagged_issues(issues, findings):
+    flagged = flagged_issue_payloads(issues, findings)
+    if not os.environ.get("OPENAI_API_KEY"):
+        return fallback_analysis(flagged, findings, "OPENAI_API_KEY is not set")
+    if not flagged:
+        return {
+            "source": "openai",
+            "teamThemes": ["No flagged issues from the local SOP checks."],
+            "ownerNotes": [],
+            "issueNotes": [],
+        }
+
+    prompt = build_prompt(flagged)
+    payload = {
+        "model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
+        "input": prompt,
+        "temperature": 0.2,
+    }
+    request = urllib.request.Request(
+        OPENAI_RESPONSES_ENDPOINT,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+
+    try:
+        with urllib.request.urlopen(request, timeout=120) as response:
+            body = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        return fallback_analysis(flagged, findings, f"OpenAI API failed with HTTP {exc.code}: {detail[:500]}")
+
+    try:
+        parsed = json.loads(extract_response_text(json.loads(body)))
+    except (json.JSONDecodeError, RuntimeError) as exc:
+        return fallback_analysis(flagged, findings, f"Could not parse OpenAI response: {exc}")
+
+    parsed["source"] = "openai"
+    return parsed
+
+
+def flagged_issue_payloads(issues, findings):
+    findings_by_issue = {}
+    for item in findings:
+        issue_id = item.get("issueId")
+        if issue_id and issue_id != "owner-summary":
+            findings_by_issue.setdefault(issue_id, []).append(item)
+
+    payloads = []
+    for issue in issues:
+        issue_id = issue.get("identifier")
+        if issue_id not in findings_by_issue:
+            continue
+        description = (issue.get("description") or "").strip()
+        if len(description) > 1000:
+            description = description[:1000] + "\n...[truncated]"
+        payloads.append(
+            {
+                "identifier": issue_id,
+                "title": issue.get("title"),
+                "status": status_of(issue),
+                "priority": priority_of(issue),
+                "owner": owner_of(issue),
+                "creator": (issue.get("creator") or {}).get("name"),
+                "team": (issue.get("team") or {}).get("name"),
+                "project": (issue.get("project") or {}).get("name"),
+                "labels": labels_of(issue),
+                "updatedAt": issue.get("updatedAt"),
+                "url": issue.get("url"),
+                "description": description,
+                "findings": findings_by_issue[issue_id],
+            }
+        )
+    return payloads
+
+
+def build_prompt(flagged):
+    return f"""You are running a lightweight weekly Linear issue-management review for Bynd.
+
+You will receive only the issues flagged by local deterministic SOP checks, not all issues.
+
+Write concise, gentle, owner-specific recommendations. Do not shame people. Do not use words like violation, non-compliant, wrong, invalid, bad issue, failed, worst, or offender.
+
+Return only valid JSON in this exact shape:
+{{
+  "teamThemes": ["theme 1", "theme 2", "theme 3"],
+  "ownerNotes": [
+    {{
+      "owner": "Name",
+      "summary": "one sentence",
+      "suggestedFocus": ["action 1", "action 2"]
+    }}
+  ],
+  "issueNotes": [
+    {{
+      "issueId": "BYN-123",
+      "currentRead": "one sentence",
+      "whatToImprove": "one sentence",
+      "suggestedNextEdit": "one concrete edit",
+      "suggestedTitle": "optional better title or empty string",
+      "suggestedDefinitionOfDone": "optional sentence or empty string",
+      "suggestedAcceptanceCriteria": ["optional criterion"]
+    }}
+  ]
+}}
+
+Issues:
+{json.dumps(flagged, indent=2)}
+"""
+
+
+def fallback_analysis(flagged, findings, reason):
+    themes = []
+    category_counts = {}
+    for item in findings:
+        category = item.get("category")
+        category_counts[category] = category_counts.get(category, 0) + 1
+    if category_counts.get("missing_owner"):
+        themes.append("Some active work needs clearer ownership.")
+    if category_counts.get("missing_priority_for_todo"):
+        themes.append("Some Todo items may not be ready to start because priority is missing.")
+    if category_counts.get("missing_acceptance_criteria"):
+        themes.append("Some ready or active issues could use clearer acceptance criteria.")
+    if category_counts.get("missing_type_label"):
+        themes.append("Some issues need exactly one SOP type label.")
+
+    owner_counts = {}
+    for issue in flagged:
+        owner_counts[issue["owner"]] = owner_counts.get(issue["owner"], 0) + 1
+
+    return {
+        "source": "fallback",
+        "fallbackReason": reason,
+        "teamThemes": themes or ["No major themes found."],
+        "ownerNotes": [
+            {
+                "owner": owner,
+                "summary": f"{count} flagged issue{'s' if count != 1 else ''} to review.",
+                "suggestedFocus": ["Review the issue notes and make the smallest useful cleanup edit."],
+            }
+            for owner, count in sorted(owner_counts.items(), key=lambda item: (-item[1], item[0].lower()))
+        ],
+        "issueNotes": [
+            {
+                "issueId": issue["identifier"],
+                "currentRead": first_finding(issue).get("noticed", "This issue was flagged by the local SOP checks."),
+                "whatToImprove": first_finding(issue).get("why", "Make the issue easier to understand and verify."),
+                "suggestedNextEdit": first_finding(issue).get("nextEdit", "Add the missing issue detail."),
+                "suggestedTitle": "",
+                "suggestedDefinitionOfDone": "",
+                "suggestedAcceptanceCriteria": [],
+            }
+            for issue in flagged
+        ],
+    }
+
+
+def first_finding(issue):
+    return (issue.get("findings") or [{}])[0]
+
+
+def extract_response_text(response):
+    if response.get("output_text"):
+        return extract_json_object(response["output_text"])
+    chunks = []
+    for item in response.get("output", []):
+        for content in item.get("content", []):
+            if content.get("type") in {"output_text", "text"} and content.get("text"):
+                chunks.append(content["text"])
+    if not chunks:
+        raise RuntimeError("response did not include output text")
+    return extract_json_object("\n".join(chunks))
+
+
+def extract_json_object(text):
+    text = text.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```(?:json)?", "", text).strip()
+        text = re.sub(r"```$", "", text).strip()
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        raise RuntimeError("no JSON object found")
+    return text[start : end + 1]

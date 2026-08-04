@@ -2,13 +2,14 @@
 
 Reusable weekly Linear issue-management skill.
 
-This repo is intentionally simple: a scheduled agent-style workflow fetches Linear issues, checks them against the Linear SOP, writes Markdown reports, and can post a short summary to Slack.
+This repo is intentionally simple: a scheduled agent-style workflow fetches Linear issues, runs local SOP checks, optionally sends only flagged issues to OpenAI for gentle wording/suggestions, writes Markdown reports, and can post a short summary to Slack.
 
 ## What It Does
 
 - Fetches active, non-archived Linear issues.
 - Reviews `Backlog`, `Todo`, `In Progress`, and `In Review`.
 - Checks SOP hygiene such as owners, priority, type labels, Definition of done, and Acceptance criteria.
+- Optionally makes one batched OpenAI call for flagged issues only, not one call per issue.
 - Writes audit artifacts for review.
 - Posts a short owner-grouped summary to Slack when Slack secrets are configured.
 - Keeps full details in Markdown files instead of dumping everything into Slack.
@@ -49,6 +50,12 @@ Required to fetch Linear:
 LINEAR_API_KEY
 ```
 
+Optional for AI-written coaching notes:
+
+```text
+OPENAI_API_KEY
+```
+
 Required for scheduled Slack posting:
 
 ```text
@@ -63,12 +70,6 @@ SHADOW_CHANNEL_ID
 ISSUE_MANAGEMENT_CHANNEL_ID
 ```
 
-Needed only for the optional interactive local Slackbot:
-
-```text
-SLACK_APP_TOKEN
-```
-
 ## Local Run
 
 ```bash
@@ -79,6 +80,8 @@ cp .env.example .env
 ```
 
 Open `.env` and fill `LINEAR_API_KEY`.
+
+If you want the AI-assisted notes, also fill `OPENAI_API_KEY`.
 
 Then run:
 
@@ -102,6 +105,8 @@ Use `team-summary.md` for the short Slack-style message.
 Use `full-report.md` for review with Mrinal.
 Use `owner-details.md` when people ask what applies to them.
 Use `issue-improvements.md` when someone asks how to improve a specific issue.
+
+If `OPENAI_API_KEY` is not set, the reports still run using local checks only and mark the analysis source as fallback.
 
 ## Local Slack Posting
 
@@ -136,24 +141,19 @@ To verify bot access without sending the full audit:
 .venv/bin/python check_slack_access.py
 ```
 
-## Interactive Bot
+## Follow-Up Answers
 
-The bot reads the latest `audit-output/audit.json`; it does not call Linear directly.
-
-```bash
-export SLACK_BOT_TOKEN="..."
-export SLACK_APP_TOKEN="..."
-python src/bot.py
-```
-
-Supported messages:
+For v2, keep Slack simple: post the short weekly summary, then use the generated files for follow-up answers.
 
 ```text
-show Devayush
-improve BYN-67
-examples
-team themes
+results/owner-details.md
+results/issue-improvements.md
+results/full-report.md
 ```
+
+If someone asks for `show Devayush`, answer from `owner-details.md`.
+If someone asks for `improve BYN-67`, answer from `issue-improvements.md`.
+If the team later wants a fully interactive Slackbot, add it as a separate layer on top of these JSON/Markdown artifacts.
 
 ## Safety
 
@@ -161,4 +161,4 @@ team themes
 - No Linear comments.
 - No auto-assignment.
 - No auto-status changes.
-- No Slack posting unless `--post` and `POST_TO_SLACK=true` are both set.
+- No Slack posting unless you run `./post_dev_smoke.sh` locally or the scheduled GitHub Action has Slack secrets configured.

@@ -26,16 +26,18 @@ jobs:
       - name: Run Linear issue review
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4o-mini' }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_SHADOW_CHANNEL_ID: ${{ secrets.SLACK_SHADOW_CHANNEL_ID }}
           DEV_SMOKE_CHANNEL_ID: ${{ secrets.DEV_SMOKE_CHANNEL_ID }}
           AUDIT_MODE: "dev-smoke"
           AUDIT_OUT_DIR: "audit-output"
           WORKFLOW_POST_TO_SLACK: ${{ github.event_name == 'schedule' && 'true' || inputs.post_to_slack }}
         run: |
-          if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && [ -n "${DEV_SMOKE_CHANNEL_ID}" ]; then
-            POST_TO_SLACK=true python src/post_weekly_audit.py --post
-          else
-            POST_TO_SLACK=false python src/post_weekly_audit.py --preview
+          python scripts/main.py
+          if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && { [ -n "${SLACK_SHADOW_CHANNEL_ID}" ] || [ -n "${DEV_SMOKE_CHANNEL_ID}" ]; }; then
+            python scripts/post_slack.py
           fi
 
       - uses: actions/upload-artifact@v4
