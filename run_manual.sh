@@ -21,7 +21,12 @@ export AUDIT_MODE="${AUDIT_MODE:-manual-preview}"
 export AUDIT_OUT_DIR="${AUDIT_OUT_DIR:-results}"
 export POST_TO_SLACK=false
 
-python3 src/post_weekly_audit.py --preview
+python_bin="${PYTHON_BIN:-python3}"
+if [ -x ".venv/bin/python" ]; then
+  python_bin=".venv/bin/python"
+fi
+
+"${python_bin}" src/post_weekly_audit.py --preview
 
 echo
 echo "Markdown report:"

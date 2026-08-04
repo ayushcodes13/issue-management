@@ -24,8 +24,13 @@ if [ "${missing}" -ne 0 ]; then
   exit 1
 fi
 
-export AUDIT_MODE="${AUDIT_MODE:-dev-smoke}"
+export AUDIT_MODE="${POST_AUDIT_MODE:-dev-smoke}"
 export AUDIT_OUT_DIR="${AUDIT_OUT_DIR:-results}"
 export POST_TO_SLACK=true
 
-python3 src/post_weekly_audit.py --post
+python_bin="${PYTHON_BIN:-python3}"
+if [ -x ".venv/bin/python" ]; then
+  python_bin=".venv/bin/python"
+fi
+
+"${python_bin}" src/post_weekly_audit.py --post

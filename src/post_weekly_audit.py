@@ -5,7 +5,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from audit import audit_issues, fetch_active_issues
-from slack_render import render_weekly_blocks, render_weekly_text
+from slack_render import (
+    render_full_report_markdown,
+    render_issue_improvements_markdown,
+    render_owner_details_markdown,
+    render_weekly_blocks,
+    render_weekly_text,
+)
 
 
 def main():
@@ -24,6 +30,18 @@ def main():
 
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "team-summary.md").write_text(f"{text}\n", encoding="utf-8")
+    (out_dir / "owner-details.md").write_text(
+        render_owner_details_markdown(issues, findings, mode),
+        encoding="utf-8",
+    )
+    (out_dir / "issue-improvements.md").write_text(
+        render_issue_improvements_markdown(findings, mode),
+        encoding="utf-8",
+    )
+    (out_dir / "full-report.md").write_text(
+        render_full_report_markdown(issues, findings, mode),
+        encoding="utf-8",
+    )
     (out_dir / "audit.json").write_text(
         json.dumps(
             {
@@ -50,6 +68,7 @@ def main():
 
 def post_to_slack(mode, text, blocks):
     from slack_sdk import WebClient
+    from slack_sdk.errors import SlackApiError
 
     token = os.environ.get("SLACK_BOT_TOKEN")
     channel = channel_for_mode(mode)
@@ -60,13 +79,22 @@ def post_to_slack(mode, text, blocks):
         raise RuntimeError("DEV_SMOKE_CHANNEL_ID, SHADOW_CHANNEL_ID, or ISSUE_MANAGEMENT_CHANNEL_ID is required when posting")
 
     client = WebClient(token=token)
-    client.chat_postMessage(
-        channel=channel,
-        text=text,
-        blocks=blocks,
-        unfurl_links=False,
-        unfurl_media=False,
-    )
+    try:
+        client.chat_postMessage(
+            channel=channel,
+            text=text,
+            blocks=blocks,
+            unfurl_links=False,
+            unfurl_media=False,
+        )
+    except SlackApiError as exc:
+        error = exc.response.get("error")
+        if error == "channel_not_found":
+            raise RuntimeError(
+                "Slack could not find or access DEV_SMOKE_CHANNEL_ID. "
+                "Invite the issue-management bot to that private channel, or use a channel ID where the bot is already a member."
+            ) from exc
+        raise
     print(f"Posted {mode} audit to {channel}")
 
 

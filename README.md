@@ -77,9 +77,17 @@ This writes:
 
 ```text
 results/team-summary.md
+results/owner-details.md
+results/issue-improvements.md
+results/full-report.md
 results/audit.json
 results/slack-blocks.json
 ```
+
+Use `team-summary.md` for the short Slack-style message.
+Use `full-report.md` for review with Mrinal.
+Use `owner-details.md` when people ask what applies to them.
+Use `issue-improvements.md` when someone asks how to improve a specific issue.
 
 ## Slack Posting
 
@@ -99,6 +107,20 @@ Then run:
 ```
 
 This posts only to `DEV_SMOKE_CHANNEL_ID`.
+
+If Slack returns `channel_not_found`, invite the bot to the private channel first:
+
+```text
+/invite @issuemanagement
+```
+
+Then run `./post_dev_smoke.sh` again.
+
+To verify bot access without sending the full audit:
+
+```bash
+.venv/bin/python check_slack_access.py
+```
 
 ## Interactive Bot
 
