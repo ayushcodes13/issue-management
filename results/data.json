@@ -1202,7 +1202,7 @@
   ],
   "analysis": {
     "source": "fallback",
-    "fallbackReason": "OPENAI_API_KEY is not set",
+    "fallbackReason": "AZURE_OPENAI_API_KEY is not set",
     "teamThemes": [
       "Some active work needs clearer ownership.",
       "Some Todo items may not be ready to start because priority is missing.",

@@ -1,22 +1,32 @@
+"""Azure OpenAI analysis for flagged Linear issues only.
+
+This module sends only issues already flagged by local checks. It does not send
+the full Linear issue list, and it makes one batched request for the run.
+"""
+
 import json
 import os
 import re
 import urllib.error
 import urllib.request
+from urllib.parse import quote
 
 from lib.linear import labels_of, owner_of, priority_of, status_of
 
 
-OPENAI_RESPONSES_ENDPOINT = "https://api.openai.com/v1/responses"
+DEFAULT_AZURE_ENDPOINT = "https://alerts-sweden-central.openai.azure.com/"
+DEFAULT_AZURE_API_VERSION = "2025-03-01-preview"
+DEFAULT_AZURE_DEPLOYMENT = "luna"
 
 
 def analyze_flagged_issues(issues, findings):
     flagged = flagged_issue_payloads(issues, findings)
-    if not os.environ.get("OPENAI_API_KEY"):
-        return fallback_analysis(flagged, findings, "OPENAI_API_KEY is not set")
+    config = azure_config()
+    if not config["api_key"]:
+        return fallback_analysis(flagged, findings, "AZURE_OPENAI_API_KEY is not set")
     if not flagged:
         return {
-            "source": "openai",
+            "source": "azure-openai",
             "teamThemes": ["No flagged issues from the local SOP checks."],
             "ownerNotes": [],
             "issueNotes": [],
@@ -24,15 +34,15 @@ def analyze_flagged_issues(issues, findings):
 
     prompt = build_prompt(flagged)
     payload = {
-        "model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
+        "model": config["deployment"],
         "input": prompt,
         "temperature": 0.2,
     }
     request = urllib.request.Request(
-        OPENAI_RESPONSES_ENDPOINT,
+        azure_responses_url(config["endpoint"], config["api_version"]),
         data=json.dumps(payload).encode("utf-8"),
         headers={
-            "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+            "api-key": config["api_key"],
             "Content-Type": "application/json",
         },
         method="POST",
@@ -43,15 +53,40 @@ def analyze_flagged_issues(issues, findings):
             body = response.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
-        return fallback_analysis(flagged, findings, f"OpenAI API failed with HTTP {exc.code}: {detail[:500]}")
+        return fallback_analysis(flagged, findings, f"Azure OpenAI API failed with HTTP {exc.code}: {detail[:500]}")
 
     try:
         parsed = json.loads(extract_response_text(json.loads(body)))
     except (json.JSONDecodeError, RuntimeError) as exc:
-        return fallback_analysis(flagged, findings, f"Could not parse OpenAI response: {exc}")
+        return fallback_analysis(flagged, findings, f"Could not parse Azure OpenAI response: {exc}")
 
-    parsed["source"] = "openai"
+    parsed["source"] = "azure-openai"
     return parsed
+
+
+def azure_config():
+    return {
+        "api_key": os.environ.get("AZURE_OPENAI_API_KEY", ""),
+        "endpoint": (
+            os.environ.get("AZURE_OPENAI_4_1_MODELS_ENDPOINT")
+            or os.environ.get("AZURE_OPENAI_API_ENDPOINT")
+            or DEFAULT_AZURE_ENDPOINT
+        ),
+        "api_version": (
+            os.environ.get("AZURE_OPENAI_4_1_MODELS_VERSION")
+            or os.environ.get("AZURE_OPENAI_API_VERSION")
+            or DEFAULT_AZURE_API_VERSION
+        ),
+        "deployment": (
+            os.environ.get("AZURE_OPENAI_4_1_MODELS_DEPLOYMENT")
+            or os.environ.get("AZURE_OPENAI_API_MODEL")
+            or DEFAULT_AZURE_DEPLOYMENT
+        ),
+    }
+
+
+def azure_responses_url(endpoint, api_version):
+    return f"{endpoint.rstrip('/')}/openai/responses?api-version={quote(api_version)}"
 
 
 def flagged_issue_payloads(issues, findings):

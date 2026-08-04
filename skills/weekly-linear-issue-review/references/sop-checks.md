@@ -27,4 +27,4 @@ Use gentle language:
 
 Avoid language like violation, non-compliant, wrong, invalid, bad issue, or failed.
 
-When `OPENAI_API_KEY` is configured, use the local checks as evidence and send only the flagged issues to OpenAI. Do not send every Linear issue if it was not flagged.
+When `AZURE_OPENAI_API_KEY` is configured, use the local checks as evidence and send only the flagged issues to Azure OpenAI. Do not send every Linear issue if it was not flagged.

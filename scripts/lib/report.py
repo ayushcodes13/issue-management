@@ -45,7 +45,7 @@ def render_team_summary(issues, findings, analysis, mode):
     ) or "- No suggestions this run"
     theme_lines = "\n".join(f"- {theme}" for theme in analysis.get("teamThemes", [])[:4])
 
-    source_note = "AI-assisted review" if analysis.get("source") == "openai" else "Local checks only"
+    source_note = "AI-assisted review" if analysis.get("source") == "azure-openai" else "Local checks only"
     return f"""Weekly Linear issue management check - {mode}
 
 Reviewed {len(issues)} active Linear issues across Backlog, Todo, In Progress, and In Review.

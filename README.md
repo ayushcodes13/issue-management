@@ -31,11 +31,18 @@ SLACK_CHANNEL_ID
 Optional:
 
 ```text
-OPENAI_API_KEY
-OPENAI_MODEL
+AZURE_OPENAI_API_KEY
 ```
 
-If `OPENAI_API_KEY` is missing, the review still runs with local checks only.
+Azure OpenAI uses the `luna` deployment by default:
+
+```text
+AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
+AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=luna
+```
+
+If `AZURE_OPENAI_API_KEY` is missing, the review still runs with local checks only.
 
 ## Local Run
 

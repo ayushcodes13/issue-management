@@ -29,8 +29,10 @@ jobs:
       - name: Run Linear issue review
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4o-mini' }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_4_1_MODELS_ENDPOINT: "https://alerts-sweden-central.openai.azure.com/"
+          AZURE_OPENAI_4_1_MODELS_VERSION: "2025-03-01-preview"
+          AZURE_OPENAI_4_1_MODELS_DEPLOYMENT: "luna"
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
           AUDIT_MODE: "weekly"

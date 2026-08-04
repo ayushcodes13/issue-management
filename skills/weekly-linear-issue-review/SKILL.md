@@ -1,6 +1,6 @@
 ---
 name: weekly-linear-issue-review
-description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, run SOP checks, optionally use OpenAI for gentle coaching notes, write the latest results folder, post a short Slack summary, or answer follow-ups from owner and issue reports.
+description: Run a simple reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, run SOP checks, optionally use Azure OpenAI for gentle coaching notes, write the latest results folder, post a short Slack summary, or answer follow-ups from owner and issue reports.
 ---
 
 # Weekly Linear Issue Review
@@ -13,7 +13,7 @@ The flow is:
 
 1. Fetch active, non-archived Linear issues in `Backlog`, `Todo`, `In Progress`, and `In Review`.
 2. Run local SOP checks.
-3. If `OPENAI_API_KEY` exists, send only flagged issues to OpenAI in one batched call.
+3. If `AZURE_OPENAI_API_KEY` exists, send only flagged issues to Azure OpenAI in one batched call using the `luna` deployment.
 4. Replace the contents of `results/` with the latest report.
 5. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
 
