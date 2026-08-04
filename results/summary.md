@@ -1,24 +1,24 @@
 Weekly Linear issue management check - manual-preview
 
-Reviewed 52 active Linear issues across Backlog, Todo, In Progress, and In Review.
+Reviewed 50 active Linear issues across Backlog, Todo, In Progress, and In Review.
 
 Review mode: AI-assisted review
 
 Status mix:
-- Backlog: 25
-- Todo: 19
+- Backlog: 24
+- Todo: 18
 - In Progress: 8
 - In Review: 0
 
 Main themes:
-- Several issues would be easier to scan with exactly one type label such as Feature, Improvement, Chore, Bug, or Spike.
-- Todo and In Progress work often needs a short outcome sentence plus 2-4 observable checks.
-- A few active or ready items are unassigned or still look like Linear setup placeholders and could be cleaned up.
+- Several Todo and In Progress items would be easier to verify with a one-sentence Definition of done and 2-4 acceptance criteria.
+- Many captured items only need one type label added to match the issue-type label practice.
+- A few ready or active items need visible ownership and priority, or should stay in Backlog until those are clear.
 
 Suggestions by owner:
-- Unassigned: 18 issues, 50 suggestions
-- Shashank Rajak: 7 issues, 20 suggestions
-- Sanidhya: 6 issues, 12 suggestions
+- Unassigned: 18 issues, 44 suggestions
+- Shashank Rajak: 7 issues, 21 suggestions
+- Sanidhya: 5 issues, 10 suggestions
 - Aditya Singh: 2 issues, 3 suggestions
 - Mrinal Kanwar: 2 issues, 3 suggestions
 - Nikhil: 2 issues, 6 suggestions

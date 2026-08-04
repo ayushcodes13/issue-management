@@ -505,54 +505,16 @@
     }
   },
   {
-    "identifier": "BYN-63",
-    "title": "Merge changes from HDFC's code to chat prod",
-    "description": "At the current stage, HDFC's code branch for chat hdfc-test, Is ahead by a lot in terms of features and optimisations compared to the current prod deployed on chat.\n Because of the difference in architecture, a simple merge is not possible and would ruin a lot of functionality. \n\nOutcome : Figuring out a way to merge the code with grace without any compromise on the functionality and flows + organize the code in modular format to maintain both the branches simultaneously in future. ",
-    "url": "https://linear.app/byndai/issue/BYN-63/merge-changes-from-hdfcs-code-to-chat-prod",
-    "updatedAt": "2026-08-04T05:14:14.573Z",
+    "identifier": "BYN-62",
+    "title": "Read from PDF Metadata on upload for published date",
+    "description": "So, right now we read the published date from the document based on the content we extract from LiteParse, but there are cases where we are not able to find the date. \n\nDefinition of Done : \nWe need to add a fallback so that it can read from the file's metadata or the created date.\n\nAcceptance Criteria : \n\n* Uploads of the PDFs are successful \n* No document remains with unavailable published date\n  * If any document remains with published date unavailable, verify that the document does not genuinely contain the published / created date. ",
+    "url": "https://linear.app/byndai/issue/BYN-62/read-from-pdf-metadata-on-upload-for-published-date",
+    "updatedAt": "2026-08-04T09:29:52.836Z",
     "priority": 2,
     "priorityLabel": "High",
     "state": {
       "name": "In Progress",
       "type": "started"
-    },
-    "assignee": {
-      "name": "Sanidhya",
-      "email": "sanidhya@bynd.ai"
-    },
-    "creator": {
-      "name": "Sanidhya",
-      "email": "sanidhya@bynd.ai"
-    },
-    "team": {
-      "name": "Bynd",
-      "key": "BYN"
-    },
-    "project": {
-      "name": "Chat (Bynd Echo)"
-    },
-    "labels": {
-      "nodes": [
-        {
-          "name": "Improvement"
-        },
-        {
-          "name": "Chat"
-        }
-      ]
-    }
-  },
-  {
-    "identifier": "BYN-62",
-    "title": "Read from PDF Metadata on upload for published date",
-    "description": "So, right now we read the published date from the document based on the content we extract from LiteParse, but there are cases where we are not able to find the date. \n\nDefinition of Done : \nWe need to add a fallback so that it can read from the file's metadata or the created date.\n\nAcceptance Criteria : \n\n* Uploads of the PDFs are successful \n* No document remains with unavailable published date\n  * If any document remains with published date unavailable, verify that the document does not genuinely contain the published / created date. ",
-    "url": "https://linear.app/byndai/issue/BYN-62/read-from-pdf-metadata-on-upload-for-published-date",
-    "updatedAt": "2026-08-03T06:12:34.915Z",
-    "priority": 2,
-    "priorityLabel": "High",
-    "state": {
-      "name": "Todo",
-      "type": "unstarted"
     },
     "assignee": {
       "name": "Sanidhya",
@@ -1467,44 +1429,6 @@
     },
     "labels": {
       "nodes": []
-    }
-  },
-  {
-    "identifier": "BYN-20",
-    "title": "Add support to bulk document upload",
-    "description": "Add support for bulk document upload (50+ documents) : All the uploaded  documents should gracefully upload and get linked to container app jobs, without entering in any infinite loop of execution.\n\nFix : \nResolve clerk token expiry issue ",
-    "url": "https://linear.app/byndai/issue/BYN-20/add-support-to-bulk-document-upload",
-    "updatedAt": "2026-08-04T08:02:49.064Z",
-    "priority": 1,
-    "priorityLabel": "Urgent",
-    "state": {
-      "name": "Backlog",
-      "type": "backlog"
-    },
-    "assignee": {
-      "name": "Sanidhya",
-      "email": "sanidhya@bynd.ai"
-    },
-    "creator": {
-      "name": "Sanidhya",
-      "email": "sanidhya@bynd.ai"
-    },
-    "team": {
-      "name": "Bynd",
-      "key": "BYN"
-    },
-    "project": {
-      "name": "Chat (Bynd Echo)"
-    },
-    "labels": {
-      "nodes": [
-        {
-          "name": "Bug"
-        },
-        {
-          "name": "Chat"
-        }
-      ]
     }
   },
   {

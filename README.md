@@ -4,12 +4,21 @@ Simple weekly Linear issue review.
 
 The run is read-only for Linear. It fetches active issues, checks them against the SOP, writes the latest report into `results/`, and can post the short summary to one Slack channel.
 
+The source of truth is the repo copy of the SOP:
+
+```text
+docs/how-we-use-linear.md
+```
+
+Do not use the public Notion URL or add checks that are not stated in that file.
+
 ## Files
 
 ```text
 skills/weekly-linear-issue-review/SKILL.md
 skills/weekly-linear-issue-review/scripts/run-review.sh
 skills/weekly-linear-issue-review/scripts/post-summary.sh
+docs/how-we-use-linear.md
 scripts/review.py
 scripts/post.py
 results/
@@ -34,6 +43,7 @@ Optional:
 
 ```text
 AZURE_OPENAI_API_KEY
+SOP_DOC_PATH=docs/how-we-use-linear.md
 ```
 
 Azure OpenAI uses the `gpt-5.5` deployment by default:

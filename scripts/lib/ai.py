@@ -9,6 +9,7 @@ import os
 import re
 import urllib.error
 import urllib.request
+from pathlib import Path
 from urllib.parse import quote
 
 from lib.linear import labels_of, owner_of, priority_of, status_of
@@ -17,6 +18,7 @@ from lib.linear import labels_of, owner_of, priority_of, status_of
 DEFAULT_AZURE_ENDPOINT = "https://alerts-sweden-central.openai.azure.com/"
 DEFAULT_AZURE_API_VERSION = "2025-03-01-preview"
 DEFAULT_AZURE_DEPLOYMENT = "gpt-5.5"
+DEFAULT_SOP_DOC_PATH = "docs/how-we-use-linear.md"
 
 
 def analyze_flagged_issues(issues, findings):
@@ -32,7 +34,7 @@ def analyze_flagged_issues(issues, findings):
             "issueNotes": [],
         }
 
-    prompt = build_prompt(flagged)
+    prompt = build_prompt(flagged, load_sop_text())
     try:
         body = request_azure_response(config, prompt)
     except NETWORK_ERRORS as exc:
@@ -131,10 +133,19 @@ def flagged_issue_payloads(issues, findings):
     return payloads
 
 
-def build_prompt(flagged):
+def load_sop_text():
+    path = Path(os.environ.get("SOP_DOC_PATH", DEFAULT_SOP_DOC_PATH))
+    if not path.exists():
+        raise RuntimeError(f"SOP doc not found: {path}")
+    return path.read_text(encoding="utf-8")
+
+
+def build_prompt(flagged, sop_text):
     return f"""You are running a lightweight weekly Linear issue-management review for Bynd.
 
 You will receive only the issues flagged by local deterministic SOP checks, not all issues.
+
+The only source of truth is the local SOP document below. Do not introduce checks, advice, or rules that are not stated in this document.
 
 Write concise, gentle, owner-specific recommendations. Do not shame people. Do not use words like violation, non-compliant, wrong, invalid, bad issue, failed, worst, or offender.
 
@@ -163,6 +174,9 @@ Return only valid JSON in this exact shape:
 
 Issues:
 {json.dumps(flagged, indent=2)}
+
+Local SOP document:
+{sop_text}
 """
 
 
@@ -174,16 +188,12 @@ def fallback_analysis(flagged, findings, reason):
         category_counts[category] = category_counts.get(category, 0) + 1
     if category_counts.get("missing_owner"):
         themes.append("Some active work needs clearer ownership.")
-    if category_counts.get("missing_priority_for_todo"):
-        themes.append("Some Todo items may not be ready to start because priority is missing.")
+    if category_counts.get("missing_priority"):
+        themes.append("Some Todo or active items may not be ready because priority is missing.")
     if category_counts.get("missing_acceptance_criteria"):
         themes.append("Some ready or active issues could use clearer acceptance criteria.")
     if category_counts.get("missing_type_label"):
         themes.append("Some issues need exactly one SOP type label.")
-    if category_counts.get("possible_duplicate_title"):
-        themes.append("Some active issues may be duplicates or need clearer titles.")
-    if category_counts.get("stale_or_default_issue"):
-        themes.append("Some issues look like default, stale, or underspecified placeholders.")
 
     owner_counts = {}
     for issue in flagged:

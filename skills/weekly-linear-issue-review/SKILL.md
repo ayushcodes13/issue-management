@@ -1,6 +1,6 @@
 ---
 name: weekly-linear-issue-review
-description: Run a reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, audit Linear hygiene, run weekly issue management checks, update the results folder, post a short Slack summary, or answer follow-ups like show Devayush, show Nikhil, improve BYN-123, improve BYN-67, examples, duplicate issues, stale issues, missing owners, missing priorities, or missing acceptance criteria.
+description: Run a reusable weekly Linear SOP review for Bynd. Use when asked to fetch active Linear issues, audit Linear hygiene against the local How we use Linear SOP, run weekly issue management checks, update the results folder, post a short Slack summary, or answer follow-ups like show Devayush, show Nikhil, improve BYN-123, improve BYN-67, examples, missing owners, missing priorities, missing type labels, missing definitions of done, missing acceptance criteria, or Spike shape.
 ---
 
 # Weekly Linear Issue Review
@@ -9,13 +9,22 @@ description: Run a reusable weekly Linear SOP review for Bynd. Use when asked to
 
 Use this skill to run a lightweight weekly Linear issue-management check. Keep Linear read-only.
 
+The only source of truth is the repo copy of the Notion SOP:
+
+```text
+docs/how-we-use-linear.md
+```
+
+Do not use the public Notion URL during a run. Do not add checks unless they are stated in `docs/how-we-use-linear.md`.
+
 The flow is:
 
 1. Fetch active, non-archived Linear issues in `Backlog`, `Todo`, `In Progress`, and `In Review`.
-2. Run deterministic local SOP checks.
-3. If `AZURE_OPENAI_API_KEY` exists, send only flagged issues to Azure OpenAI in one batched call.
-4. Replace the contents of `results/` with the latest report.
-5. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
+2. Read `docs/how-we-use-linear.md`.
+3. Run deterministic local SOP checks derived only from that file.
+4. If `AZURE_OPENAI_API_KEY` exists, send only flagged issues plus the local SOP text to Azure OpenAI in one batched call.
+5. Replace the contents of `results/` with the latest report.
+6. Post only `results/summary.md` to Slack when explicitly asked or when the Thursday cron runs.
 
 The Azure deployment is `gpt-5.5`. It is configured through:
 
@@ -56,6 +65,7 @@ Optional:
 ```text
 AUDIT_MODE
 AUDIT_OUT_DIR
+SOP_DOC_PATH
 ```
 
 If `AZURE_OPENAI_API_KEY` is missing, still run the review using deterministic checks and fallback wording.

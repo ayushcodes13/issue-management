@@ -5,11 +5,11 @@ Analysis source: `azure-openai`
 
 ## Unassigned
 
-Several unassigned items look useful but need ownership or cleanup before they are easy for the team to act on.
+Several unassigned items are in Todo or In Progress and need a visible owner, or can move back until ownership is clear.
 
 Suggested focus:
 - Assign owners for Todo and In Progress work
-- Archive or rename default Linear setup items if they are not real Bynd work
+- Add type labels to captured Backlog items
 
 Flagged issues:
 - BYN-51: eme Sources - This issue does not show one SOP type label.
@@ -18,7 +18,6 @@ Flagged issues:
 - BYN-48: Rate limit on the number of parallel jobs - This issue does not show one SOP type label.
 - BYN-47: Alerting for errors and failures - This issue does not show one SOP type label.
 - BYN-46: Check whether a rerun reuses the cached document, and cache for as long as possible - This issue does not show one SOP type label.
-- BYN-46: Check whether a rerun reuses the cached document, and cache for as long as possible - The title reads like an activity rather than an outcome.
 - BYN-45: Section heading highlight in metric search - This issue does not show one SOP type label.
 - BYN-44: Deterministic figure verification and highlighting in Download Financials - This issue does not show one SOP type label.
 - BYN-44: Deterministic figure verification and highlighting in Download Financials - This issue is in In Progress without an assignee.
@@ -57,19 +56,14 @@ Flagged issues:
 - BYN-1: Get familiar with Linear - This Todo issue does not show a priority.
 - BYN-1: Get familiar with Linear - This Todo issue could make the defined outcome clearer.
 - BYN-1: Get familiar with Linear - This Todo issue could use clearer acceptance criteria.
-- BYN-51: eme Sources - This looks like a default, stale, or underspecified issue.
-- BYN-3: Import your data - This looks like a default, stale, or underspecified issue.
-- BYN-4: Set up your teams - This looks like a default, stale, or underspecified issue.
-- BYN-2: Connect your tools - This looks like a default, stale, or underspecified issue.
-- BYN-1: Get familiar with Linear - This looks like a default, stale, or underspecified issue.
 
 ## Shashank Rajak
 
-The Company Reports roadmap has many useful items that would benefit from labels, priorities, and outcome detail.
+Your Company Reports items would be easier to prioritize and verify with type labels, priority, and ready-to-start details.
 
 Suggested focus:
-- Add one type label to each Company Reports issue
-- Prioritize Todo items or move them to Backlog until sequencing is clear
+- Add one type label to each item
+- For Todo or In Progress work, add priority, Definition of done, and acceptance criteria
 
 Flagged issues:
 - BYN-61: Integrate PPT Agent into the main company reports application - This issue does not show one SOP type label.
@@ -84,30 +78,29 @@ Flagged issues:
 - BYN-59: Plan out UI/UX for the PPT export workflow - This Todo issue does not show a priority.
 - BYN-59: Plan out UI/UX for the PPT export workflow - This Todo issue could make the defined outcome clearer.
 - BYN-59: Plan out UI/UX for the PPT export workflow - This Todo issue could use clearer acceptance criteria.
-- BYN-59: Plan out UI/UX for the PPT export workflow - The title reads like an activity rather than an outcome.
 - BYN-58: Integrate Validation Service - This issue does not show one SOP type label.
 - BYN-57: Excel Integration - This issue does not show one SOP type label.
 - BYN-56: PPT Exports - This issue does not show one SOP type label.
+- BYN-56: PPT Exports - This In Progress issue does not show a priority.
 - BYN-56: PPT Exports - This In Progress issue could make the defined outcome clearer.
 - BYN-56: PPT Exports - This In Progress issue could use clearer acceptance criteria.
 - BYN-55: Data connectors broker architecture - PoC - This issue does not show one SOP type label.
+- BYN-55: Data connectors broker architecture - PoC - This In Progress issue does not show a priority.
 - BYN-55: Data connectors broker architecture - PoC - This In Progress issue could make the defined outcome clearer.
 
 ## Sanidhya
 
-Your chat and monitoring work is strong on context and would be easier to close with clearer priorities and checks.
+Most of your Chat and Intelligence items have useful context and need clearer verification details before starting.
 
 Suggested focus:
-- Set priority before Todo work starts, or move uncertain work to Backlog
-- Add measurable acceptance criteria for performance, alerting, and architecture tasks
+- Add Definition of done sections
+- Add acceptance criteria to Todo items and set priority where known
 
 Flagged issues:
 - BYN-68: Get Bynd added to the Azure alert group - This Todo issue could make the defined outcome clearer.
 - BYN-67: Research Azure Monitoring for code-level alerting/observability - This Todo issue does not show a priority.
 - BYN-67: Research Azure Monitoring for code-level alerting/observability - This Todo issue could make the defined outcome clearer.
 - BYN-67: Research Azure Monitoring for code-level alerting/observability - This Todo issue could use clearer acceptance criteria.
-- BYN-67: Research Azure Monitoring for code-level alerting/observability - The title reads like an activity rather than an outcome.
-- BYN-63: Merge changes from HDFC's code to chat prod - This In Progress issue could use clearer acceptance criteria.
 - BYN-54: Change citation loading approach in chat view pane - This Todo issue could make the defined outcome clearer.
 - BYN-54: Change citation loading approach in chat view pane - This Todo issue could use clearer acceptance criteria.
 - BYN-35: Add support for Bi-Weekly newsletter runs - This Todo issue could make the defined outcome clearer.
@@ -117,11 +110,11 @@ Flagged issues:
 
 ## Nikhil
 
-Your HDFC expansion items have useful context and would benefit from type labels and clearer completion checks.
+Your HDFC Expansion Todos are clear in intent and would be easier for others to pick up with type labels and verifiable outcomes.
 
 Suggested focus:
-- Add one type label to each Todo item
-- Add a Definition of Done and 2-4 acceptance checks for each outreach or PR task
+- Add one type label to each Todo
+- Add a Definition of done and 2-4 acceptance criteria before work starts
 
 Flagged issues:
 - BYN-79: Connect with Sanjay - This issue does not show one SOP type label.
@@ -133,11 +126,11 @@ Flagged issues:
 
 ## Aditya Singh
 
-The Intelligence frontend work has clear intent and would be easier to verify with explicit done criteria.
+Your Intelligence items have clear product direction and need concise outcome and verification text.
 
 Suggested focus:
-- Add one-sentence Definitions of Done
-- Add acceptance checks for UI behavior and generated outputs
+- Add a one-sentence Definition of done
+- Add 2-4 observable acceptance criteria where missing
 
 Flagged issues:
 - BYN-39: One-Pager Generation for Delivered News - This In Progress issue could make the defined outcome clearer.
@@ -146,11 +139,11 @@ Flagged issues:
 
 ## Mrinal Kanwar
 
-Your validation and research items already have direction; a crisp outcome sentence would make handoff simpler.
+Your research and validation items would benefit from a clearer finished-state sentence.
 
 Suggested focus:
-- Add one Definition of Done per active or Todo item
-- Turn research outputs into observable acceptance checks
+- Add a Definition of done to active or Todo work
+- Add observable checks where the item is in Todo
 
 Flagged issues:
 - BYN-72: Validation speed and coverage improvements, - This In Progress issue could make the defined outcome clearer.
@@ -159,33 +152,33 @@ Flagged issues:
 
 ## Devayush Rout
 
-The validation rollout items are already well structured and mainly need a single type label.
+Your validation Backlog items already have useful detail and mainly need type labels.
 
 Suggested focus:
-- Add Improvement, Chore, or Spike labels as appropriate
-- Keep linking follow-up work from validation reviews
+- Add one type label to each Backlog issue
+- Keep Todo readiness details for when the work is ready this week
 
 Flagged issues:
 - BYN-27: Test validation service on Piyush’s latest reports - This issue does not show one SOP type label.
 
 ## kabir bahl
 
-The benchmarking issue is well scoped and just needs a single type label for easier filtering.
+The metrics benchmark is well described for Backlog and only needs a type label.
 
 Suggested focus:
-- Add Spike or Improvement as the type label
-- Keep the metric list as the verification basis
+- Add one type label
+- Leave remaining detail for Todo readiness when it is prioritized
 
 Flagged issues:
 - BYN-76: Metric retrieval accuracy - This issue does not show one SOP type label.
 
 ## Piyush Khurana
 
-The citation placement item has clear acceptance criteria and just needs a type label for consistency.
+The citation-placement item is well scoped for Backlog and only needs a type label.
 
 Suggested focus:
-- Add an Improvement label
-- Keep the regex-based verification note visible
+- Add one type label
+- Keep the existing acceptance criteria as the verification basis
 
 Flagged issues:
 - BYN-24: Fix report-writer citation placement - This issue does not show one SOP type label.

@@ -1,7 +1,8 @@
-"""Deterministic Linear hygiene checks.
+"""Deterministic Linear SOP checks.
 
-No LLM calls happen here. Only issues that trip one of these checks are sent to
-Azure OpenAI for optional wording and rewrite suggestions.
+The only rulebook for this module is the local repo copy at
+docs/how-we-use-linear.md. Do not add a check here unless that file states the
+rule.
 """
 
 from collections import Counter
@@ -10,13 +11,7 @@ from lib.linear import labels_of, owner_of, priority_of, status_of
 
 
 TYPE_LABELS = {"Bug", "Feature", "Improvement", "Chore", "Spike"}
-READY_STATUSES = {"Todo", "In Progress", "In Review"}
-DEFAULT_TITLES = {
-    "get familiar with linear",
-    "connect your tools",
-    "import your data",
-    "set up your teams",
-}
+TODO_OR_LATER = {"Todo", "In Progress", "In Review"}
 
 
 def run_checks(issues):
@@ -24,8 +19,6 @@ def run_checks(issues):
     for issue in issues:
         check_issue(issue, findings)
 
-    check_duplicate_titles(issues, findings)
-    check_stale_or_default_issues(issues, findings)
     in_progress_by_owner = Counter(
         owner_of(issue)
         for issue in issues
@@ -49,50 +42,6 @@ def run_checks(issues):
                 )
             )
     return findings
-
-
-def check_duplicate_titles(issues, findings):
-    issues_by_title = {}
-    for issue in issues:
-        title = issue.get("title", "").strip().lower()
-        if title:
-            issues_by_title.setdefault(title, []).append(issue)
-
-    for duplicate_issues in issues_by_title.values():
-        if len(duplicate_issues) < 2:
-            continue
-        duplicate_ids = ", ".join(issue.get("identifier", "Unknown") for issue in duplicate_issues)
-        for issue in duplicate_issues:
-            add(
-                findings,
-                issue,
-                "gentle_suggestion",
-                "possible_duplicate_title",
-                f"This issue has the same title as {len(duplicate_issues) - 1} other active issue(s).",
-                "Duplicate-looking titles make it harder to tell which issue owns the work.",
-                f"Check whether these should be merged, linked, or retitled: {duplicate_ids}.",
-                "medium",
-            )
-
-
-def check_stale_or_default_issues(issues, findings):
-    for issue in issues:
-        title = issue.get("title", "").strip()
-        title_lower = title.lower()
-        description = (issue.get("description") or "").strip()
-        is_default = title_lower in DEFAULT_TITLES
-        is_junk = title_lower in {"untitled", ""} or (not description and len(title) < 15)
-        if is_default or is_junk:
-            add(
-                findings,
-                issue,
-                "gentle_suggestion",
-                "stale_or_default_issue",
-                "This looks like a default, stale, or underspecified issue.",
-                "Very thin issues add noise to Linear and are hard for others to act on.",
-                "If this work is real, rename it and add context. Otherwise consider canceling it.",
-                "medium",
-            )
 
 
 def check_issue(issue, findings):
@@ -121,7 +70,7 @@ def check_issue(issue, findings):
             "Keep the best matching type label and remove the others.",
         )
 
-    if status in READY_STATUSES and owner_of(issue) == "Unassigned":
+    if status in TODO_OR_LATER and owner_of(issue) == "Unassigned":
         add(
             findings,
             issue,
@@ -132,18 +81,18 @@ def check_issue(issue, findings):
             "Assign an owner, or move it back until ownership is clear.",
         )
 
-    if status == "Todo" and priority_of(issue) == "No priority":
+    if status in TODO_OR_LATER and priority_of(issue) == "No priority":
         add(
             findings,
             issue,
             "needs_fix",
-            "missing_priority_for_todo",
-            "This Todo issue does not show a priority.",
-            "Todo work should be prioritized before someone starts it.",
+            "missing_priority",
+            f"This {status} issue does not show a priority.",
+            "Todo and later work should have priority set or clearly communicated by Nikhil.",
             "If priority is known, add it. Otherwise consider Backlog.",
         )
 
-    if status in READY_STATUSES and not has_text(issue, ["definition of done", "dod:", "goal:", "outcome"]):
+    if status in TODO_OR_LATER and not has_text(issue, ["definition of done", "dod:", "goal:", "outcome"]):
         add(
             findings,
             issue,
@@ -155,7 +104,7 @@ def check_issue(issue, findings):
             "medium",
         )
 
-    if status in READY_STATUSES and not has_text(issue, ["acceptance criteria", "how to verify", "verify by", "criteria:"]):
+    if status in TODO_OR_LATER and not has_text(issue, ["acceptance criteria", "how to verify", "verify by", "criteria:"]):
         add(
             findings,
             issue,
@@ -199,19 +148,6 @@ def check_issue(issue, findings):
                 "A Spike is done when the output is recorded.",
                 "Add an `Output` section.",
             )
-
-    title = issue.get("title", "").lower().strip()
-    if title.startswith(("check ", "look into", "investigate", "research ", "work on", "plan out")):
-        add(
-            findings,
-            issue,
-            "gentle_suggestion",
-            "activity_style_title",
-            "The title reads like an activity rather than an outcome.",
-            "Outcome-style titles are easier to scan and verify.",
-            "Consider rewriting the title as the result that should exist when complete.",
-            "medium",
-        )
 
 
 def add(findings, issue, severity, category, noticed, why, next_edit, confidence="high"):
