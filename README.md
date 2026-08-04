@@ -18,7 +18,7 @@ This repo is intentionally simple: a scheduled agent-style workflow fetches Line
 The reusable skill instructions live in:
 
 ```text
-SKILL.md
+skills/weekly-linear-issue-review/SKILL.md
 ```
 
 Use that file when running this from Codex, Claude, or another agent.

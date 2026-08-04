@@ -2,6 +2,12 @@
 
 This repo is a simple reusable weekly Linear issue-review skill.
 
+Skill folder:
+
+```text
+skills/weekly-linear-issue-review/
+```
+
 ## Local
 
 ```bash
