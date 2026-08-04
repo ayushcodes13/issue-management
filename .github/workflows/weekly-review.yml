@@ -37,7 +37,7 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
           AUDIT_MODE: "weekly"
           AUDIT_OUT_DIR: "results"
-          WORKFLOW_POST_TO_SLACK: ${{ github.event_name == 'schedule' && 'true' || inputs.post_to_slack }}
+          WORKFLOW_POST_TO_SLACK: ${{ github.event_name == 'schedule' && vars.POST_WEEKLY_TO_SLACK || inputs.post_to_slack }}
         run: |
           python scripts/review.py
           if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && [ -n "${SLACK_CHANNEL_ID}" ]; then
@@ -48,7 +48,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results
+          git add results state/history.json
           if ! git diff --cached --quiet; then
             git commit -m "Update weekly Linear results"
             git push

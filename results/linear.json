@@ -505,44 +505,6 @@
     }
   },
   {
-    "identifier": "BYN-62",
-    "title": "Read from PDF Metadata on upload for published date",
-    "description": "So, right now we read the published date from the document based on the content we extract from LiteParse, but there are cases where we are not able to find the date. \n\nDefinition of Done : \nWe need to add a fallback so that it can read from the file's metadata or the created date.\n\nAcceptance Criteria : \n\n* Uploads of the PDFs are successful \n* No document remains with unavailable published date\n  * If any document remains with published date unavailable, verify that the document does not genuinely contain the published / created date. ",
-    "url": "https://linear.app/byndai/issue/BYN-62/read-from-pdf-metadata-on-upload-for-published-date",
-    "updatedAt": "2026-08-04T09:29:52.836Z",
-    "priority": 2,
-    "priorityLabel": "High",
-    "state": {
-      "name": "In Progress",
-      "type": "started"
-    },
-    "assignee": {
-      "name": "Sanidhya",
-      "email": "sanidhya@bynd.ai"
-    },
-    "creator": {
-      "name": "Sanidhya",
-      "email": "sanidhya@bynd.ai"
-    },
-    "team": {
-      "name": "Bynd",
-      "key": "BYN"
-    },
-    "project": {
-      "name": "HDFC Chat Deployment"
-    },
-    "labels": {
-      "nodes": [
-        {
-          "name": "Improvement"
-        },
-        {
-          "name": "Chat"
-        }
-      ]
-    }
-  },
-  {
     "identifier": "BYN-61",
     "title": "Integrate PPT Agent into the main company reports application",
     "description": "",

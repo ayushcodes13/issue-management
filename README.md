@@ -2,7 +2,7 @@
 
 Simple weekly Linear issue review.
 
-The run is read-only for Linear. It fetches active issues, asks Azure OpenAI to review them against the local SOP Markdown, writes the latest report into `results/`, and can post the short summary to one Slack channel.
+The run is read-only for Linear. It fetches active issues, asks Azure OpenAI to review them against the local SOP Markdown, writes the latest report and DM drafts into `results/`, and can post the short no-name summary to one Slack channel.
 
 The source of truth is the repo copy of the SOP:
 
@@ -22,6 +22,7 @@ docs/how-we-use-linear.md
 scripts/review.py
 scripts/post.py
 results/
+state/history.json
 ```
 
 ## Secrets
@@ -82,12 +83,17 @@ To post the latest summary to Slack:
 ./post.sh
 ```
 
+`./post.sh` posts only `results/summary.md`. It does not send DM drafts.
+
 ## Results
 
 `results/` is committed to the repo. Each run replaces the folder contents with the latest report.
 
 ```text
 results/summary.md
+results/dms/*.md
+results/dm-drafts.json
+results/friction-notes.md
 results/owners.md
 results/issues.md
 results/report.md
@@ -96,7 +102,13 @@ results/linear.json
 results/slack.json
 ```
 
-Use `summary.md` for Slack, `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific edits, and `report.md` for the full review.
+Use `summary.md` for the public/shadow Slack post. It contains aggregate counts only and no owner names.
+
+Use `results/dms/` for per-person DM drafts. Each draft is capped at three items.
+
+Use `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific edits, `friction-notes.md` for repeat-suppression notes, and `report.md` for the full review.
+
+`state/history.json` is committed and not replaced each run. It is used to suppress repeat DM items once actual DM sending starts updating state.
 
 ## GitHub Action
 
@@ -106,7 +118,15 @@ The workflow runs every Thursday at 9:00 AM IST:
 .github/workflows/weekly-review.yml
 ```
 
-It writes the new `results/`, commits the updated results back to `main`, uploads the same folder as an artifact, and posts to Slack only when Slack secrets are configured.
+It writes the new `results/`, commits the updated results back to `main`, and uploads the same folder as an artifact.
+
+Scheduled runs are dry-run by default. To allow scheduled Slack posting, set repository variable:
+
+```text
+POST_WEEKLY_TO_SLACK=true
+```
+
+Manual workflow runs still use the `post_to_slack` input.
 
 ## Safety
 
@@ -114,3 +134,5 @@ It writes the new `results/`, commits the updated results back to `main`, upload
 - No Linear comments.
 - No auto-assignment.
 - No status changes.
+- Public Slack summary has no owner names.
+- DM drafts are generated locally but not sent by `post.sh`.

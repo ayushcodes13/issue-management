@@ -15,6 +15,9 @@ Do not use the public Notion URL during a run.
 - Ask for useful suggestions only.
 - Do not claim issues without suggestions are clean, compliant, or good.
 - Keep the report framed as an AI-assisted helper, not a compliance report.
+- Ask for one positive example issue when the model can identify one.
+- Ask for the relevant SOP section on each suggestion so DM drafts can point
+  people back to the rulebook.
 
 ## Language
 

@@ -1,22 +1,35 @@
 import json
+import re
+import shutil
 from collections import Counter, defaultdict
 
 from lib.linear import owner_of, status_of
+from lib.state import already_sent
 
 
-def write_reports(out_dir, issues, findings, analysis, mode):
+MAX_DM_ITEMS = 3
+
+
+def write_reports(out_dir, issues, findings, analysis, mode, history=None):
+    history = history or {}
     out_dir.mkdir(parents=True, exist_ok=True)
     for old_file in out_dir.iterdir():
         if old_file.is_file():
             old_file.unlink()
+        elif old_file.is_dir():
+            shutil.rmtree(old_file)
 
-    team_summary = render_team_summary(issues, findings, analysis, mode)
+    dm_drafts, suppressed = build_dm_drafts(issues, findings, history)
+    team_summary = render_team_summary(issues, findings, analysis, mode, dm_drafts)
+
     artifacts = {
         "summary.md": team_summary,
         "owners.md": render_owner_details(issues, findings, analysis, mode),
         "issues.md": render_issue_improvements(findings, analysis, mode),
-        "report.md": render_full_report(team_summary, issues, findings, analysis, mode),
+        "report.md": render_full_report(team_summary, issues, findings, analysis, mode, dm_drafts, suppressed),
+        "friction-notes.md": render_friction_notes(suppressed),
         "slack.json": json.dumps(render_slack_blocks(team_summary), indent=2),
+        "dm-drafts.json": json.dumps(dm_drafts, indent=2),
         "data.json": json.dumps(
             {
                 "mode": mode,
@@ -24,6 +37,8 @@ def write_reports(out_dir, issues, findings, analysis, mode):
                 "analysisSource": analysis.get("source"),
                 "findings": findings,
                 "analysis": analysis,
+                "dmDrafts": dm_drafts,
+                "suppressedRepeats": suppressed,
             },
             indent=2,
         ),
@@ -31,19 +46,86 @@ def write_reports(out_dir, issues, findings, analysis, mode):
     }
     for name, content in artifacts.items():
         (out_dir / name).write_text(content.rstrip() + "\n", encoding="utf-8")
+
+    write_dm_files(out_dir / "dms", dm_drafts)
     return team_summary
 
 
-def render_team_summary(issues, findings, analysis, mode):
+def build_dm_drafts(issues, findings, history):
+    issues_by_id = {issue.get("identifier"): issue for issue in issues}
+    by_recipient = defaultdict(list)
+    suppressed = []
+
+    for finding in sorted(findings, key=finding_sort_key):
+        issue_id = finding.get("issueId")
+        issue = issues_by_id.get(issue_id)
+        if not issue:
+            continue
+        recipient = recipient_for_issue(issue)
+        if recipient == "Unassigned":
+            continue
+        category = finding.get("category") or "ai_sop_suggestion"
+        item = dm_item(finding, recipient)
+        if already_sent(history, issue_id, category, recipient):
+            suppressed.append(item)
+            continue
+        by_recipient[recipient].append(item)
+
+    drafts = []
+    for recipient in sorted(by_recipient):
+        items = by_recipient[recipient][:MAX_DM_ITEMS]
+        drafts.append(
+            {
+                "recipient": recipient,
+                "itemCount": len(items),
+                "items": items,
+                "text": render_dm_text(recipient, items),
+            }
+        )
+    return drafts, suppressed
+
+
+def recipient_for_issue(issue):
+    assignee = issue.get("assignee")
+    if assignee and assignee.get("name"):
+        return assignee["name"]
+    creator = issue.get("creator")
+    if creator and creator.get("name"):
+        return creator["name"]
+    return "Unassigned"
+
+
+def dm_item(finding, recipient):
+    return {
+        "recipient": recipient,
+        "issueId": finding.get("issueId"),
+        "title": finding.get("title"),
+        "url": finding.get("url"),
+        "category": finding.get("category"),
+        "severity": finding.get("severity"),
+        "confidence": finding.get("confidence"),
+        "noticed": finding.get("noticed"),
+        "nextEdit": finding.get("nextEdit"),
+        "sopSection": finding.get("sopSection") or "docs/how-we-use-linear.md",
+    }
+
+
+def finding_sort_key(finding):
+    severity_order = {"needs_fix": 0, "should_improve": 1, "gentle_suggestion": 2}
+    confidence_order = {"high": 0, "medium": 1, "low": 2}
+    return (
+        severity_order.get(finding.get("severity"), 3),
+        confidence_order.get(finding.get("confidence"), 3),
+        finding.get("issueId") or "",
+    )
+
+
+def render_team_summary(issues, findings, analysis, mode, dm_drafts):
     statuses = Counter(status_of(issue) for issue in issues)
-    owner_issue_counts = issue_counts_by_owner(findings)
-    owner_suggestion_counts = Counter(item.get("owner", "Unassigned") for item in findings)
-    owners = sorted(owner_suggestion_counts, key=lambda owner: (-owner_issue_counts.get(owner, 0), owner.lower()))[:8]
-    owner_lines = "\n".join(
-        f"- {owner}: {owner_issue_counts.get(owner, 0)} issue{'s' if owner_issue_counts.get(owner, 0) != 1 else ''}, {owner_suggestion_counts[owner]} suggestion{'s' if owner_suggestion_counts[owner] != 1 else ''}"
-        for owner in owners
-    ) or "- No suggestions this run"
-    theme_lines = "\n".join(f"- {theme}" for theme in analysis.get("teamThemes", [])[:6])
+    theme_lines = "\n".join(f"- {theme}" for theme in analysis.get("teamThemes", [])[:4])
+    positive = render_positive_example(analysis.get("positiveExample") or {})
+    suggestion_issue_count = len({item.get("issueId") for item in findings if is_issue_finding(item)})
+    dm_recipient_count = len(dm_drafts)
 
     source_note = "AI SOP review" if analysis.get("source") == "azure-openai" else "No AI review"
     return f"""Weekly Linear issue management check - {mode}
@@ -63,34 +145,46 @@ Status mix:
 Main themes:
 {theme_lines or "- No major themes this run."}
 
-AI suggestions by owner:
-{owner_lines}
+Suggested follow-ups:
+- {suggestion_issue_count} issues have AI suggestions.
+- {dm_recipient_count} people have short DM drafts in `results/dms/`.
 
-This review is read-only. No Linear changes were made.
+Positive example to copy:
+{positive}
 
-Reply with:
-- show <name>
-- improve <issue id>
-- examples"""
+A few people may get short DMs with specific suggestions. Feel free to ignore anything the review got wrong.
+
+This review is read-only. No Linear changes were made."""
+
+
+def render_positive_example(example):
+    issue_id = example.get("issueId")
+    title = example.get("title")
+    url = example.get("url")
+    why = example.get("why")
+    if not issue_id:
+        return "- No positive example selected this run."
+    label = f"{issue_id}: {title}" if title else issue_id
+    if url:
+        label = f"{label} - {url}"
+    if why:
+        return f"- {label}\n  Why: {why}"
+    return f"- {label}"
 
 
 def render_owner_details(issues, findings, analysis, mode):
     notes_by_owner = {note.get("owner"): note for note in analysis.get("ownerNotes", [])}
     issues_by_owner = defaultdict(list)
     findings_by_owner = defaultdict(list)
-    owner_level_findings = defaultdict(list)
     for issue in issues:
         issues_by_owner[owner_of(issue)].append(issue)
     for item in findings:
-        owner = item.get("owner", "Unassigned")
         if is_issue_finding(item):
-            findings_by_owner[owner].append(item)
-        else:
-            owner_level_findings[owner].append(item)
+            findings_by_owner[item.get("owner", "Unassigned")].append(item)
 
     owners = sorted(
         issues_by_owner,
-        key=lambda owner: (-(len(findings_by_owner.get(owner, [])) + len(owner_level_findings.get(owner, []))), owner.lower()),
+        key=lambda owner: (-len(findings_by_owner.get(owner, [])), owner.lower()),
     )
     lines = [
         "# Owner-Specific Linear Review",
@@ -112,11 +206,6 @@ def render_owner_details(issues, findings, analysis, mode):
             lines.append("Suggested focus:")
             lines.extend(f"- {item}" for item in focus)
             lines.append("")
-        if owner_level_findings.get(owner):
-            lines.append("Owner-level suggestions:")
-            for item in owner_level_findings[owner]:
-                lines.append(f"- {item.get('noticed')} Next edit: {item.get('nextEdit')}")
-            lines.append("")
         owner_findings = findings_by_owner.get(owner, [])
         if owner_findings:
             lines.append("Issues with AI suggestions:")
@@ -132,9 +221,8 @@ def render_issue_improvements(findings, analysis, mode):
     notes_by_issue = {note.get("issueId"): note for note in analysis.get("issueNotes", [])}
     grouped = defaultdict(list)
     for item in findings:
-        if not is_issue_finding(item):
-            continue
-        grouped[item.get("issueId")].append(item)
+        if is_issue_finding(item):
+            grouped[item.get("issueId")].append(item)
 
     lines = [
         "# Issue Improvement Notes",
@@ -152,6 +240,7 @@ def render_issue_improvements(findings, analysis, mode):
         lines.append(f"- Owner: {first.get('owner')}")
         lines.append(f"- Status: `{first.get('status')}`")
         lines.append(f"- Link: {first.get('url') or 'No URL available'}")
+        lines.append(f"- SOP section: {first.get('sopSection') or note.get('sopSection') or 'docs/how-we-use-linear.md'}")
         if note:
             lines.append(f"- Current read: {note.get('currentRead')}")
             lines.append(f"- What to improve: {note.get('whatToImprove')}")
@@ -171,15 +260,77 @@ def render_issue_improvements(findings, analysis, mode):
     return "\n".join(lines)
 
 
-def render_full_report(team_summary, issues, findings, analysis, mode):
+def render_full_report(team_summary, issues, findings, analysis, mode, dm_drafts, suppressed):
+    dm_index = "\n".join(
+        f"- {draft['recipient']}: {draft['itemCount']} item{'s' if draft['itemCount'] != 1 else ''}"
+        for draft in dm_drafts
+    ) or "- No DM drafts this run."
+    suppressed_count = len(suppressed)
     return "\n\n".join(
         [
             "# Weekly Linear Issue Management Report",
             team_summary,
+            "## DM Drafts",
+            dm_index,
+            f"Suppressed repeat DM items: {suppressed_count}",
             render_owner_details(issues, findings, analysis, mode),
             render_issue_improvements(findings, analysis, mode),
         ]
     )
+
+
+def render_friction_notes(suppressed):
+    lines = [
+        "# Friction Notes",
+        "",
+        "Repeat DM items are suppressed here so the bot does not nudge the same person about the same issue/category twice.",
+        "",
+    ]
+    if not suppressed:
+        lines.append("No repeat DM items were suppressed this run.")
+        return "\n".join(lines)
+
+    lines.append("Suppressed repeats:")
+    for item in suppressed:
+        lines.append(
+            f"- {item.get('issueId')} / {item.get('category')} for {item.get('recipient')}: {item.get('title')}"
+        )
+    lines.append("")
+    lines.append("Bring repeated patterns to standup or the Friday review; treat them as feedback on the SOP, not the person.")
+    return "\n".join(lines)
+
+
+def render_dm_text(recipient, items):
+    lines = [
+        f"Hi {recipient}, here are a few Linear SOP suggestions from this week's AI-assisted review.",
+        "This is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.",
+        "",
+    ]
+    for idx, item in enumerate(items, start=1):
+        lines.append(f"{idx}. {item.get('issueId')}: {item.get('title')}")
+        if item.get("url"):
+            lines.append(f"   Link: {item.get('url')}")
+        lines.append(f"   Noticed: {item.get('noticed')}")
+        lines.append(f"   One-line fix: {item.get('nextEdit')}")
+        lines.append(f"   SOP reference: {item.get('sopSection')}")
+        lines.append("")
+    lines.append("If a rule seems wrong or slows you down, raise it at standup or the Friday review.")
+    return "\n".join(lines)
+
+
+def write_dm_files(dms_dir, dm_drafts):
+    dms_dir.mkdir(parents=True, exist_ok=True)
+    if not dm_drafts:
+        (dms_dir / "no-dms.md").write_text("No DM drafts this run.\n", encoding="utf-8")
+        return
+    for draft in dm_drafts:
+        filename = f"{slugify(draft['recipient'])}.md"
+        (dms_dir / filename).write_text(draft["text"].rstrip() + "\n", encoding="utf-8")
+
+
+def slugify(value):
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return slug or "unknown"
 
 
 def render_slack_blocks(team_summary):
@@ -189,14 +340,6 @@ def render_slack_blocks(team_summary):
             "text": {"type": "mrkdwn", "text": team_summary},
         }
     ]
-
-
-def issue_counts_by_owner(findings):
-    owner_to_issues = defaultdict(set)
-    for item in findings:
-        if is_issue_finding(item):
-            owner_to_issues[item.get("owner", "Unassigned")].add(item.get("issueId"))
-    return {owner: len(issue_ids) for owner, issue_ids in owner_to_issues.items()}
 
 
 def is_issue_finding(item):

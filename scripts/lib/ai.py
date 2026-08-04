@@ -47,6 +47,7 @@ def review_issues_with_ai(issues):
     parsed.setdefault("teamThemes", [])
     parsed.setdefault("ownerNotes", [])
     parsed.setdefault("issueNotes", [])
+    parsed.setdefault("positiveExample", {})
     parsed["source"] = "azure-openai"
     return parsed
 
@@ -72,6 +73,7 @@ def findings_from_analysis(issues, analysis):
                 "why": note.get("whatToImprove") or "The SOP review found a possible improvement.",
                 "nextEdit": note.get("suggestedNextEdit") or "Make the smallest useful edit.",
                 "confidence": note.get("confidence") or "medium",
+                "sopSection": note.get("sopSection") or "docs/how-we-use-linear.md",
             }
         )
     return findings
@@ -168,6 +170,12 @@ Important tone rules:
 Return only valid JSON in this exact shape:
 {{
   "teamThemes": ["theme 1", "theme 2", "theme 3"],
+  "positiveExample": {{
+    "issueId": "BYN-123",
+    "title": "issue title",
+    "url": "issue URL",
+    "why": "one sentence explaining what is worth copying"
+  }},
   "ownerNotes": [
     {{
       "owner": "Name",
@@ -181,6 +189,7 @@ Return only valid JSON in this exact shape:
       "severity": "needs_fix|should_improve|gentle_suggestion",
       "category": "short_snake_case_category",
       "confidence": "high|medium|low",
+      "sopSection": "short name of the relevant SOP section",
       "currentRead": "one sentence",
       "whatToImprove": "one sentence",
       "suggestedNextEdit": "one concrete edit",
@@ -206,6 +215,7 @@ def no_review(reason):
         "teamThemes": [
             "No SOP review was generated because Azure OpenAI was unavailable. This run should not be treated as a hygiene result."
         ],
+        "positiveExample": {},
         "ownerNotes": [],
         "issueNotes": [],
     }

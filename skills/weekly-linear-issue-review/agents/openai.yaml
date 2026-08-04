@@ -1,4 +1,4 @@
 interface:
   display_name: "Weekly Linear Issue Review"
-  short_description: "Review Linear hygiene against docs/how-we-use-linear.md using Azure OpenAI gpt-5.5, then post a short Slack summary."
-  default_prompt: "Run the weekly Linear issue review using docs/how-we-use-linear.md as the only rulebook, review all active issues with Azure OpenAI gpt-5.5, update the results folder, and post only the short summary to the configured Slack channel."
+  short_description: "Review Linear hygiene against docs/how-we-use-linear.md using Azure OpenAI gpt-5.5, then draft a no-name Slack summary and per-person DMs."
+  default_prompt: "Run the weekly Linear issue review using docs/how-we-use-linear.md as the only rulebook, review all active issues with Azure OpenAI gpt-5.5, update results including the no-name summary and DM drafts, and post only the short summary when explicitly asked."

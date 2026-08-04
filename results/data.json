@@ -1,6 +1,6 @@
 {
   "mode": "manual-preview",
-  "issueCount": 50,
+  "issueCount": 49,
   "analysisSource": "azure-openai",
   "findings": [
     {
@@ -11,10 +11,11 @@
       "status": "Todo",
       "severity": "needs_fix",
       "category": "todo_readiness",
-      "noticed": "This Todo issue has a clear action, but no type label, Definition of done, or Acceptance criteria.",
-      "why": "Make the desired outcome of the Sanjay conversation observable before it stays in Todo.",
-      "nextEdit": "Add a Definition of done and one acceptance check for the call or follow-up.",
-      "confidence": "high"
+      "noticed": "This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.",
+      "why": "Make the outreach outcome and verification explicit before treating it as ready-to-start work.",
+      "nextEdit": "Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
     },
     {
       "issueId": "BYN-78",
@@ -24,36 +25,11 @@
       "status": "Todo",
       "severity": "needs_fix",
       "category": "todo_readiness",
-      "noticed": "This Todo issue describes two activities but has no type label, Definition of done, or Acceptance criteria.",
-      "why": "Separate or clarify whether the outcome is the draft itself, publisher outreach, or both.",
-      "nextEdit": "Add a type label and a Definition of done for the press release deliverable.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-76",
-      "title": "Metric retrieval accuracy",
-      "url": "https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy",
-      "owner": "kabir bahl",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has product-surface labels but no type label.",
-      "why": "Add the issue type so it is clear whether this is a Spike, Improvement, or other work type.",
-      "nextEdit": "Add a type label; if this is research, use Spike and add the bounded question before moving it to Todo.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-72",
-      "title": "Validation speed and coverage improvements,",
-      "url": "https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements",
-      "owner": "Mrinal Kanwar",
-      "status": "In Progress",
-      "severity": "needs_fix",
-      "category": "in_progress_readiness",
-      "noticed": "This In Progress parent issue says details are in subissues but does not state its own Definition of done or Acceptance criteria.",
-      "why": "Add a parent-level outcome so the issue can be reviewed without opening every child first.",
-      "nextEdit": "Add one Definition of done sentence and list the subissues that must be complete.",
-      "confidence": "high"
+      "noticed": "This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.",
+      "why": "Clarify whether done means a draft only, publisher outreach only, or both.",
+      "nextEdit": "Add a Definition of done sentence that names the completed press-release artifact and outreach status.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
     },
     {
       "issueId": "BYN-68",
@@ -61,116 +37,13 @@
       "url": "https://linear.app/byndai/issue/BYN-68/get-bynd-added-to-the-azure-alert-group",
       "owner": "Sanidhya",
       "status": "Todo",
-      "severity": "needs_fix",
-      "category": "todo_readiness",
-      "noticed": "This Todo issue has a clear verification idea, but the description does not use the required Definition of done and Acceptance criteria headings.",
-      "why": "Turn the existing text into the required start-ready structure.",
-      "nextEdit": "Add a Definition of done heading and move the manual alert trigger into Acceptance criteria.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-67",
-      "title": "Research Azure Monitoring for code-level alerting/observability",
-      "url": "https://linear.app/byndai/issue/BYN-67/research-azure-monitoring-for-code-level-alertingobservability",
-      "owner": "Sanidhya",
-      "status": "Todo",
-      "severity": "needs_fix",
-      "category": "spike_readiness",
-      "noticed": "This Spike is in Todo with a timebox and output, but it has no priority.",
-      "why": "Todo items need a priority set or clearly communicated by Nikhil.",
-      "nextEdit": "Ask Nikhil for the priority, then set it before keeping this in Todo.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-61",
-      "title": "Integrate PPT Agent into the main company reports application",
-      "url": "https://linear.app/byndai/issue/BYN-61/integrate-ppt-agent-into-the-main-company-reports-application",
-      "owner": "Shashank Rajak",
-      "status": "Todo",
-      "severity": "needs_fix",
-      "category": "todo_readiness",
-      "noticed": "This Todo issue has no description, priority, or type label.",
-      "why": "Add enough detail to make the integration outcome start-ready this week.",
-      "nextEdit": "Add a type label, priority, Definition of done, and Acceptance criteria.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-60",
-      "title": "Add examples for standard templates across different persona for the layout designer agent",
-      "url": "https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the",
-      "owner": "Shashank Rajak",
-      "status": "Todo",
-      "severity": "needs_fix",
-      "category": "todo_readiness",
-      "noticed": "This Todo issue has no description, priority, or type label.",
-      "why": "Define what set of template examples will count as complete.",
-      "nextEdit": "Add a type label, priority, Definition of done, and a small acceptance list.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-59",
-      "title": "Plan out UI/UX for the PPT export workflow",
-      "url": "https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow",
-      "owner": "Shashank Rajak",
-      "status": "Todo",
-      "severity": "needs_fix",
-      "category": "todo_readiness",
-      "noticed": "This Todo issue has no description, priority, or type label.",
-      "why": "Frame the UI/UX planning work as a concrete deliverable.",
-      "nextEdit": "Add a type label, priority, Definition of done, and acceptance checks for the plan.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-58",
-      "title": "Integrate Validation Service",
-      "url": "https://linear.app/byndai/issue/BYN-58/integrate-validation-service",
-      "owner": "Shashank Rajak",
-      "status": "Backlog",
       "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has a product-surface label but no type label.",
-      "why": "Add one type label so the work kind is clear.",
-      "nextEdit": "Add Feature, Improvement, or Spike depending on whether this is delivery work or planning research.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-57",
-      "title": "Excel Integration",
-      "url": "https://linear.app/byndai/issue/BYN-57/excel-integration",
-      "owner": "Shashank Rajak",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no labels.",
-      "why": "Add a type label and product-surface label.",
-      "nextEdit": "Add a type label such as Feature and a Company Reports or Reports surface label if that is the intended surface.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-56",
-      "title": "PPT Exports",
-      "url": "https://linear.app/byndai/issue/BYN-56/ppt-exports",
-      "owner": "Shashank Rajak",
-      "status": "In Progress",
-      "severity": "needs_fix",
-      "category": "in_progress_readiness",
-      "noticed": "This In Progress issue has no priority, type label, Definition of done, or Acceptance criteria.",
-      "why": "Make the PPT export feature reviewable before continuing active work.",
-      "nextEdit": "Add priority, a Feature label, Definition of done, and acceptance checks.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-55",
-      "title": "Data connectors broker architecture - PoC",
-      "url": "https://linear.app/byndai/issue/BYN-55/data-connectors-broker-architecture-poc",
-      "owner": "Shashank Rajak",
-      "status": "In Progress",
-      "severity": "needs_fix",
-      "category": "in_progress_readiness",
-      "noticed": "This In Progress issue has strong verification detail but no priority or type label.",
-      "why": "Add the required metadata for active work.",
-      "nextEdit": "Set the priority communicated by Nikhil and add the appropriate type label.",
-      "confidence": "high"
+      "category": "definition_of_done",
+      "noticed": "The issue has useful verification detail, but the done state is not separated under the required heading.",
+      "why": "Turn the current text into a Definition of done plus Acceptance criteria so another person can verify it quickly.",
+      "nextEdit": "Add a Definition of done heading before the verification text.",
+      "confidence": "high",
+      "sopSection": "Definition of done"
     },
     {
       "issueId": "BYN-54",
@@ -179,167 +52,12 @@
       "owner": "Sanidhya",
       "status": "Todo",
       "severity": "needs_fix",
-      "category": "todo_readiness",
-      "noticed": "This Todo Improvement describes the proposed approach but not the Definition of done or Acceptance criteria.",
-      "why": "State the observable loading behavior that proves the improvement is complete.",
-      "nextEdit": "Add a Definition of done and checks for citation click loading and scroll pagination.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-51",
-      "title": "eme Sources",
-      "url": "https://linear.app/byndai/issue/BYN-51/eme-sources",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "unclear_backlog_capture",
-      "noticed": "This Backlog issue has an unclear title, no description, and no type label.",
-      "why": "Make the captured work understandable enough for someone else to recognize later.",
-      "nextEdit": "Rename the title to the actual task and add a type label.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-50",
-      "title": "Handle a renamed sheet by matching a byte-identical version",
-      "url": "https://linear.app/byndai/issue/BYN-50/handle-a-renamed-sheet-by-matching-a-byte-identical-version",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has a clear description but no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Bug, Feature, Chore, Spike, or Improvement based on the intended work type.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-49",
-      "title": "Handle failures gracefully, including OOMs, and stop excessive retries",
-      "url": "https://linear.app/byndai/issue/BYN-49/handle-failures-gracefully-including-ooms-and-stop-excessive-retries",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the issue type so the work can be filtered consistently.",
-      "nextEdit": "Add Bug if this is existing behavior that needs repair, or Improvement if this is planned resilience work.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-48",
-      "title": "Rate limit on the number of parallel jobs",
-      "url": "https://linear.app/byndai/issue/BYN-48/rate-limit-on-the-number-of-parallel-jobs",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the required type label while it remains captured in Backlog.",
-      "nextEdit": "Add Improvement if the work is to make existing parallel job handling more controlled.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-47",
-      "title": "Alerting for errors and failures",
-      "url": "https://linear.app/byndai/issue/BYN-47/alerting-for-errors-and-failures",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the issue type so the work kind is clear.",
-      "nextEdit": "Add Chore or Improvement depending on whether this is planned upkeep or a behavior improvement.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-46",
-      "title": "Check whether a rerun reuses the cached document, and cache for as long as possible",
-      "url": "https://linear.app/byndai/issue/BYN-46/check-whether-a-rerun-reuses-the-cached-document-and-cache-for-as-long",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "backlog_scoping",
-      "noticed": "This Backlog issue mixes investigation with a possible implementation step and has no type label.",
-      "why": "Worth checking whether the investigation should be a Spike before delivery work is scoped.",
-      "nextEdit": "Add a type label, and if using Spike, add the question, timebox, and output.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-45",
-      "title": "Section heading highlight in metric search",
-      "url": "https://linear.app/byndai/issue/BYN-45/section-heading-highlight-in-metric-search",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Feature or Improvement depending on whether this is new capability or an enhancement to existing metric search.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-44",
-      "title": "Deterministic figure verification and highlighting in Download Financials",
-      "url": "https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download",
-      "owner": "Unassigned",
-      "status": "In Progress",
-      "severity": "needs_fix",
-      "category": "unassigned_in_progress",
-      "noticed": "This issue is In Progress but has no owner and no type label.",
-      "why": "Active work needs a clear accountable owner and type label.",
-      "nextEdit": "Assign the owner or move it back to Backlog, and add the appropriate type label.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-43",
-      "title": "Native-text vs OCR/scanned classification for Download Financials",
-      "url": "https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials",
-      "owner": "Unassigned",
-      "status": "In Progress",
-      "severity": "needs_fix",
-      "category": "unassigned_in_progress",
-      "noticed": "This issue is In Progress but has no owner and no type label.",
-      "why": "Active work needs an owner before it stays In Progress.",
-      "nextEdit": "Assign the owner or move it back to Backlog, and add the appropriate type label.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-39",
-      "title": "One-Pager Generation for Delivered News",
-      "url": "https://linear.app/byndai/issue/BYN-39/one-pager-generation-for-delivered-news",
-      "owner": "Aditya Singh",
-      "status": "In Progress",
-      "severity": "gentle_suggestion",
-      "category": "description_structure",
-      "noticed": "This In Progress issue has a Goal and How to Verify section that mostly map to the required fields.",
-      "why": "Worth renaming those sections to the required Definition of done and Acceptance criteria headings for consistency.",
-      "nextEdit": "Rename Goal to Definition of done and How to Verify to Acceptance criteria.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-37",
-      "title": "R&D on Claude Code / Codex architecture and document corpus indexing",
-      "url": "https://linear.app/byndai/issue/BYN-37/randd-on-claude-code-codex-architecture-and-document-corpus-indexing",
-      "owner": "Mrinal Kanwar",
-      "status": "Todo",
-      "severity": "should_improve",
-      "category": "spike_readiness",
-      "noticed": "This Spike has a timebox and output, but the question to answer is written as an activity.",
-      "why": "Make the specific uncertainty explicit before starting the Spike.",
-      "nextEdit": "Add a Question to answer line at the top of the description.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-36",
-      "title": "Add support for Bi-Weekly newsletter on Frontend",
-      "url": "https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend",
-      "owner": "Aditya Singh",
-      "status": "Todo",
-      "severity": "needs_fix",
-      "category": "todo_readiness",
-      "noticed": "This Todo issue has priority and a Feature label, but no Definition of done or Acceptance criteria.",
-      "why": "Add the observable frontend behavior needed to complete the bi-weekly cadence work.",
-      "nextEdit": "Add Definition of done and Acceptance criteria to the description.",
-      "confidence": "high"
+      "category": "improvement_scope",
+      "noticed": "This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.",
+      "why": "Add the current state and target state in terms someone can verify after the citation loading change.",
+      "nextEdit": "Add an Acceptance criteria section with the page-window behavior and expected loading behavior.",
+      "confidence": "high",
+      "sopSection": "Issue types"
     },
     {
       "issueId": "BYN-35",
@@ -349,101 +67,25 @@
       "status": "Todo",
       "severity": "needs_fix",
       "category": "todo_readiness",
-      "noticed": "This urgent Todo issue has a Feature label but no Definition of done or Acceptance criteria.",
-      "why": "Add the checks that show backend bi-weekly newsletter support and the PropEquity shift are complete.",
-      "nextEdit": "Add a Definition of done and two acceptance checks.",
-      "confidence": "high"
+      "noticed": "This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.",
+      "why": "Define what backend support for bi-weekly runs includes and how PropEquity migration will be checked.",
+      "nextEdit": "Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
     },
     {
-      "issueId": "BYN-34",
-      "title": "Modularize adapters for multi-service support",
-      "url": "https://linear.app/byndai/issue/BYN-34/modularize-adapters-for-multi-service-support",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has acceptance criteria but no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Improvement if this is making the existing validation architecture support more services.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-33",
-      "title": "Extend validation API to other Bynd services",
-      "url": "https://linear.app/byndai/issue/BYN-33/extend-validation-api-to-other-bynd-services",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has acceptance criteria but no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Improvement if this extends an existing validation API to more consumers.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-32",
-      "title": "Create product-neutral validation input schema",
-      "url": "https://linear.app/byndai/issue/BYN-32/create-product-neutral-validation-input-schema",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has acceptance criteria but no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Improvement if this generalizes the existing validation input contract.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-30",
-      "title": "Run deployed auth drills",
-      "url": "https://linear.app/byndai/issue/BYN-30/run-deployed-auth-drills",
-      "owner": "Unassigned",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Chore if this is an operational verification task.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-27",
-      "title": "Test validation service on Piyush\u2019s latest reports",
-      "url": "https://linear.app/byndai/issue/BYN-27/test-validation-service-on-piyushs-latest-reports",
-      "owner": "Devayush Rout",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Chore if this is a planned validation review task, or Spike if the review is meant to answer a bounded uncertainty.",
-      "confidence": "high"
-    },
-    {
-      "issueId": "BYN-25",
-      "title": "Run final quality signoff with Mrinal",
-      "url": "https://linear.app/byndai/issue/BYN-25/run-final-quality-signoff-with-mrinal",
-      "owner": "Devayush Rout",
+      "issueId": "BYN-36",
+      "title": "Add support for Bi-Weekly newsletter on Frontend",
+      "url": "https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend",
+      "owner": "Aditya Singh",
       "status": "Todo",
-      "severity": "should_improve",
-      "category": "description_structure",
-      "noticed": "This Todo issue has a Goal and acceptance criteria, but not a Definition of done heading.",
-      "why": "Use the required heading so the done outcome is easy to find.",
-      "nextEdit": "Rename Goal to Definition of done.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-24",
-      "title": "Fix report-writer citation placement",
-      "url": "https://linear.app/byndai/issue/BYN-24/fix-report-writer-citation-placement",
-      "owner": "Piyush Khurana",
-      "status": "Backlog",
-      "severity": "should_improve",
-      "category": "missing_type_label",
-      "noticed": "This Backlog issue has no type label.",
-      "why": "Add the required issue type label.",
-      "nextEdit": "Add Improvement or Bug based on how the team wants to classify citation placement work.",
-      "confidence": "high"
+      "severity": "needs_fix",
+      "category": "todo_readiness",
+      "noticed": "This Todo has owner, priority, and type label, but the description does not define completion or checks.",
+      "why": "State the frontend behavior that proves bi-weekly cadence support exists.",
+      "nextEdit": "Add a Definition of done and two acceptance criteria for the cadence setup UI.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
     },
     {
       "issueId": "BYN-19",
@@ -452,11 +94,166 @@
       "owner": "Sanidhya",
       "status": "Todo",
       "severity": "needs_fix",
+      "category": "improvement_scope",
+      "noticed": "This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.",
+      "why": "Frame the planning work as a concrete architecture recommendation or document.",
+      "nextEdit": "Add a Definition of done that makes the output a reviewed architecture plan.",
+      "confidence": "high",
+      "sopSection": "Issue types"
+    },
+    {
+      "issueId": "BYN-61",
+      "title": "Integrate PPT Agent into the main company reports application",
+      "url": "https://linear.app/byndai/issue/BYN-61/integrate-ppt-agent-into-the-main-company-reports-application",
+      "owner": "Shashank Rajak",
+      "status": "Todo",
+      "severity": "needs_fix",
       "category": "todo_readiness",
-      "noticed": "This Todo issue is labeled Improvement, but the description reads like planning work and has no Definition of done or Acceptance criteria.",
-      "why": "Worth checking whether this should be a Spike with a recommendation output, or a delivery Improvement with measurable current and target states.",
-      "nextEdit": "If this is planning, change the type to Spike and add Question to answer, Timebox, and Output.",
-      "confidence": "medium"
+      "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+      "why": "Either make it ready for this week or keep it as captured work in Backlog.",
+      "nextEdit": "Move it to Backlog unless priority and the ready-to-start fields are added now.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
+    },
+    {
+      "issueId": "BYN-60",
+      "title": "Add examples for standard templates across different persona for the layout designer agent",
+      "url": "https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the",
+      "owner": "Shashank Rajak",
+      "status": "Todo",
+      "severity": "needs_fix",
+      "category": "todo_readiness",
+      "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+      "why": "Turn the template examples work into a verifiable deliverable before keeping it in Todo.",
+      "nextEdit": "Add a type label and a Definition of done that states where the examples will live.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
+    },
+    {
+      "issueId": "BYN-59",
+      "title": "Plan out UI/UX for the PPT export workflow",
+      "url": "https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow",
+      "owner": "Shashank Rajak",
+      "status": "Todo",
+      "severity": "needs_fix",
+      "category": "todo_readiness",
+      "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+      "why": "Make the planning output observable, such as a UI/UX spec or decision note.",
+      "nextEdit": "Add a Definition of done that names the UI/UX artifact to be produced.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
+    },
+    {
+      "issueId": "BYN-72",
+      "title": "Validation speed and coverage improvements,",
+      "url": "https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements",
+      "owner": "Mrinal Kanwar",
+      "status": "In Progress",
+      "severity": "should_improve",
+      "category": "parent_issue_clarity",
+      "noticed": "This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.",
+      "why": "Add a short parent-level outcome so the bundle can be closed without rereading every sub-issue.",
+      "nextEdit": "Add one Definition of done sentence that summarizes the combined speed and coverage outcome.",
+      "confidence": "medium",
+      "sopSection": "Definition of done"
+    },
+    {
+      "issueId": "BYN-56",
+      "title": "PPT Exports",
+      "url": "https://linear.app/byndai/issue/BYN-56/ppt-exports",
+      "owner": "Shashank Rajak",
+      "status": "In Progress",
+      "severity": "needs_fix",
+      "category": "in_progress_readiness",
+      "noticed": "This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.",
+      "why": "Add the fields that would have made it ready before active work started.",
+      "nextEdit": "Add a type label and Acceptance criteria for a successful PPT export.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
+    },
+    {
+      "issueId": "BYN-55",
+      "title": "Data connectors broker architecture - PoC",
+      "url": "https://linear.app/byndai/issue/BYN-55/data-connectors-broker-architecture-poc",
+      "owner": "Shashank Rajak",
+      "status": "In Progress",
+      "severity": "should_improve",
+      "category": "missing_type_label",
+      "noticed": "This In Progress issue has strong verification detail, but no type label and no priority.",
+      "why": "Add the issue type and priority so the active work matches the SOP fields.",
+      "nextEdit": "Add the most fitting type label, likely Spike if the output is an architecture recommendation rather than shipped code.",
+      "confidence": "high",
+      "sopSection": "Issue types"
+    },
+    {
+      "issueId": "BYN-44",
+      "title": "Deterministic figure verification and highlighting in Download Financials",
+      "url": "https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download",
+      "owner": "Unassigned",
+      "status": "In Progress",
+      "severity": "needs_fix",
+      "category": "in_progress_owner",
+      "noticed": "This issue is In Progress but unassigned.",
+      "why": "Assign the active owner so the person accountable for closing the loop is clear.",
+      "nextEdit": "Set the assignee to the person actively working on deterministic figure verification.",
+      "confidence": "high",
+      "sopSection": "Issue statuses"
+    },
+    {
+      "issueId": "BYN-43",
+      "title": "Native-text vs OCR/scanned classification for Download Financials",
+      "url": "https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials",
+      "owner": "Unassigned",
+      "status": "In Progress",
+      "severity": "needs_fix",
+      "category": "in_progress_owner",
+      "noticed": "This issue is In Progress but unassigned.",
+      "why": "Assign the active owner so the status reflects someone currently working on it.",
+      "nextEdit": "Set the assignee to the person actively working on native-text versus OCR classification.",
+      "confidence": "high",
+      "sopSection": "Issue statuses"
+    },
+    {
+      "issueId": "BYN-76",
+      "title": "Metric retrieval accuracy",
+      "url": "https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy",
+      "owner": "kabir bahl",
+      "status": "Backlog",
+      "severity": "should_improve",
+      "category": "missing_type_label",
+      "noticed": "This backlog benchmark issue has product-surface labels, but no type label.",
+      "why": "Add the issue type so it is clear whether this is a Spike, Chore, or other work type.",
+      "nextEdit": "If this is research, add the Spike label plus a Question, Timebox, and Output.",
+      "confidence": "medium",
+      "sopSection": "Issue types"
+    },
+    {
+      "issueId": "BYN-58",
+      "title": "Integrate Validation Service",
+      "url": "https://linear.app/byndai/issue/BYN-58/integrate-validation-service",
+      "owner": "Shashank Rajak",
+      "status": "Backlog",
+      "severity": "should_improve",
+      "category": "missing_type_label",
+      "noticed": "This backlog issue has a Reports label but no type label.",
+      "why": "Add the type label so the work category is clear at a glance.",
+      "nextEdit": "Add a type label, likely Spike if the immediate output is an integration plan.",
+      "confidence": "high",
+      "sopSection": "Issue types"
+    },
+    {
+      "issueId": "BYN-51",
+      "title": "eme Sources",
+      "url": "https://linear.app/byndai/issue/BYN-51/eme-sources",
+      "owner": "Unassigned",
+      "status": "Backlog",
+      "severity": "should_improve",
+      "category": "unclear_backlog_title",
+      "noticed": "This backlog title is too terse for someone else to understand, and it has no type label.",
+      "why": "Rewrite the title as the remembered task and add a type label.",
+      "nextEdit": "Replace the title with a clear task phrase and add the matching type label.",
+      "confidence": "high",
+      "sopSection": "Creating an issue"
     },
     {
       "issueId": "BYN-11",
@@ -466,10 +263,11 @@
       "status": "Todo",
       "severity": "needs_fix",
       "category": "todo_readiness",
-      "noticed": "This Todo issue has no description, priority, owner, or type label.",
-      "why": "Add the required Todo details or move it back to Backlog until scoped.",
-      "nextEdit": "Move to Backlog unless it has an owner, priority, Definition of done, Acceptance criteria, and alignment to start this week.",
-      "confidence": "high"
+      "noticed": "This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.",
+      "why": "Move it to Backlog unless it is ready to start this week with all required fields.",
+      "nextEdit": "Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.",
+      "confidence": "high",
+      "sopSection": "Backlog-to-Todo"
     },
     {
       "issueId": "BYN-3",
@@ -478,97 +276,73 @@
       "owner": "Unassigned",
       "status": "Todo",
       "severity": "gentle_suggestion",
-      "category": "workspace_placeholder",
-      "noticed": "This looks like a default Linear onboarding item rather than a Bynd task.",
-      "why": "Worth checking whether it should remain on the active Bynd board.",
-      "nextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-4",
-      "title": "Set up your teams",
-      "url": "https://linear.app/byndai/issue/BYN-4/set-up-your-teams",
-      "owner": "Unassigned",
-      "status": "Todo",
-      "severity": "gentle_suggestion",
-      "category": "workspace_placeholder",
-      "noticed": "This looks like a default Linear onboarding item rather than a Bynd task.",
-      "why": "Worth checking whether it should remain on the active Bynd board.",
-      "nextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-2",
-      "title": "Connect your tools",
-      "url": "https://linear.app/byndai/issue/BYN-2/connect-your-tools",
-      "owner": "Unassigned",
-      "status": "Todo",
-      "severity": "gentle_suggestion",
-      "category": "workspace_placeholder",
-      "noticed": "This looks like a default Linear onboarding item rather than a Bynd task.",
-      "why": "Worth checking whether it should remain on the active Bynd board.",
-      "nextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-      "confidence": "medium"
-    },
-    {
-      "issueId": "BYN-1",
-      "title": "Get familiar with Linear",
-      "url": "https://linear.app/byndai/issue/BYN-1/get-familiar-with-linear",
-      "owner": "Unassigned",
-      "status": "Todo",
-      "severity": "gentle_suggestion",
-      "category": "workspace_placeholder",
-      "noticed": "This looks like a default Linear onboarding item rather than a Bynd task.",
-      "why": "Worth checking whether it should remain on the active Bynd board.",
-      "nextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-      "confidence": "medium"
+      "category": "starter_issue_hygiene",
+      "noticed": "This reads like Linear starter guidance rather than a current Bynd task.",
+      "why": "Worth checking whether this should remain in active work tracking.",
+      "nextEdit": "If this is not a current Bynd task, move it to Canceled with a one-line reason.",
+      "confidence": "medium",
+      "sopSection": "What goes in Linear"
     }
   ],
   "analysis": {
     "teamThemes": [
-      "Many Todo and In Progress issues would be easier to start or review with explicit Definition of done and Acceptance criteria headings.",
-      "Several issues need a type label such as Bug, Feature, Chore, Spike, or Improvement.",
-      "A few active issues need owner or priority cleanup before staying in Todo or In Progress."
+      "Several Todo and In Progress issues need the Backlog-to-Todo fields added before they are easy for someone else to start or verify.",
+      "Type labels are missing on many issues, especially older Company Reports, Extract, and unassigned items.",
+      "A few In Progress issues are unassigned or rely on sub-issues for clarity, so ownership and the parent done state are worth tightening."
     ],
+    "positiveExample": {
+      "issueId": "BYN-66",
+      "title": "Update industry report pipeline to new blob output structure",
+      "url": "https://linear.app/byndai/issue/BYN-66/update-industry-report-pipeline-to-new-blob-output-structure",
+      "why": "It has a clear done state, concrete acceptance checks, and a verification path worth copying."
+    },
     "ownerNotes": [
       {
-        "owner": "Sanidhya",
-        "summary": "Several active Chat and Intelligence items are ready for small description edits before weekly work continues.",
+        "owner": "Nikhil",
+        "summary": "The two HDFC Expansion Todo items are actionable ideas but need type labels plus done and verification text.",
         "suggestedFocus": [
-          "Add Definition of done and Acceptance criteria to BYN-35, BYN-54, and BYN-68.",
-          "Ask Nikhil for the priority on BYN-67 if it is meant to stay in Todo."
+          "Add a type label to BYN-79 and BYN-78",
+          "Add one Definition of done sentence and 1-2 acceptance checks to each"
         ]
       },
       {
         "owner": "Shashank Rajak",
-        "summary": "The Company Reports items need type labels and clearer start-ready descriptions before staying in Todo or In Progress.",
+        "summary": "Several Company Reports items are in Todo or In Progress before the SOP-ready fields are present.",
         "suggestedFocus": [
-          "Add type labels to BYN-56, BYN-59, BYN-60, and BYN-61.",
-          "Add a one-sentence Definition of done and quick Acceptance criteria to active PPT work."
+          "Add type labels to BYN-56, BYN-59, BYN-60, and BYN-61",
+          "For Todo items, either add priority plus Definition of done and Acceptance criteria or move them back to Backlog"
+        ]
+      },
+      {
+        "owner": "Sanidhya",
+        "summary": "The Chat and Intelligence delivery issues would be easier to verify with explicit done states and checks.",
+        "suggestedFocus": [
+          "Add Definition of done and Acceptance criteria to BYN-35, BYN-36, BYN-54, and BYN-19",
+          "For Improvement issues, include the measured current state and target state"
         ]
       },
       {
         "owner": "Mrinal Kanwar",
-        "summary": "The validation parent issue in progress could use a small parent-level outcome instead of relying only on subissues.",
+        "summary": "The parent validation issue in progress leans on sub-issues and could use its own observable done state.",
         "suggestedFocus": [
-          "Add a parent Definition of done to BYN-72.",
-          "List the subissues that prove BYN-72 is complete."
-        ]
-      },
-      {
-        "owner": "Nikhil",
-        "summary": "The HDFC Expansion Todo items would be easier for others to verify with type labels and explicit completion checks.",
-        "suggestedFocus": [
-          "Add a type label to BYN-78 and BYN-79.",
-          "Add one concrete acceptance check to each issue."
+          "Add a parent Definition of done to BYN-72",
+          "Add acceptance criteria that summarize what proves the bundle is complete"
         ]
       },
       {
         "owner": "Unassigned",
-        "summary": "A couple of In Progress Extract issues are worth assigning so there is a clear closer for the work.",
+        "summary": "A few unassigned issues are in active statuses or read like starter/template content rather than current Bynd work.",
         "suggestedFocus": [
-          "Assign owners for BYN-43 and BYN-44 or move them out of In Progress.",
-          "Add type labels to the unassigned Extract backlog items."
+          "Assign an owner before keeping BYN-43 and BYN-44 In Progress",
+          "Worth checking whether BYN-1, BYN-2, BYN-3, and BYN-4 should be canceled with a one-line reason"
+        ]
+      },
+      {
+        "owner": "Devayush Rout",
+        "summary": "Most owned validation items are well scoped; a couple of backlog items mainly need type labels for SOP consistency.",
+        "suggestedFocus": [
+          "Add a type label to BYN-27",
+          "Keep using the BYN-66 structure for future validation delivery issues"
         ]
       }
     ],
@@ -578,13 +352,16 @@
         "severity": "needs_fix",
         "category": "todo_readiness",
         "confidence": "high",
-        "currentRead": "This Todo issue has a clear action, but no type label, Definition of done, or Acceptance criteria.",
-        "whatToImprove": "Make the desired outcome of the Sanjay conversation observable before it stays in Todo.",
-        "suggestedNextEdit": "Add a Definition of done and one acceptance check for the call or follow-up.",
-        "suggestedTitle": "Confirm HDFC phase two scope with Sanjay",
-        "suggestedDefinitionOfDone": "Sanjay has confirmed the phase two scope or the next decision needed from HDFC is recorded.",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.",
+        "whatToImprove": "Make the outreach outcome and verification explicit before treating it as ready-to-start work.",
+        "suggestedNextEdit": "Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.",
+        "suggestedTitle": "Align with Sanjay on HDFC phase two scope",
+        "suggestedDefinitionOfDone": "Sanjay has confirmed the next step for HDFC phase two scope, and the Mumbai investment team follow-up is either scheduled or documented.",
         "suggestedAcceptanceCriteria": [
-          "Call or message Sanjay and record the agreed next step in the issue."
+          "Sanjay confirms whether a call is needed.",
+          "If a call is needed, calendar invite and agenda are shared.",
+          "If no call is needed, the agreed next step is recorded in the issue."
         ]
       },
       {
@@ -592,324 +369,50 @@
         "severity": "needs_fix",
         "category": "todo_readiness",
         "confidence": "high",
-        "currentRead": "This Todo issue describes two activities but has no type label, Definition of done, or Acceptance criteria.",
-        "whatToImprove": "Separate or clarify whether the outcome is the draft itself, publisher outreach, or both.",
-        "suggestedNextEdit": "Add a type label and a Definition of done for the press release deliverable.",
-        "suggestedTitle": "Draft HDFC Capital deployment press release",
-        "suggestedDefinitionOfDone": "A joint Bynd and HDFC Capital press release draft is ready to share for review.",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.",
+        "whatToImprove": "Clarify whether done means a draft only, publisher outreach only, or both.",
+        "suggestedNextEdit": "Add a Definition of done sentence that names the completed press-release artifact and outreach status.",
+        "suggestedTitle": "Draft and route HDFC deployment press release",
+        "suggestedDefinitionOfDone": "A joint Bynd and HDFC Capital press release draft is ready for review, and the target media outreach list is captured.",
         "suggestedAcceptanceCriteria": [
-          "Press release draft is linked in the issue.",
-          "Target media agencies or publishers are listed for outreach."
-        ]
-      },
-      {
-        "issueId": "BYN-76",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "medium",
-        "currentRead": "This Backlog issue has product-surface labels but no type label.",
-        "whatToImprove": "Add the issue type so it is clear whether this is a Spike, Improvement, or other work type.",
-        "suggestedNextEdit": "Add a type label; if this is research, use Spike and add the bounded question before moving it to Todo.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-72",
-        "severity": "needs_fix",
-        "category": "in_progress_readiness",
-        "confidence": "high",
-        "currentRead": "This In Progress parent issue says details are in subissues but does not state its own Definition of done or Acceptance criteria.",
-        "whatToImprove": "Add a parent-level outcome so the issue can be reviewed without opening every child first.",
-        "suggestedNextEdit": "Add one Definition of done sentence and list the subissues that must be complete.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Validation speed and coverage improvements are complete when the linked parallelism, text-fact, and blob-PDF subissues are done and verified.",
-        "suggestedAcceptanceCriteria": [
-          "BYN-73, BYN-74, and BYN-75 are completed or any remaining scope is captured in follow-up issues."
+          "Press release draft link is added to the issue.",
+          "HDFC/Bynd reviewers are identified.",
+          "Target media agencies or publishers are listed with owner for outreach."
         ]
       },
       {
         "issueId": "BYN-68",
-        "severity": "needs_fix",
-        "category": "todo_readiness",
-        "confidence": "high",
-        "currentRead": "This Todo issue has a clear verification idea, but the description does not use the required Definition of done and Acceptance criteria headings.",
-        "whatToImprove": "Turn the existing text into the required start-ready structure.",
-        "suggestedNextEdit": "Add a Definition of done heading and move the manual alert trigger into Acceptance criteria.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Bynd receives Azure alerts at the Bynd email address added to HDFC's Azure tenant.",
-        "suggestedAcceptanceCriteria": [
-          "Manually trigger an alert through az cli and confirm the Bynd email address receives it."
-        ]
-      },
-      {
-        "issueId": "BYN-67",
-        "severity": "needs_fix",
-        "category": "spike_readiness",
-        "confidence": "high",
-        "currentRead": "This Spike is in Todo with a timebox and output, but it has no priority.",
-        "whatToImprove": "Todo items need a priority set or clearly communicated by Nikhil.",
-        "suggestedNextEdit": "Ask Nikhil for the priority, then set it before keeping this in Todo.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-61",
-        "severity": "needs_fix",
-        "category": "todo_readiness",
-        "confidence": "high",
-        "currentRead": "This Todo issue has no description, priority, or type label.",
-        "whatToImprove": "Add enough detail to make the integration outcome start-ready this week.",
-        "suggestedNextEdit": "Add a type label, priority, Definition of done, and Acceptance criteria.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "The PPT Agent is integrated into the main company reports application and can be triggered from the application flow.",
-        "suggestedAcceptanceCriteria": [
-          "Generate a company report and confirm the PPT Agent can be invoked from the main application."
-        ]
-      },
-      {
-        "issueId": "BYN-60",
-        "severity": "needs_fix",
-        "category": "todo_readiness",
-        "confidence": "high",
-        "currentRead": "This Todo issue has no description, priority, or type label.",
-        "whatToImprove": "Define what set of template examples will count as complete.",
-        "suggestedNextEdit": "Add a type label, priority, Definition of done, and a small acceptance list.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Standard template examples for the selected personas are available for the layout designer agent.",
-        "suggestedAcceptanceCriteria": [
-          "List the personas covered by the examples.",
-          "Link the added template examples in the issue."
-        ]
-      },
-      {
-        "issueId": "BYN-59",
-        "severity": "needs_fix",
-        "category": "todo_readiness",
-        "confidence": "high",
-        "currentRead": "This Todo issue has no description, priority, or type label.",
-        "whatToImprove": "Frame the UI/UX planning work as a concrete deliverable.",
-        "suggestedNextEdit": "Add a type label, priority, Definition of done, and acceptance checks for the plan.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "A UI/UX plan for the PPT export workflow is documented and ready for implementation scoping.",
-        "suggestedAcceptanceCriteria": [
-          "Workflow plan or mock is linked in the issue.",
-          "Open implementation questions are listed."
-        ]
-      },
-      {
-        "issueId": "BYN-58",
         "severity": "should_improve",
-        "category": "missing_type_label",
+        "category": "definition_of_done",
         "confidence": "high",
-        "currentRead": "This Backlog issue has a product-surface label but no type label.",
-        "whatToImprove": "Add one type label so the work kind is clear.",
-        "suggestedNextEdit": "Add Feature, Improvement, or Spike depending on whether this is delivery work or planning research.",
+        "sopSection": "Definition of done",
+        "currentRead": "The issue has useful verification detail, but the done state is not separated under the required heading.",
+        "whatToImprove": "Turn the current text into a Definition of done plus Acceptance criteria so another person can verify it quickly.",
+        "suggestedNextEdit": "Add a Definition of done heading before the verification text.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-57",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no labels.",
-        "whatToImprove": "Add a type label and product-surface label.",
-        "suggestedNextEdit": "Add a type label such as Feature and a Company Reports or Reports surface label if that is the intended surface.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-56",
-        "severity": "needs_fix",
-        "category": "in_progress_readiness",
-        "confidence": "high",
-        "currentRead": "This In Progress issue has no priority, type label, Definition of done, or Acceptance criteria.",
-        "whatToImprove": "Make the PPT export feature reviewable before continuing active work.",
-        "suggestedNextEdit": "Add priority, a Feature label, Definition of done, and acceptance checks.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Users can export a generated company report in PPT format using their branding and templates.",
+        "suggestedDefinitionOfDone": "Bynd receives Azure tenant alerts at the configured Bynd email address.",
         "suggestedAcceptanceCriteria": [
-          "Generate a company report and export it as a PPT.",
-          "Confirm the exported PPT uses the selected branding and template."
+          "Yogesh confirms the tenant-level alert group configuration.",
+          "A manual az cli alert test is triggered.",
+          "The Bynd email address receives the alert."
         ]
-      },
-      {
-        "issueId": "BYN-55",
-        "severity": "needs_fix",
-        "category": "in_progress_readiness",
-        "confidence": "high",
-        "currentRead": "This In Progress issue has strong verification detail but no priority or type label.",
-        "whatToImprove": "Add the required metadata for active work.",
-        "suggestedNextEdit": "Set the priority communicated by Nikhil and add the appropriate type label.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-54",
         "severity": "needs_fix",
-        "category": "todo_readiness",
+        "category": "improvement_scope",
         "confidence": "high",
-        "currentRead": "This Todo Improvement describes the proposed approach but not the Definition of done or Acceptance criteria.",
-        "whatToImprove": "State the observable loading behavior that proves the improvement is complete.",
-        "suggestedNextEdit": "Add a Definition of done and checks for citation click loading and scroll pagination.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Citation clicks load only the cited page plus the surrounding buffer first, and additional PDF pages load as the user scrolls.",
+        "sopSection": "Issue types",
+        "currentRead": "This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.",
+        "whatToImprove": "Add the current state and target state in terms someone can verify after the citation loading change.",
+        "suggestedNextEdit": "Add an Acceptance criteria section with the page-window behavior and expected loading behavior.",
+        "suggestedTitle": "Load only the cited PDF page window in chat citations",
+        "suggestedDefinitionOfDone": "Clicking a citation loads only the cited page plus the defined surrounding page buffer, with additional pages loaded as the user scrolls.",
         "suggestedAcceptanceCriteria": [
-          "Click a citation and confirm only the cited page plus the configured buffer loads initially.",
-          "Scroll through the PDF pane and confirm additional pages load through pagination."
-        ]
-      },
-      {
-        "issueId": "BYN-51",
-        "severity": "should_improve",
-        "category": "unclear_backlog_capture",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has an unclear title, no description, and no type label.",
-        "whatToImprove": "Make the captured work understandable enough for someone else to recognize later.",
-        "suggestedNextEdit": "Rename the title to the actual task and add a type label.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-50",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has a clear description but no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Bug, Feature, Chore, Spike, or Improvement based on the intended work type.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-49",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the issue type so the work can be filtered consistently.",
-        "suggestedNextEdit": "Add Bug if this is existing behavior that needs repair, or Improvement if this is planned resilience work.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-48",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the required type label while it remains captured in Backlog.",
-        "suggestedNextEdit": "Add Improvement if the work is to make existing parallel job handling more controlled.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-47",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the issue type so the work kind is clear.",
-        "suggestedNextEdit": "Add Chore or Improvement depending on whether this is planned upkeep or a behavior improvement.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-46",
-        "severity": "should_improve",
-        "category": "backlog_scoping",
-        "confidence": "medium",
-        "currentRead": "This Backlog issue mixes investigation with a possible implementation step and has no type label.",
-        "whatToImprove": "Worth checking whether the investigation should be a Spike before delivery work is scoped.",
-        "suggestedNextEdit": "Add a type label, and if using Spike, add the question, timebox, and output.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-45",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Feature or Improvement depending on whether this is new capability or an enhancement to existing metric search.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-44",
-        "severity": "needs_fix",
-        "category": "unassigned_in_progress",
-        "confidence": "high",
-        "currentRead": "This issue is In Progress but has no owner and no type label.",
-        "whatToImprove": "Active work needs a clear accountable owner and type label.",
-        "suggestedNextEdit": "Assign the owner or move it back to Backlog, and add the appropriate type label.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-43",
-        "severity": "needs_fix",
-        "category": "unassigned_in_progress",
-        "confidence": "high",
-        "currentRead": "This issue is In Progress but has no owner and no type label.",
-        "whatToImprove": "Active work needs an owner before it stays In Progress.",
-        "suggestedNextEdit": "Assign the owner or move it back to Backlog, and add the appropriate type label.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-39",
-        "severity": "gentle_suggestion",
-        "category": "description_structure",
-        "confidence": "medium",
-        "currentRead": "This In Progress issue has a Goal and How to Verify section that mostly map to the required fields.",
-        "whatToImprove": "Worth renaming those sections to the required Definition of done and Acceptance criteria headings for consistency.",
-        "suggestedNextEdit": "Rename Goal to Definition of done and How to Verify to Acceptance criteria.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-37",
-        "severity": "should_improve",
-        "category": "spike_readiness",
-        "confidence": "medium",
-        "currentRead": "This Spike has a timebox and output, but the question to answer is written as an activity.",
-        "whatToImprove": "Make the specific uncertainty explicit before starting the Spike.",
-        "suggestedNextEdit": "Add a Question to answer line at the top of the description.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": [
-          "Question to answer: What indexing approach should Bynd use to make large-corpus retrieval more accurate and faster while keeping indexes updated?"
-        ]
-      },
-      {
-        "issueId": "BYN-36",
-        "severity": "needs_fix",
-        "category": "todo_readiness",
-        "confidence": "high",
-        "currentRead": "This Todo issue has priority and a Feature label, but no Definition of done or Acceptance criteria.",
-        "whatToImprove": "Add the observable frontend behavior needed to complete the bi-weekly cadence work.",
-        "suggestedNextEdit": "Add Definition of done and Acceptance criteria to the description.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Users can configure a bi-weekly newsletter cadence on the Intelligence frontend.",
-        "suggestedAcceptanceCriteria": [
-          "Create or edit a newsletter cadence from the frontend and select bi-weekly."
+          "Clicking a citation loads the cited page plus three pages before and after when available.",
+          "Scrolling loads additional pages through pagination.",
+          "The full PDF is not loaded on the initial citation click."
         ]
       },
       {
@@ -917,123 +420,222 @@
         "severity": "needs_fix",
         "category": "todo_readiness",
         "confidence": "high",
-        "currentRead": "This urgent Todo issue has a Feature label but no Definition of done or Acceptance criteria.",
-        "whatToImprove": "Add the checks that show backend bi-weekly newsletter support and the PropEquity shift are complete.",
-        "suggestedNextEdit": "Add a Definition of done and two acceptance checks.",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.",
+        "whatToImprove": "Define what backend support for bi-weekly runs includes and how PropEquity migration will be checked.",
+        "suggestedNextEdit": "Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Backend newsletter runs support a bi-weekly cadence and PropEquity newsletters are shifted to bi-weekly.",
+        "suggestedDefinitionOfDone": "The backend supports bi-weekly newsletter runs, and PropEquity newsletters are configured to use the bi-weekly cadence.",
         "suggestedAcceptanceCriteria": [
-          "Run or schedule a bi-weekly newsletter cadence on backend.",
-          "Confirm PropEquity newsletters are configured for bi-weekly runs."
+          "A bi-weekly newsletter cadence can be configured on the backend.",
+          "PropEquity is set to the bi-weekly cadence.",
+          "A test run confirms the configured cadence is used."
         ]
       },
       {
-        "issueId": "BYN-34",
-        "severity": "should_improve",
-        "category": "missing_type_label",
+        "issueId": "BYN-36",
+        "severity": "needs_fix",
+        "category": "todo_readiness",
         "confidence": "high",
-        "currentRead": "This Backlog issue has acceptance criteria but no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Improvement if this is making the existing validation architecture support more services.",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This Todo has owner, priority, and type label, but the description does not define completion or checks.",
+        "whatToImprove": "State the frontend behavior that proves bi-weekly cadence support exists.",
+        "suggestedNextEdit": "Add a Definition of done and two acceptance criteria for the cadence setup UI.",
         "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-33",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has acceptance criteria but no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Improvement if this extends an existing validation API to more consumers.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-32",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has acceptance criteria but no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Improvement if this generalizes the existing validation input contract.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-30",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Chore if this is an operational verification task.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-27",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Chore if this is a planned validation review task, or Spike if the review is meant to answer a bounded uncertainty.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-25",
-        "severity": "should_improve",
-        "category": "description_structure",
-        "confidence": "medium",
-        "currentRead": "This Todo issue has a Goal and acceptance criteria, but not a Definition of done heading.",
-        "whatToImprove": "Use the required heading so the done outcome is easy to find.",
-        "suggestedNextEdit": "Rename Goal to Definition of done.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "Manual quality signoff for the sentence judge production lane is completed and signoff notes are captured.",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-24",
-        "severity": "should_improve",
-        "category": "missing_type_label",
-        "confidence": "high",
-        "currentRead": "This Backlog issue has no type label.",
-        "whatToImprove": "Add the required issue type label.",
-        "suggestedNextEdit": "Add Improvement or Bug based on how the team wants to classify citation placement work.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
+        "suggestedDefinitionOfDone": "Users can set up a bi-weekly newsletter cadence from the Intelligence frontend.",
+        "suggestedAcceptanceCriteria": [
+          "Bi-weekly appears as a cadence option in the newsletter setup flow.",
+          "Saving the setup sends the bi-weekly cadence value to the backend."
+        ]
       },
       {
         "issueId": "BYN-19",
         "severity": "needs_fix",
-        "category": "todo_readiness",
-        "confidence": "medium",
-        "currentRead": "This Todo issue is labeled Improvement, but the description reads like planning work and has no Definition of done or Acceptance criteria.",
-        "whatToImprove": "Worth checking whether this should be a Spike with a recommendation output, or a delivery Improvement with measurable current and target states.",
-        "suggestedNextEdit": "If this is planning, change the type to Spike and add Question to answer, Timebox, and Output.",
-        "suggestedTitle": "Plan Chat agent architecture for 50+ documents",
-        "suggestedDefinitionOfDone": "A recommended agent-flow architecture for 50+ documents is documented with expected latency impact and next implementation steps.",
+        "category": "improvement_scope",
+        "confidence": "high",
+        "sopSection": "Issue types",
+        "currentRead": "This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.",
+        "whatToImprove": "Frame the planning work as a concrete architecture recommendation or document.",
+        "suggestedNextEdit": "Add a Definition of done that makes the output a reviewed architecture plan.",
+        "suggestedTitle": "Recommend Chat agent architecture for 50+ documents",
+        "suggestedDefinitionOfDone": "A proposed Chat agent architecture for 50+ documents is documented with expected latency impact and next implementation steps.",
         "suggestedAcceptanceCriteria": [
-          "Document the current supported document range and the proposed target.",
-          "Share the architecture recommendation and next steps."
+          "The plan covers agent fan-out and response-latency reduction.",
+          "The plan states the current 20-30 document limit and the 50+ document target.",
+          "Next implementation issues are created or linked."
         ]
+      },
+      {
+        "issueId": "BYN-61",
+        "severity": "needs_fix",
+        "category": "todo_readiness",
+        "confidence": "high",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+        "whatToImprove": "Either make it ready for this week or keep it as captured work in Backlog.",
+        "suggestedNextEdit": "Move it to Backlog unless priority and the ready-to-start fields are added now.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "The PPT Agent is integrated into the main company reports application and can be used from the intended workflow.",
+        "suggestedAcceptanceCriteria": [
+          "The main company reports application can call the PPT Agent.",
+          "A generated company report can be exported through the integrated flow.",
+          "The integration path is documented or linked in the issue."
+        ]
+      },
+      {
+        "issueId": "BYN-60",
+        "severity": "needs_fix",
+        "category": "todo_readiness",
+        "confidence": "high",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+        "whatToImprove": "Turn the template examples work into a verifiable deliverable before keeping it in Todo.",
+        "suggestedNextEdit": "Add a type label and a Definition of done that states where the examples will live.",
+        "suggestedTitle": "Add standard layout-template examples by persona",
+        "suggestedDefinitionOfDone": "The layout designer agent has standard template examples for the agreed personas.",
+        "suggestedAcceptanceCriteria": [
+          "The agreed personas are listed in the issue.",
+          "Each persona has at least one standard template example.",
+          "The examples are available where the layout designer agent uses or references them."
+        ]
+      },
+      {
+        "issueId": "BYN-59",
+        "severity": "needs_fix",
+        "category": "todo_readiness",
+        "confidence": "high",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+        "whatToImprove": "Make the planning output observable, such as a UI/UX spec or decision note.",
+        "suggestedNextEdit": "Add a Definition of done that names the UI/UX artifact to be produced.",
+        "suggestedTitle": "Write UI/UX plan for the PPT export workflow",
+        "suggestedDefinitionOfDone": "A UI/UX plan for the PPT export workflow is documented and ready for implementation discussion.",
+        "suggestedAcceptanceCriteria": [
+          "The planned user flow is documented.",
+          "The export entry point and output behavior are covered.",
+          "Open implementation questions are listed."
+        ]
+      },
+      {
+        "issueId": "BYN-72",
+        "severity": "should_improve",
+        "category": "parent_issue_clarity",
+        "confidence": "medium",
+        "sopSection": "Definition of done",
+        "currentRead": "This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.",
+        "whatToImprove": "Add a short parent-level outcome so the bundle can be closed without rereading every sub-issue.",
+        "suggestedNextEdit": "Add one Definition of done sentence that summarizes the combined speed and coverage outcome.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "Validation speed and coverage improvements from the linked sub-issues are implemented and verified together.",
+        "suggestedAcceptanceCriteria": [
+          "Linked sub-issues for parallelism, text checks, and blob PDF reads are completed or explicitly deferred.",
+          "The combined verification evidence is linked from this parent issue."
+        ]
+      },
+      {
+        "issueId": "BYN-56",
+        "severity": "needs_fix",
+        "category": "in_progress_readiness",
+        "confidence": "high",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.",
+        "whatToImprove": "Add the fields that would have made it ready before active work started.",
+        "suggestedNextEdit": "Add a type label and Acceptance criteria for a successful PPT export.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "Users can export a generated company report as a PPT using their branding and templates.",
+        "suggestedAcceptanceCriteria": [
+          "A generated report can be exported in PPT format.",
+          "The export applies the selected branding or template.",
+          "The exported PPT opens successfully for review."
+        ]
+      },
+      {
+        "issueId": "BYN-55",
+        "severity": "should_improve",
+        "category": "missing_type_label",
+        "confidence": "high",
+        "sopSection": "Issue types",
+        "currentRead": "This In Progress issue has strong verification detail, but no type label and no priority.",
+        "whatToImprove": "Add the issue type and priority so the active work matches the SOP fields.",
+        "suggestedNextEdit": "Add the most fitting type label, likely Spike if the output is an architecture recommendation rather than shipped code.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "",
+        "suggestedAcceptanceCriteria": []
+      },
+      {
+        "issueId": "BYN-44",
+        "severity": "needs_fix",
+        "category": "in_progress_owner",
+        "confidence": "high",
+        "sopSection": "Issue statuses",
+        "currentRead": "This issue is In Progress but unassigned.",
+        "whatToImprove": "Assign the active owner so the person accountable for closing the loop is clear.",
+        "suggestedNextEdit": "Set the assignee to the person actively working on deterministic figure verification.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "",
+        "suggestedAcceptanceCriteria": []
+      },
+      {
+        "issueId": "BYN-43",
+        "severity": "needs_fix",
+        "category": "in_progress_owner",
+        "confidence": "high",
+        "sopSection": "Issue statuses",
+        "currentRead": "This issue is In Progress but unassigned.",
+        "whatToImprove": "Assign the active owner so the status reflects someone currently working on it.",
+        "suggestedNextEdit": "Set the assignee to the person actively working on native-text versus OCR classification.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "",
+        "suggestedAcceptanceCriteria": []
+      },
+      {
+        "issueId": "BYN-76",
+        "severity": "should_improve",
+        "category": "missing_type_label",
+        "confidence": "medium",
+        "sopSection": "Issue types",
+        "currentRead": "This backlog benchmark issue has product-surface labels, but no type label.",
+        "whatToImprove": "Add the issue type so it is clear whether this is a Spike, Chore, or other work type.",
+        "suggestedNextEdit": "If this is research, add the Spike label plus a Question, Timebox, and Output.",
+        "suggestedTitle": "Benchmark financial metric retrieval accuracy across models",
+        "suggestedDefinitionOfDone": "",
+        "suggestedAcceptanceCriteria": []
+      },
+      {
+        "issueId": "BYN-58",
+        "severity": "should_improve",
+        "category": "missing_type_label",
+        "confidence": "high",
+        "sopSection": "Issue types",
+        "currentRead": "This backlog issue has a Reports label but no type label.",
+        "whatToImprove": "Add the type label so the work category is clear at a glance.",
+        "suggestedNextEdit": "Add a type label, likely Spike if the immediate output is an integration plan.",
+        "suggestedTitle": "Plan validation service integration for company reports",
+        "suggestedDefinitionOfDone": "",
+        "suggestedAcceptanceCriteria": []
+      },
+      {
+        "issueId": "BYN-51",
+        "severity": "should_improve",
+        "category": "unclear_backlog_title",
+        "confidence": "high",
+        "sopSection": "Creating an issue",
+        "currentRead": "This backlog title is too terse for someone else to understand, and it has no type label.",
+        "whatToImprove": "Rewrite the title as the remembered task and add a type label.",
+        "suggestedNextEdit": "Replace the title with a clear task phrase and add the matching type label.",
+        "suggestedTitle": "",
+        "suggestedDefinitionOfDone": "",
+        "suggestedAcceptanceCriteria": []
       },
       {
         "issueId": "BYN-11",
         "severity": "needs_fix",
         "category": "todo_readiness",
         "confidence": "high",
-        "currentRead": "This Todo issue has no description, priority, owner, or type label.",
-        "whatToImprove": "Add the required Todo details or move it back to Backlog until scoped.",
-        "suggestedNextEdit": "Move to Backlog unless it has an owner, priority, Definition of done, Acceptance criteria, and alignment to start this week.",
+        "sopSection": "Backlog-to-Todo",
+        "currentRead": "This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.",
+        "whatToImprove": "Move it to Backlog unless it is ready to start this week with all required fields.",
+        "suggestedNextEdit": "Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.",
         "suggestedTitle": "Update DB to support project-in-project architecture",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
@@ -1041,52 +643,256 @@
       {
         "issueId": "BYN-3",
         "severity": "gentle_suggestion",
-        "category": "workspace_placeholder",
+        "category": "starter_issue_hygiene",
         "confidence": "medium",
-        "currentRead": "This looks like a default Linear onboarding item rather than a Bynd task.",
-        "whatToImprove": "Worth checking whether it should remain on the active Bynd board.",
-        "suggestedNextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-4",
-        "severity": "gentle_suggestion",
-        "category": "workspace_placeholder",
-        "confidence": "medium",
-        "currentRead": "This looks like a default Linear onboarding item rather than a Bynd task.",
-        "whatToImprove": "Worth checking whether it should remain on the active Bynd board.",
-        "suggestedNextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-2",
-        "severity": "gentle_suggestion",
-        "category": "workspace_placeholder",
-        "confidence": "medium",
-        "currentRead": "This looks like a default Linear onboarding item rather than a Bynd task.",
-        "whatToImprove": "Worth checking whether it should remain on the active Bynd board.",
-        "suggestedNextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
-        "suggestedTitle": "",
-        "suggestedDefinitionOfDone": "",
-        "suggestedAcceptanceCriteria": []
-      },
-      {
-        "issueId": "BYN-1",
-        "severity": "gentle_suggestion",
-        "category": "workspace_placeholder",
-        "confidence": "medium",
-        "currentRead": "This looks like a default Linear onboarding item rather than a Bynd task.",
-        "whatToImprove": "Worth checking whether it should remain on the active Bynd board.",
-        "suggestedNextEdit": "If no one plans to act on it, move it to Canceled with a one-line note.",
+        "sopSection": "What goes in Linear",
+        "currentRead": "This reads like Linear starter guidance rather than a current Bynd task.",
+        "whatToImprove": "Worth checking whether this should remain in active work tracking.",
+        "suggestedNextEdit": "If this is not a current Bynd task, move it to Canceled with a one-line reason.",
         "suggestedTitle": "",
         "suggestedDefinitionOfDone": "",
         "suggestedAcceptanceCriteria": []
       }
     ],
     "source": "azure-openai"
-  }
+  },
+  "dmDrafts": [
+    {
+      "recipient": "Aditya Singh",
+      "itemCount": 2,
+      "items": [
+        {
+          "recipient": "Aditya Singh",
+          "issueId": "BYN-11",
+          "title": "Update DB to support project-in-poject architecture",
+          "url": "https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.",
+          "nextEdit": "Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.",
+          "sopSection": "Backlog-to-Todo"
+        },
+        {
+          "recipient": "Aditya Singh",
+          "issueId": "BYN-36",
+          "title": "Add support for Bi-Weekly newsletter on Frontend",
+          "url": "https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This Todo has owner, priority, and type label, but the description does not define completion or checks.",
+          "nextEdit": "Add a Definition of done and two acceptance criteria for the cadence setup UI.",
+          "sopSection": "Backlog-to-Todo"
+        }
+      ],
+      "text": "Hi Aditya Singh, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-11: Update DB to support project-in-poject architecture\n   Link: https://linear.app/byndai/issue/BYN-11/update-db-to-support-project-in-poject-architecture\n   Noticed: This Todo is unassigned and has no priority, type label, description, Definition of done, or acceptance criteria.\n   One-line fix: Move to Backlog, or add owner, priority, type label, Definition of done, and Acceptance criteria.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-36: Add support for Bi-Weekly newsletter on Frontend\n   Link: https://linear.app/byndai/issue/BYN-36/add-support-for-bi-weekly-newsletter-on-frontend\n   Noticed: This Todo has owner, priority, and type label, but the description does not define completion or checks.\n   One-line fix: Add a Definition of done and two acceptance criteria for the cadence setup UI.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Ishan Patel",
+      "itemCount": 1,
+      "items": [
+        {
+          "recipient": "Ishan Patel",
+          "issueId": "BYN-51",
+          "title": "eme Sources",
+          "url": "https://linear.app/byndai/issue/BYN-51/eme-sources",
+          "category": "unclear_backlog_title",
+          "severity": "should_improve",
+          "confidence": "high",
+          "noticed": "This backlog title is too terse for someone else to understand, and it has no type label.",
+          "nextEdit": "Replace the title with a clear task phrase and add the matching type label.",
+          "sopSection": "Creating an issue"
+        }
+      ],
+      "text": "Hi Ishan Patel, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-51: eme Sources\n   Link: https://linear.app/byndai/issue/BYN-51/eme-sources\n   Noticed: This backlog title is too terse for someone else to understand, and it has no type label.\n   One-line fix: Replace the title with a clear task phrase and add the matching type label.\n   SOP reference: Creating an issue\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Mrinal Kanwar",
+      "itemCount": 1,
+      "items": [
+        {
+          "recipient": "Mrinal Kanwar",
+          "issueId": "BYN-72",
+          "title": "Validation speed and coverage improvements,",
+          "url": "https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements",
+          "category": "parent_issue_clarity",
+          "severity": "should_improve",
+          "confidence": "medium",
+          "noticed": "This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.",
+          "nextEdit": "Add one Definition of done sentence that summarizes the combined speed and coverage outcome.",
+          "sopSection": "Definition of done"
+        }
+      ],
+      "text": "Hi Mrinal Kanwar, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-72: Validation speed and coverage improvements,\n   Link: https://linear.app/byndai/issue/BYN-72/validation-speed-and-coverage-improvements\n   Noticed: This In Progress parent issue says details are in sub-issues, but the parent does not state its own done state.\n   One-line fix: Add one Definition of done sentence that summarizes the combined speed and coverage outcome.\n   SOP reference: Definition of done\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Nikhil",
+      "itemCount": 2,
+      "items": [
+        {
+          "recipient": "Nikhil",
+          "issueId": "BYN-78",
+          "title": "Draft press release",
+          "url": "https://linear.app/byndai/issue/BYN-78/draft-press-release",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.",
+          "nextEdit": "Add a Definition of done sentence that names the completed press-release artifact and outreach status.",
+          "sopSection": "Backlog-to-Todo"
+        },
+        {
+          "recipient": "Nikhil",
+          "issueId": "BYN-79",
+          "title": "Connect with Sanjay",
+          "url": "https://linear.app/byndai/issue/BYN-79/connect-with-sanjay",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.",
+          "nextEdit": "Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.",
+          "sopSection": "Backlog-to-Todo"
+        }
+      ],
+      "text": "Hi Nikhil, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-78: Draft press release\n   Link: https://linear.app/byndai/issue/BYN-78/draft-press-release\n   Noticed: This is in Todo with priority and owner, but it does not yet state the finished outcome or acceptance checks.\n   One-line fix: Add a Definition of done sentence that names the completed press-release artifact and outreach status.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-79: Connect with Sanjay\n   Link: https://linear.app/byndai/issue/BYN-79/connect-with-sanjay\n   Noticed: This is in Todo with owner and priority, but it lacks a type label, Definition of done, and acceptance criteria.\n   One-line fix: Add a Definition of done heading with: Sanjay has confirmed the phase two discussion path, or a call is scheduled with the investment team scope captured.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Pratham Batra",
+      "itemCount": 2,
+      "items": [
+        {
+          "recipient": "Pratham Batra",
+          "issueId": "BYN-43",
+          "title": "Native-text vs OCR/scanned classification for Download Financials",
+          "url": "https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials",
+          "category": "in_progress_owner",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This issue is In Progress but unassigned.",
+          "nextEdit": "Set the assignee to the person actively working on native-text versus OCR classification.",
+          "sopSection": "Issue statuses"
+        },
+        {
+          "recipient": "Pratham Batra",
+          "issueId": "BYN-44",
+          "title": "Deterministic figure verification and highlighting in Download Financials",
+          "url": "https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download",
+          "category": "in_progress_owner",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This issue is In Progress but unassigned.",
+          "nextEdit": "Set the assignee to the person actively working on deterministic figure verification.",
+          "sopSection": "Issue statuses"
+        }
+      ],
+      "text": "Hi Pratham Batra, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-43: Native-text vs OCR/scanned classification for Download Financials\n   Link: https://linear.app/byndai/issue/BYN-43/native-text-vs-ocrscanned-classification-for-download-financials\n   Noticed: This issue is In Progress but unassigned.\n   One-line fix: Set the assignee to the person actively working on native-text versus OCR classification.\n   SOP reference: Issue statuses\n\n2. BYN-44: Deterministic figure verification and highlighting in Download Financials\n   Link: https://linear.app/byndai/issue/BYN-44/deterministic-figure-verification-and-highlighting-in-download\n   Noticed: This issue is In Progress but unassigned.\n   One-line fix: Set the assignee to the person actively working on deterministic figure verification.\n   SOP reference: Issue statuses\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Sanidhya",
+      "itemCount": 3,
+      "items": [
+        {
+          "recipient": "Sanidhya",
+          "issueId": "BYN-19",
+          "title": "Plan new architecture for agent flow",
+          "url": "https://linear.app/byndai/issue/BYN-19/plan-new-architecture-for-agent-flow",
+          "category": "improvement_scope",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.",
+          "nextEdit": "Add a Definition of done that makes the output a reviewed architecture plan.",
+          "sopSection": "Issue types"
+        },
+        {
+          "recipient": "Sanidhya",
+          "issueId": "BYN-35",
+          "title": "Add support for Bi-Weekly newsletter runs",
+          "url": "https://linear.app/byndai/issue/BYN-35/add-support-for-bi-weekly-newsletter-runs",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.",
+          "nextEdit": "Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.",
+          "sopSection": "Backlog-to-Todo"
+        },
+        {
+          "recipient": "Sanidhya",
+          "issueId": "BYN-54",
+          "title": "Change citation loading approach in chat view pane",
+          "url": "https://linear.app/byndai/issue/BYN-54/change-citation-loading-approach-in-chat-view-pane",
+          "category": "improvement_scope",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.",
+          "nextEdit": "Add an Acceptance criteria section with the page-window behavior and expected loading behavior.",
+          "sopSection": "Issue types"
+        }
+      ],
+      "text": "Hi Sanidhya, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-19: Plan new architecture for agent flow\n   Link: https://linear.app/byndai/issue/BYN-19/plan-new-architecture-for-agent-flow\n   Noticed: This Improvement mentions the current scale and desired larger scale, but lacks a defined deliverable and acceptance checks.\n   One-line fix: Add a Definition of done that makes the output a reviewed architecture plan.\n   SOP reference: Issue types\n\n2. BYN-35: Add support for Bi-Weekly newsletter runs\n   Link: https://linear.app/byndai/issue/BYN-35/add-support-for-bi-weekly-newsletter-runs\n   Noticed: This urgent Todo has owner, priority, and type label, but no Definition of done or acceptance criteria.\n   One-line fix: Add a Definition of done sentence covering backend cadence support and PropEquity switch-over.\n   SOP reference: Backlog-to-Todo\n\n3. BYN-54: Change citation loading approach in chat view pane\n   Link: https://linear.app/byndai/issue/BYN-54/change-citation-loading-approach-in-chat-view-pane\n   Noticed: This Improvement describes the current pain and approach, but not a measurable target state or acceptance checks.\n   One-line fix: Add an Acceptance criteria section with the page-window behavior and expected loading behavior.\n   SOP reference: Issue types\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Shashank Rajak",
+      "itemCount": 3,
+      "items": [
+        {
+          "recipient": "Shashank Rajak",
+          "issueId": "BYN-56",
+          "title": "PPT Exports",
+          "url": "https://linear.app/byndai/issue/BYN-56/ppt-exports",
+          "category": "in_progress_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.",
+          "nextEdit": "Add a type label and Acceptance criteria for a successful PPT export.",
+          "sopSection": "Backlog-to-Todo"
+        },
+        {
+          "recipient": "Shashank Rajak",
+          "issueId": "BYN-59",
+          "title": "Plan out UI/UX for the PPT export workflow",
+          "url": "https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+          "nextEdit": "Add a Definition of done that names the UI/UX artifact to be produced.",
+          "sopSection": "Backlog-to-Todo"
+        },
+        {
+          "recipient": "Shashank Rajak",
+          "issueId": "BYN-60",
+          "title": "Add examples for standard templates across different persona for the layout designer agent",
+          "url": "https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the",
+          "category": "todo_readiness",
+          "severity": "needs_fix",
+          "confidence": "high",
+          "noticed": "This Todo has no priority, type label, description, Definition of done, or acceptance criteria.",
+          "nextEdit": "Add a type label and a Definition of done that states where the examples will live.",
+          "sopSection": "Backlog-to-Todo"
+        }
+      ],
+      "text": "Hi Shashank Rajak, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-56: PPT Exports\n   Link: https://linear.app/byndai/issue/BYN-56/ppt-exports\n   Noticed: This In Progress issue has an owner and broad outcome, but no priority, type label, or acceptance criteria.\n   One-line fix: Add a type label and Acceptance criteria for a successful PPT export.\n   SOP reference: Backlog-to-Todo\n\n2. BYN-59: Plan out UI/UX for the PPT export workflow\n   Link: https://linear.app/byndai/issue/BYN-59/plan-out-uiux-for-the-ppt-export-workflow\n   Noticed: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.\n   One-line fix: Add a Definition of done that names the UI/UX artifact to be produced.\n   SOP reference: Backlog-to-Todo\n\n3. BYN-60: Add examples for standard templates across different persona for the layout designer agent\n   Link: https://linear.app/byndai/issue/BYN-60/add-examples-for-standard-templates-across-different-persona-for-the\n   Noticed: This Todo has no priority, type label, description, Definition of done, or acceptance criteria.\n   One-line fix: Add a type label and a Definition of done that states where the examples will live.\n   SOP reference: Backlog-to-Todo\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "kabir bahl",
+      "itemCount": 1,
+      "items": [
+        {
+          "recipient": "kabir bahl",
+          "issueId": "BYN-76",
+          "title": "Metric retrieval accuracy",
+          "url": "https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy",
+          "category": "missing_type_label",
+          "severity": "should_improve",
+          "confidence": "medium",
+          "noticed": "This backlog benchmark issue has product-surface labels, but no type label.",
+          "nextEdit": "If this is research, add the Spike label plus a Question, Timebox, and Output.",
+          "sopSection": "Issue types"
+        }
+      ],
+      "text": "Hi kabir bahl, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-76: Metric retrieval accuracy\n   Link: https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy\n   Noticed: This backlog benchmark issue has product-surface labels, but no type label.\n   One-line fix: If this is research, add the Spike label plus a Question, Timebox, and Output.\n   SOP reference: Issue types\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    }
+  ],
+  "suppressedRepeats": []
 }

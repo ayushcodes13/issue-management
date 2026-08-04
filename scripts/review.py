@@ -4,6 +4,7 @@ from pathlib import Path
 from lib.ai import findings_from_analysis, review_issues_with_ai
 from lib.linear import fetch_active_issues
 from lib.report import write_reports
+from lib.state import load_history
 
 
 def main():
@@ -21,7 +22,8 @@ def main():
     print(f"Generated suggestions for {suggestion_count} issues.")
 
     print("Writing results...")
-    team_summary = write_reports(out_dir, issues, findings, analysis, mode)
+    history = load_history()
+    team_summary = write_reports(out_dir, issues, findings, analysis, mode, history)
 
     print(team_summary)
     print(f"\nWrote results to {out_dir}")
