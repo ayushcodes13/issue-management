@@ -56,8 +56,9 @@ Rules:
 - Never repeat the same issue/category to the same person; see
   `state-tracking.md`.
 
-Actual DM sending is intentionally separate from summary posting and should stay
-behind an explicit send flag once implemented.
+Actual DM sending is intentionally separate from summary posting. Preview with
+`./send_dms.sh`; send only with `./send_dms.sh --send --yes`. Successful sends
+update `state/history.json` for issue-level nudges.
 
 ## Follow-Up Commands
 

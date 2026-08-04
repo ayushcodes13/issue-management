@@ -19,8 +19,8 @@ regenerated.
 
 - Dry runs read `state/history.json` and suppress repeat DM draft items.
 - Dry runs do not write to `state/history.json`.
-- Actual DM sending is still a later step; when that is implemented, it should
-  write to `state/history.json` only after a DM send succeeds.
+- `./send_dms.sh --send --yes` writes to `state/history.json` only after a DM
+  send succeeds.
 - Suppressed repeats are written to `results/friction-notes.md`.
 
 ## Shape

@@ -21,6 +21,7 @@ skills/weekly-linear-issue-review/scripts/post-summary.sh
 docs/how-we-use-linear.md
 scripts/review.py
 scripts/post.py
+scripts/send_dms.py
 results/
 state/history.json
 ```
@@ -38,6 +39,14 @@ Required only for Slack posting:
 ```text
 SLACK_BOT_TOKEN
 SLACK_CHANNEL_ID
+```
+
+DM sending also requires these Slack bot scopes:
+
+```text
+chat:write
+im:write
+users:read
 ```
 
 Required for review generation:
@@ -84,6 +93,33 @@ To post the latest summary to Slack:
 ```
 
 `./post.sh` posts only `results/summary.md`. It does not send DM drafts.
+
+To preview generated DMs without sending anything:
+
+```bash
+./send_dms.sh
+```
+
+To validate that draft recipients resolve to Slack users without sending:
+
+```bash
+./send_dms.sh --validate-users
+```
+
+To send one reviewed draft:
+
+```bash
+./send_dms.sh --recipient "Devayush Rout" --send --yes
+```
+
+To send every reviewed draft:
+
+```bash
+./send_dms.sh --send --yes
+```
+
+Successful DM sends update `state/history.json` for issue-level nudges. Dry-runs
+never update state.
 
 ## Results
 
@@ -149,3 +185,4 @@ Manual workflow runs still use the `post_to_slack` input.
 - No status changes.
 - Public Slack summary has no owner names.
 - DM drafts are generated locally but not sent by `post.sh`.
+- DM sending requires `./send_dms.sh --send --yes`.

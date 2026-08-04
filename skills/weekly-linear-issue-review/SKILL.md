@@ -98,6 +98,36 @@ or:
 skills/weekly-linear-issue-review/scripts/post-summary.sh
 ```
 
+To preview generated DMs without sending:
+
+```bash
+./send_dms.sh
+```
+
+To validate Slack user resolution without sending:
+
+```bash
+./send_dms.sh --validate-users
+```
+
+or:
+
+```bash
+skills/weekly-linear-issue-review/scripts/send-dms.sh --validate-users
+```
+
+To send after human review:
+
+```bash
+./send_dms.sh --send --yes
+```
+
+or:
+
+```bash
+skills/weekly-linear-issue-review/scripts/send-dms.sh --send --yes
+```
+
 ## Results
 
 Each run replaces these files:
@@ -139,5 +169,6 @@ Do not describe this as a deterministic compliance report. It is an AI-assisted 
 - Do not auto-assign owners.
 - Do not move issue statuses.
 - Do not post detailed reports or DMs to Slack unless explicitly asked.
+- DM sending must use `./send_dms.sh --send --yes`; dry-run is the default.
 - Public Slack summaries must not name owners or DM recipients.
 - Keep `.env` local and ignored by git.
