@@ -19,7 +19,7 @@ Main themes:
 
 Suggested follow-ups:
 - 20 issues have AI suggestions.
-- 8 people have short DM drafts in `results/dms/`.
+- 9 people have short DM drafts in `results/dms/`.
 
 Positive example to copy:
 - BYN-66: Update industry report pipeline to new blob output structure - https://linear.app/byndai/issue/BYN-66/update-industry-report-pipeline-to-new-blob-output-structure

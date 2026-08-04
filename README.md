@@ -104,7 +104,7 @@ results/slack.json
 
 Use `summary.md` for the public/shadow Slack post. It contains aggregate counts only and no owner names.
 
-Use `results/dms/` for per-person DM drafts. Each draft is capped at three items.
+Use `results/dms/` for per-person DM drafts. Issue-suggestion drafts are capped at three items. If someone has no issue-level nudge but the AI produced a useful owner note, the draft can be a light "no specific nudge this week" message.
 
 Use `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific edits, `friction-notes.md` for repeat-suppression notes, and `report.md` for the full review.
 

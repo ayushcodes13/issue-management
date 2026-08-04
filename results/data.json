@@ -659,6 +659,7 @@
   "dmDrafts": [
     {
       "recipient": "Aditya Singh",
+      "kind": "issue_suggestions",
       "itemCount": 2,
       "items": [
         {
@@ -690,6 +691,7 @@
     },
     {
       "recipient": "Ishan Patel",
+      "kind": "issue_suggestions",
       "itemCount": 1,
       "items": [
         {
@@ -709,6 +711,7 @@
     },
     {
       "recipient": "Mrinal Kanwar",
+      "kind": "issue_suggestions",
       "itemCount": 1,
       "items": [
         {
@@ -728,6 +731,7 @@
     },
     {
       "recipient": "Nikhil",
+      "kind": "issue_suggestions",
       "itemCount": 2,
       "items": [
         {
@@ -759,6 +763,7 @@
     },
     {
       "recipient": "Pratham Batra",
+      "kind": "issue_suggestions",
       "itemCount": 2,
       "items": [
         {
@@ -790,6 +795,7 @@
     },
     {
       "recipient": "Sanidhya",
+      "kind": "issue_suggestions",
       "itemCount": 3,
       "items": [
         {
@@ -833,6 +839,7 @@
     },
     {
       "recipient": "Shashank Rajak",
+      "kind": "issue_suggestions",
       "itemCount": 3,
       "items": [
         {
@@ -876,6 +883,7 @@
     },
     {
       "recipient": "kabir bahl",
+      "kind": "issue_suggestions",
       "itemCount": 1,
       "items": [
         {
@@ -892,6 +900,13 @@
         }
       ],
       "text": "Hi kabir bahl, here are a few Linear SOP suggestions from this week's AI-assisted review.\nThis is a draft/helper, not a judgement. Feel free to ignore anything it got wrong.\n\n1. BYN-76: Metric retrieval accuracy\n   Link: https://linear.app/byndai/issue/BYN-76/metric-retrieval-accuracy\n   Noticed: This backlog benchmark issue has product-surface labels, but no type label.\n   One-line fix: If this is research, add the Spike label plus a Question, Timebox, and Output.\n   SOP reference: Issue types\n\nIf a rule seems wrong or slows you down, raise it at standup or the Friday review."
+    },
+    {
+      "recipient": "Devayush Rout",
+      "kind": "owner_note",
+      "itemCount": 0,
+      "items": [],
+      "text": "Hi Devayush Rout, no specific Linear SOP nudge for you this week.\n\nThe review noted that most owned validation items are well scoped; a couple of backlog items mainly need type labels for SOP consistency.\nA couple of light follow-ups:\n- Add a type label to BYN-27\n- Keep using the BYN-66 structure for future validation delivery issues\n\nThis is a draft/helper, not a judgement. If a rule seems wrong or slows you down, raise it at standup or the Friday review."
     }
   ],
   "suppressedRepeats": []

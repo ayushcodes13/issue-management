@@ -19,7 +19,7 @@ def write_reports(out_dir, issues, findings, analysis, mode, history=None):
         elif old_file.is_dir():
             shutil.rmtree(old_file)
 
-    dm_drafts, suppressed = build_dm_drafts(issues, findings, history)
+    dm_drafts, suppressed = build_dm_drafts_with_analysis(issues, findings, analysis, history)
     team_summary = render_team_summary(issues, findings, analysis, mode, dm_drafts)
 
     artifacts = {
@@ -52,6 +52,10 @@ def write_reports(out_dir, issues, findings, analysis, mode, history=None):
 
 
 def build_dm_drafts(issues, findings, history):
+    return build_dm_drafts_with_analysis(issues, findings, {}, history)
+
+
+def build_dm_drafts_with_analysis(issues, findings, analysis, history):
     issues_by_id = {issue.get("identifier"): issue for issue in issues}
     by_recipient = defaultdict(list)
     suppressed = []
@@ -72,17 +76,41 @@ def build_dm_drafts(issues, findings, history):
         by_recipient[recipient].append(item)
 
     drafts = []
+    recipients_with_issue_items = set(by_recipient)
     for recipient in sorted(by_recipient):
         items = by_recipient[recipient][:MAX_DM_ITEMS]
         drafts.append(
             {
                 "recipient": recipient,
+                "kind": "issue_suggestions",
                 "itemCount": len(items),
                 "items": items,
                 "text": render_dm_text(recipient, items),
             }
         )
+    drafts.extend(owner_note_drafts(analysis, recipients_with_issue_items))
     return drafts, suppressed
+
+
+def owner_note_drafts(analysis, excluded_recipients):
+    drafts = []
+    for note in analysis.get("ownerNotes", []):
+        recipient = note.get("owner")
+        if not recipient or recipient in excluded_recipients or recipient == "Unassigned":
+            continue
+        text = render_owner_note_dm_text(note)
+        if not text:
+            continue
+        drafts.append(
+            {
+                "recipient": recipient,
+                "kind": "owner_note",
+                "itemCount": 0,
+                "items": [],
+                "text": text,
+            }
+        )
+    return sorted(drafts, key=lambda draft: draft["recipient"].lower())
 
 
 def recipient_for_issue(issue):
@@ -315,6 +343,33 @@ def render_dm_text(recipient, items):
         lines.append(f"   SOP reference: {item.get('sopSection')}")
         lines.append("")
     lines.append("If a rule seems wrong or slows you down, raise it at standup or the Friday review.")
+    return "\n".join(lines)
+
+
+def render_owner_note_dm_text(note):
+    recipient = note.get("owner")
+    summary = note.get("summary")
+    focus = [item for item in note.get("suggestedFocus", []) if item]
+    if not recipient or not summary:
+        return ""
+
+    lines = [
+        f"Hi {recipient}, no specific Linear SOP nudge for you this week.",
+        "",
+        f"The review noted that {summary[0].lower() + summary[1:] if summary else summary}",
+    ]
+    if focus:
+        if len(focus) == 1:
+            lines.append(f"The only light follow-up is to {focus[0][0].lower() + focus[0][1:] if focus[0] else focus[0]}.")
+        else:
+            lines.append("A couple of light follow-ups:")
+            lines.extend(f"- {item}" for item in focus[:3])
+    lines.extend(
+        [
+            "",
+            "This is a draft/helper, not a judgement. If a rule seems wrong or slows you down, raise it at standup or the Friday review.",
+        ]
+    )
     return "\n".join(lines)
 
 

@@ -115,7 +115,8 @@ Each run replaces these files:
 
 Use `owners.md` for `show <name>`.
 Use `issues.md` for `improve <issue id>`.
-Use `results/dms/` for per-person DM drafts.
+Use `results/dms/` for per-person DM drafts. Some drafts may be light owner-note
+messages when there is no specific issue-level nudge.
 Use `report.md` for the full review.
 
 `state/history.json` is not replaced during normal runs. It is reserved for

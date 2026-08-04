@@ -21,7 +21,7 @@ Main themes:
 
 Suggested follow-ups:
 - 20 issues have AI suggestions.
-- 8 people have short DM drafts in `results/dms/`.
+- 9 people have short DM drafts in `results/dms/`.
 
 Positive example to copy:
 - BYN-66: Update industry report pipeline to new blob output structure - https://linear.app/byndai/issue/BYN-66/update-industry-report-pipeline-to-new-blob-output-structure
@@ -41,6 +41,7 @@ This review is read-only. No Linear changes were made.
 - Sanidhya: 3 items
 - Shashank Rajak: 3 items
 - kabir bahl: 1 item
+- Devayush Rout: 0 items
 
 Suppressed repeat DM items: 0
 
