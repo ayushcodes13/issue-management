@@ -54,6 +54,7 @@ def main():
         ),
         encoding="utf-8",
     )
+    (out_dir / "issues.json").write_text(json.dumps(issues, indent=2), encoding="utf-8")
     (out_dir / "slack-blocks.json").write_text(json.dumps(blocks, indent=2), encoding="utf-8")
 
     print(text)

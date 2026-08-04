@@ -80,6 +80,7 @@ results/team-summary.md
 results/owner-details.md
 results/issue-improvements.md
 results/full-report.md
+results/issues.json
 results/audit.json
 results/slack-blocks.json
 ```
