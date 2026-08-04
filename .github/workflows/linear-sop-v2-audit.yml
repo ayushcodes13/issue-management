@@ -1,0 +1,49 @@
+name: Linear SOP V2 Audit
+
+on:
+  schedule:
+    # Thursdays at 9:00 AM IST
+    - cron: "30 3 * * 4"
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - name: Preview audit without Slack posting
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          POST_TO_SLACK: "false"
+          AUDIT_MODE: "dev-smoke"
+        run: python src/post_weekly_audit.py --preview
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linear-sop-v2-audit
+          path: audit-output
+
+  # Enable this later, after reviewing the preview artifacts.
+  # post-dev-smoke:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - run: pip install -r requirements.txt
+  #     - name: Post dev-smoke audit to private channel
+  #       env:
+  #         LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+  #         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  #         DEV_SMOKE_CHANNEL_ID: ${{ secrets.DEV_SMOKE_CHANNEL_ID }}
+  #         POST_TO_SLACK: "true"
+  #         AUDIT_MODE: "dev-smoke"
+  #       run: python src/post_weekly_audit.py --post
