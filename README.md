@@ -12,6 +12,12 @@ docs/how-we-use-linear.md
 
 Do not use the public Notion URL. Do not add rules that are not stated in that file.
 
+For the broader Granola, Linear, GitHub, and Slack orchestration design, see:
+
+```text
+docs/central-work-orchestrator.md
+```
+
 ## Files
 
 ```text
@@ -19,6 +25,7 @@ skills/weekly-linear-issue-review/SKILL.md
 skills/weekly-linear-issue-review/scripts/run-review.sh
 skills/weekly-linear-issue-review/scripts/post-summary.sh
 docs/how-we-use-linear.md
+docs/central-work-orchestrator.md
 scripts/review.py
 scripts/post.py
 scripts/send_dms.py
