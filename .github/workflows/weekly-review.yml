@@ -1,9 +1,6 @@
 name: Weekly Linear Issue Review
 
 on:
-  schedule:
-    # Thursdays at 9:00 AM IST
-    - cron: "30 3 * * 4"
   workflow_dispatch:
     inputs:
       post_to_slack:
@@ -37,7 +34,7 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
           AUDIT_MODE: "weekly"
           AUDIT_OUT_DIR: "results"
-          WORKFLOW_POST_TO_SLACK: ${{ github.event_name == 'schedule' && vars.POST_WEEKLY_TO_SLACK || inputs.post_to_slack }}
+          WORKFLOW_POST_TO_SLACK: ${{ inputs.post_to_slack }}
         run: |
           python scripts/review.py
           if [ "${WORKFLOW_POST_TO_SLACK}" = "true" ] && [ -n "${SLACK_BOT_TOKEN}" ] && [ -n "${SLACK_CHANNEL_ID}" ]; then

@@ -196,7 +196,8 @@ Use `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific ed
 
 ## GitHub Action
 
-The workflow runs every Thursday at 9:00 AM IST:
+The GitHub Actions cron is disabled. The workflow can still be run manually from
+the Actions tab:
 
 ```text
 .github/workflows/weekly-review.yml
@@ -204,13 +205,8 @@ The workflow runs every Thursday at 9:00 AM IST:
 
 It writes the new `results/`, commits the updated results back to `main`, and uploads the same folder as an artifact.
 
-Scheduled runs are dry-run by default. To allow scheduled Slack posting, set repository variable:
-
-```text
-POST_WEEKLY_TO_SLACK=true
-```
-
-Manual workflow runs still use the `post_to_slack` input.
+Manual workflow runs use the `post_to_slack` input. Keep it `false` unless you
+explicitly want the short summary posted to Slack.
 
 ## Safety
 
