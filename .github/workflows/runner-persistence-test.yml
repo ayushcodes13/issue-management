@@ -1,0 +1,63 @@
+name: Temporary Runner Persistence Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      marker:
+        description: "Marker for this manual test run"
+        required: false
+        default: "manual"
+
+permissions:
+  contents: read
+
+jobs:
+  persistence-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check whether previous-run files exist
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          WORKSPACE_TOKEN=".mcp-tokens/granola.json"
+          HOME_TOKEN="$HOME/.mcp-tokens/granola.json"
+          TMP_TOKEN="/tmp/granola-mcp-token-test.json"
+
+          echo "run_id=${GITHUB_RUN_ID}"
+          echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+          echo "marker=${{ inputs.marker }}"
+          echo "runner_name=${RUNNER_NAME}"
+          echo "workspace=${GITHUB_WORKSPACE}"
+          echo "home=${HOME}"
+
+          echo "workspace_token_present_at_start=$([ -f "$WORKSPACE_TOKEN" ] && echo true || echo false)"
+          echo "home_token_present_at_start=$([ -f "$HOME_TOKEN" ] && echo true || echo false)"
+          echo "tmp_token_present_at_start=$([ -f "$TMP_TOKEN" ] && echo true || echo false)"
+
+          {
+            echo "## Runner persistence test"
+            echo ""
+            echo "- run id: \`${GITHUB_RUN_ID}\`"
+            echo "- marker: \`${{ inputs.marker }}\`"
+            echo "- workspace token present at start: \`$([ -f "$WORKSPACE_TOKEN" ] && echo true || echo false)\`"
+            echo "- home token present at start: \`$([ -f "$HOME_TOKEN" ] && echo true || echo false)\`"
+            echo "- tmp token present at start: \`$([ -f "$TMP_TOKEN" ] && echo true || echo false)\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create files that would prove persistence if seen by the next run
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p .mcp-tokens "$HOME/.mcp-tokens"
+          printf '{"created_by_run":"%s","marker":"%s"}\n' "$GITHUB_RUN_ID" "${{ inputs.marker }}" > .mcp-tokens/granola.json
+          printf '{"created_by_run":"%s","marker":"%s"}\n' "$GITHUB_RUN_ID" "${{ inputs.marker }}" > "$HOME/.mcp-tokens/granola.json"
+          printf '{"created_by_run":"%s","marker":"%s"}\n' "$GITHUB_RUN_ID" "${{ inputs.marker }}" > /tmp/granola-mcp-token-test.json
+
+          echo "created_workspace_token=true"
+          echo "created_home_token=true"
+          echo "created_tmp_token=true"
