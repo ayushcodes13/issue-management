@@ -87,6 +87,7 @@ DAILY_STANDUP_POLL_SECONDS=300
 DAILY_STANDUP_STABLE_SECONDS=600
 DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
 DAILY_STANDUP_SEND_SLACK_DMS=false
+DAILY_STANDUP_MAX_TRANSCRIPT_CHARS=24000
 GRANOLA_PAGE_SIZE=30
 GRANOLA_MAX_PAGES=10
 ```
@@ -106,6 +107,11 @@ results/daily-standup-memory/dms/*.md
 
 The output is a draft queue. A proposal can recommend adding context to an
 existing Linear issue, creating a new issue, or marking work as already tracked.
+The proposal step should prefer recall over brevity: if one person has several
+distinct workstreams mentioned in standup, create separate proposals for those
+distinct workstreams instead of collapsing them into one item.
+Daily DMs show up to 10 items per person so a busy standup does not hide
+important same-day work behind a summary line.
 
 `proposals.json`, `summary.md`, and `report.md` include token accounting. The
 per-section breakdown is an approximate `chars / 4` estimate; provider usage is

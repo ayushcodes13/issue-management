@@ -28,6 +28,7 @@ from work_memory_api import normalize_proposals, render_report, render_summary, 
 
 DEFAULT_OUT_DIR = "results/daily-standup-memory"
 DEFAULT_TITLE_REGEX = r"^Daily[- ]Stand[- ]?up$|^Daily-Standup$"
+DEFAULT_MAX_DM_ITEMS = 10
 
 
 def main():
@@ -56,7 +57,13 @@ def main():
     issues = fetch_active_issues()
     print(f"Fetched {len(issues)} active Linear issues.")
 
-    note_payloads = [note_payload_for_ai(detailed_note, include_transcript=True)]
+    note_payloads = [
+        note_payload_for_ai(
+            detailed_note,
+            include_transcript=True,
+            max_transcript_chars=args.max_transcript_chars,
+        )
+    ]
     print("Generating standup-to-Linear draft proposals with Azure OpenAI...")
     analysis = generate_work_memory_proposals(note_payloads, issues, start_utc, 1)
     proposals = normalize_proposals(analysis.get("proposals") or [])
@@ -90,6 +97,12 @@ def parse_args():
         help="How long the note signature must remain unchanged before processing.",
     )
     parser.add_argument("--out-dir", default=os.environ.get("DAILY_STANDUP_OUT_DIR", DEFAULT_OUT_DIR))
+    parser.add_argument(
+        "--max-transcript-chars",
+        type=int,
+        default=int(os.environ.get("DAILY_STANDUP_MAX_TRANSCRIPT_CHARS", "24000")),
+        help="Maximum transcript characters to send to the AI review.",
+    )
     return parser.parse_args()
 
 
@@ -251,6 +264,7 @@ def build_daily_raw_index(since_iso, target_date, selected, detailed_note, issue
             "meetingLimit": 1,
             "includeTranscript": True,
             "stableSeconds": args.stable_seconds,
+            "maxTranscriptChars": args.max_transcript_chars,
         },
         "granola": {
             "selectedStandup": safe_note_metadata(selected),
@@ -308,21 +322,22 @@ def dm_item(proposal):
 
 
 def render_dm_text(owner, proposals, target_date):
+    visible_proposals = proposals[:DEFAULT_MAX_DM_ITEMS]
     lines = [
         f"Hi {owner},",
         "",
         "Here are the things from today's standup that mentioned you:",
         "",
     ]
-    lines.extend(bullets(mentioned_todo(proposal) for proposal in proposals[:5]))
+    lines.extend(bullets(mentioned_todo(proposal) for proposal in visible_proposals))
     lines.extend(["", "This is what it sounds like you are working on:", ""])
-    lines.extend(bullets(working_on(proposal) for proposal in proposals[:5]))
+    lines.extend(bullets(working_on(proposal) for proposal in visible_proposals))
     lines.extend(["", "Linear follow-up:", ""])
-    lines.extend(bullets(linear_follow_up(proposal) for proposal in proposals[:5]))
+    lines.extend(bullets(linear_follow_up(proposal) for proposal in visible_proposals))
     lines.append("")
 
-    if len(proposals) > 5:
-        lines.append(f"- Plus {len(proposals) - 5} more item(s) in the daily standup report.")
+    if len(proposals) > DEFAULT_MAX_DM_ITEMS:
+        lines.append(f"- Plus {len(proposals) - DEFAULT_MAX_DM_ITEMS} more item(s) in the daily standup report.")
         lines.append("")
 
     lines.extend(

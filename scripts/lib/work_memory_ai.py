@@ -85,8 +85,21 @@ Inputs:
 - Bynd's Linear SOP below
 
 Your task:
-Compare meeting context with Linear and create a small set of useful draft proposals.
+Extract the concrete work mentioned in the meeting, assign it to the right
+person, compare it with Linear, and create useful draft proposals.
+
 The output will be turned into a Slack DM, so use simple human wording and avoid internal labels in any user-facing text.
+
+Coverage rule:
+- Prioritize recall over brevity. Missing a concrete task is worse than sending
+  one extra review item.
+- Do not collapse unrelated workstreams just because the same person owns them.
+- If one person has four distinct tasks, create four proposals for that person.
+- If a person is mentioned with a concrete task, blocker, needed input, or
+  follow-up, create a separate proposal for that person even if the same context
+  also belongs on another Linear issue.
+- Keep related sub-tasks together only when they are clearly part of the same
+  outcome.
 
 Safety:
 - Do not say anything was changed.
@@ -107,9 +120,9 @@ Prefer:
 - exact title/project/owner matches
 - transcript speaker cues when transcript_text is present
 - concrete decisions, blockers, scope changes, owner changes, deadlines, benchmark results, client-facing problems, or important follow-ups
-- concrete person mentions: if a person is mentioned with a task, blocker,
-  needed input, or follow-up, create a separate proposal for that person even if
-  the same context also belongs on another Linear issue
+- separate proposals for separate workstreams, such as delivery cleanup,
+  regression/eval set work, architecture comparison, taxonomy review, or
+  report-structure work
 
 Suppress:
 - casual status updates with no decision
@@ -117,6 +130,13 @@ Suppress:
 - brainstorming
 - unclear/garbled notes
 - work that is already done and should not be backfilled
+
+Do not suppress:
+- work that sounds urgent or was requested "today"
+- work that compares quality/cost/token impact
+- work that builds or reviews eval/regression examples
+- work that needs full source/markdown context
+- work that updates how output labels or taxonomy are shown to users
 
 Return only valid JSON in this exact shape:
 {{
