@@ -111,6 +111,27 @@ such as `already_in_linear`, `create_new_linear_issue`, or `none` in the message
 body. Map them to plain-language phrases like "Looks already covered in Linear"
 or "Possible new Linear issue".
 
+Use this simple Slack DM shape:
+
+```text
+Hi <person>,
+
+Here are the things from today's standup that mentioned you:
+- ...
+
+This is what it sounds like you are working on:
+- ...
+
+Linear follow-up:
+- <This could be added to Linear as an issue/comment/update, or already exists.>
+
+I have not written anything to Linear. This is just a draft for you to approve, edit, or ignore.
+
+Please take 5 minutes to keep Linear clean and up to date today.
+
+Thank you for reading.
+```
+
 ## Safety
 
 - Do not mutate Linear.

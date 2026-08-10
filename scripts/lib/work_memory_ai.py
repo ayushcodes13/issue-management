@@ -81,6 +81,7 @@ Inputs:
 
 Your task:
 Compare meeting context with Linear and create a small set of useful draft proposals.
+The output will be turned into a Slack DM, so use simple human wording and avoid internal labels in any user-facing text.
 
 Safety:
 - Do not say anything was changed.
@@ -125,6 +126,8 @@ Return only valid JSON in this exact shape:
       "owner": "person or Unassigned",
       "sourceMeetingIds": [],
       "sourceMeetingTitles": [],
+      "mentionedTodo": "plain-language task or update from the standup that mentioned this person",
+      "workingOn": "plain-language summary of what this person appears to be working on, or empty string if unclear",
       "targetLinearIssue": {{
         "identifier": "",
         "title": "",

@@ -294,6 +294,8 @@ def dm_item(proposal):
         "proposalId": proposal.get("id") or "",
         "category": proposal.get("category") or "",
         "confidence": proposal.get("confidence") or "",
+        "mentionedTodo": proposal.get("mentionedTodo") or "",
+        "workingOn": proposal.get("workingOn") or "",
         "targetIssueId": target.get("identifier") or "",
         "targetIssueTitle": target.get("title") or "",
         "targetIssueUrl": target.get("url") or "",
@@ -305,66 +307,84 @@ def dm_item(proposal):
 
 
 def render_dm_text(owner, proposals, target_date):
-    item_count = len(proposals)
-    item_word = "thing" if item_count == 1 else "things"
     lines = [
-        f"Hi {owner}, I checked today's standup against Linear and found {item_count} {item_word} you may want to review.",
+        f"Hi {owner},",
         "",
-        "I have not written anything to Linear. This is just a draft for you to approve, edit, or ignore.",
+        "Here are the things from today's standup that mentioned you:",
         "",
     ]
-    for index, proposal in enumerate(proposals[:5], start=1):
-        evidence = proposal.get("evidenceSummary") or "No evidence summary provided."
-        lines.append(f"{index}. {proposal_heading(proposal)}")
-        lines.append(f"   Why this came up: {evidence}")
-        issue_line = target_issue_line(proposal)
-        if issue_line:
-            lines.append(f"   {issue_line}")
-        if proposal.get("suggestedSlackMessage"):
-            lines.append(f"   Suggested next step: {proposal.get('suggestedSlackMessage')}")
-        lines.append("")
+    lines.extend(bullets(mentioned_todo(proposal) for proposal in proposals[:5]))
+    lines.extend(["", "This is what it sounds like you are working on:", ""])
+    lines.extend(bullets(working_on(proposal) for proposal in proposals[:5]))
+    lines.extend(["", "Linear follow-up:", ""])
+    lines.extend(bullets(linear_follow_up(proposal) for proposal in proposals[:5]))
+    lines.append("")
 
     if len(proposals) > 5:
-        lines.append(f"...and {len(proposals) - 5} more draft item(s) in the daily standup report.")
+        lines.append(f"- Plus {len(proposals) - 5} more item(s) in the daily standup report.")
         lines.append("")
 
     lines.extend(
         [
+            "I have not written anything to Linear. This is just a draft for you to approve, edit, or ignore.",
+            "",
+            "Please take 5 minutes to keep Linear clean and up to date today.",
+            "",
+            "Thank you for reading.",
+            "",
             f"Date: {target_date.isoformat()}",
-            "This is a helper draft, not a judgement. If it looks useful, we can decide the next step; if it looks off, ignore it.",
         ]
     )
     return "\n".join(lines).rstrip()
 
 
-def proposal_heading(proposal):
+def bullets(items):
+    values = [item for item in items if item]
+    if not values:
+        return ["- Nothing specific."]
+    return [f"- {item}" for item in values]
+
+
+def mentioned_todo(proposal):
+    return proposal.get("mentionedTodo") or proposal.get("evidenceSummary") or ""
+
+
+def working_on(proposal):
+    return proposal.get("workingOn") or ""
+
+
+def linear_follow_up(proposal):
     category = proposal.get("category") or ""
-    headings = {
-        "add_context_to_existing_issue": "Possible context to add to an existing Linear issue",
-        "create_new_linear_issue": "Possible new Linear issue",
-        "already_in_linear": "Looks already covered in Linear",
-        "not_linear_worthy": "Probably does not need a Linear update",
-        "needs_human_review": "Needs a quick human decision",
-    }
-    return headings.get(category, "Linear follow-up to review")
-
-
-def target_issue_line(proposal):
     target = proposal.get("targetLinearIssue") or {}
+    issue = target_issue_label(target)
+    evidence = proposal.get("suggestedSlackMessage") or proposal.get("evidenceSummary") or "Please review whether Linear needs an update."
+
+    if category == "add_context_to_existing_issue" and issue:
+        return f"This could be added as a comment or update on {issue}. {evidence}"
+    if category == "create_new_linear_issue":
+        return f"This could be added to Linear as a new issue. {evidence}"
+    if category == "already_in_linear" and issue:
+        return f"This already appears to exist in Linear as {issue}. {evidence}"
+    if category == "not_linear_worthy":
+        return f"This probably does not need a Linear update. {evidence}"
+    if category == "needs_human_review":
+        return f"This needs a quick human decision before updating Linear. {evidence}"
+    if issue:
+        return f"Please review whether {issue} needs an update. {evidence}"
+    return evidence
+
+
+def target_issue_label(target):
     issue_id = target.get("identifier")
     title = target.get("title")
     url = target.get("url")
-    if not issue_id and not title and not url:
-        return ""
-
+    if issue_id and title and url:
+        return f"{issue_id} - {title} ({url})"
     if issue_id and title:
-        label = f"{issue_id} - {title}"
-    else:
-        label = issue_id or title or "Linear issue"
-
-    if url:
-        return f"Related issue: {label}\n   {url}"
-    return f"Related issue: {label}"
+        return f"{issue_id} - {title}"
+    if issue_id and url:
+        return f"{issue_id} ({url})"
+    return issue_id or title or ""
 
 
 def write_dm_markdown(out_dir, drafts):
