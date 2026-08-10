@@ -281,6 +281,8 @@ def build_daily_raw_index(since_iso, target_date, selected, detailed_note, issue
 def build_dm_drafts(proposals, target_date):
     by_owner = {}
     for proposal in proposals:
+        if not should_include_in_dm(proposal):
+            continue
         owner = proposal.get("owner") or "Unassigned"
         if owner == "Unassigned":
             continue
@@ -300,6 +302,18 @@ def build_dm_drafts(proposals, target_date):
             }
         )
     return drafts
+
+
+def should_include_in_dm(proposal):
+    todo = (mentioned_todo(proposal) or "").strip().lower()
+    if not todo:
+        return False
+    no_action_prefixes = (
+        "no new follow-up",
+        "no follow-up",
+        "no linear follow-up",
+    )
+    return not todo.startswith(no_action_prefixes)
 
 
 def dm_item(proposal):
@@ -325,19 +339,15 @@ def render_dm_text(owner, proposals, target_date):
     lines = [
         f"Hi {owner},",
         "",
-        "Here are the things from today's standup that mentioned you:",
+        "Here are suggested todos from today's standup:",
         "",
     ]
-    lines.extend(bullets(mentioned_todo(proposal) for proposal in proposals))
-    lines.extend(["", "This is what it sounds like you are working on:", ""])
-    lines.extend(bullets(working_on(proposal) for proposal in proposals))
-    lines.extend(["", "Linear follow-up:", ""])
-    lines.extend(bullets(linear_follow_up(proposal) for proposal in proposals))
+    lines.extend(bullets(todo_with_linear_follow_up(proposal) for proposal in proposals))
     lines.append("")
 
     lines.extend(
         [
-            "I have not written anything to Linear. This is just a draft for you to approve, edit, or ignore.",
+            "I have not written anything to Linear.",
             "",
             "Please take 5 minutes to keep Linear clean and up to date today.",
             "",
@@ -366,25 +376,45 @@ def working_on(proposal):
     return proposal.get("workingOn") or ""
 
 
-def linear_follow_up(proposal):
+def todo_with_linear_follow_up(proposal):
+    todo = sentence(mentioned_todo(proposal))
+    follow_up = short_linear_follow_up(proposal)
+    if not todo:
+        return ""
+    return f"{todo} Linear: {follow_up}"
+
+
+def short_linear_follow_up(proposal):
     category = proposal.get("category") or ""
     target = proposal.get("targetLinearIssue") or {}
-    issue = target_issue_label(target)
-    evidence = proposal.get("suggestedSlackMessage") or proposal.get("evidenceSummary") or "Please review whether Linear needs an update."
+    issue = target_issue_id(target)
 
     if category == "add_context_to_existing_issue" and issue:
-        return f"This could be added as a comment or update on {issue}. {evidence}"
+        return f"update {issue}."
     if category == "create_new_linear_issue":
-        return f"This could be added to Linear as a new issue. {evidence}"
+        return "possible new issue."
     if category == "already_in_linear" and issue:
-        return f"This already appears to exist in Linear as {issue}. {evidence}"
+        return f"already covered by {issue}."
     if category == "not_linear_worthy":
-        return f"This probably does not need a Linear update. {evidence}"
+        return "no update needed."
     if category == "needs_human_review":
-        return f"This needs a quick human decision before updating Linear. {evidence}"
+        return "needs quick human review."
     if issue:
-        return f"Please review whether {issue} needs an update. {evidence}"
-    return evidence
+        return f"review {issue}."
+    return "review if this should be tracked."
+
+
+def sentence(value):
+    text = (value or "").strip()
+    if not text:
+        return ""
+    if text[-1] in ".!?":
+        return text
+    return f"{text}."
+
+
+def target_issue_id(target):
+    return target.get("identifier") or ""
 
 
 def target_issue_label(target):

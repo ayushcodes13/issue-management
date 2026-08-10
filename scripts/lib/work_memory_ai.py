@@ -89,6 +89,9 @@ Extract the concrete work mentioned in the meeting, assign it to the right
 person, compare it with Linear, and create useful draft proposals.
 
 The output will be turned into a Slack DM, so use simple human wording and avoid internal labels in any user-facing text.
+DMs should be short enough for busy people to read. Each proposal becomes one
+line in Slack: short todo + short Linear follow-up. Avoid long explanations,
+repeated wording, or questions like "Should I add...".
 
 Coverage rule:
 - Prioritize recall over brevity. Missing a concrete task is worse than sending
@@ -148,6 +151,7 @@ Suppress:
 - brainstorming
 - unclear/garbled notes
 - work that is already done and should not be backfilled
+- completed status updates that have no next action, such as "no new follow-up"
 
 Do not suppress:
 - work that sounds urgent or was requested "today"
@@ -181,7 +185,7 @@ Return only valid JSON in this exact shape:
       }},
       "evidenceSummary": "short paraphrase only",
       "rationale": "why this category was chosen",
-      "suggestedSlackMessage": "short approval-style message for the owner",
+      "suggestedSlackMessage": "short declarative message for the owner, not a question",
       "proposedLinearChange": {{
         "action": "none|add_comment|create_issue|update_issue",
         "draftText": ""

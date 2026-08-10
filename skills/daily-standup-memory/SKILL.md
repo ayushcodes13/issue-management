@@ -128,16 +128,10 @@ Use this simple Slack DM shape:
 ```text
 Hi <person>,
 
-Here are the things from today's standup that mentioned you:
-- ...
+Here are suggested todos from today's standup:
+- <short todo>. Linear: <update BYN-123 / possible new issue / already covered by BYN-123 / no update needed / needs quick human review>.
 
-This is what it sounds like you are working on:
-- ...
-
-Linear follow-up:
-- <This could be added to Linear as an issue/comment/update, or already exists.>
-
-I have not written anything to Linear. This is just a draft for you to approve, edit, or ignore.
+I have not written anything to Linear.
 
 Please take 5 minutes to keep Linear clean and up to date today.
 
