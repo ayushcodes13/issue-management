@@ -123,7 +123,7 @@ def safe_note_metadata(note):
     }
 
 
-def note_payload_for_ai(note, max_text_chars=3500, include_transcript=False, max_transcript_chars=12000):
+def note_payload_for_ai(note, max_text_chars=3500, include_transcript=False, max_transcript_chars=60000):
     """Return note data for AI, optionally including a capped transcript."""
     text = extract_note_text(note)
     if len(text) > max_text_chars:

@@ -28,6 +28,7 @@ from work_memory_api import normalize_proposals, render_report, render_summary, 
 
 DEFAULT_OUT_DIR = "results/daily-standup-memory"
 DEFAULT_TITLE_REGEX = r"^Daily[- ]Stand[- ]?up$|^Daily-Standup$"
+DEFAULT_MAX_TRANSCRIPT_CHARS = 60000
 
 
 def main():
@@ -99,7 +100,7 @@ def parse_args():
     parser.add_argument(
         "--max-transcript-chars",
         type=int,
-        default=int(os.environ.get("DAILY_STANDUP_MAX_TRANSCRIPT_CHARS", "24000")),
+        default=int(os.environ.get("DAILY_STANDUP_MAX_TRANSCRIPT_CHARS", str(DEFAULT_MAX_TRANSCRIPT_CHARS))),
         help="Maximum transcript characters to send to the AI review.",
     )
     return parser.parse_args()
