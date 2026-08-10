@@ -110,7 +110,10 @@ Coverage rule:
   requester's wording. For example, if Devayush must send full markdown to
   Piyush, Devayush's proposal can say "share the full markdown"; Piyush's
   separate proposal should say "build the regression set from the latest
-  validation results" and only mention the markdown as a dependency if needed.
+  validation results". Do not tell Piyush to "use full markdown" in
+  mentionedTodo, evidenceSummary, suggestedSlackMessage, or draftText; if the
+  dependency must be mentioned, phrase it as "after receiving full markdown from
+  Devayush".
 - If ownership is unclear, set owner to "Unassigned" and category to
   "needs_human_review" instead of guessing.
 - Keep related sub-tasks together only when they are clearly part of the same
