@@ -45,6 +45,7 @@ The daily runner:
 7. Fetches active Linear issues.
 8. Sends the one standup transcript plus Linear context to Azure OpenAI.
 9. Writes local draft proposals to `results/daily-standup-memory/`.
+10. Writes per-person Slack DM drafts, but does not send them unless explicitly enabled.
 
 ## Schedule
 
@@ -84,6 +85,7 @@ DAILY_STANDUP_MAX_WAIT_SECONDS=14400
 DAILY_STANDUP_POLL_SECONDS=300
 DAILY_STANDUP_STABLE_SECONDS=600
 DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
+DAILY_STANDUP_SEND_SLACK_DMS=false
 GRANOLA_PAGE_SIZE=30
 GRANOLA_MAX_PAGES=10
 ```
@@ -97,6 +99,8 @@ results/daily-standup-memory/summary.md
 results/daily-standup-memory/report.md
 results/daily-standup-memory/proposals.json
 results/daily-standup-memory/raw-index.json
+results/daily-standup-memory/dm-drafts.json
+results/daily-standup-memory/dms/*.md
 ```
 
 The output is a draft queue. A proposal can recommend adding context to an
@@ -108,6 +112,7 @@ existing Linear issue, creating a new issue, or marking work as already tracked.
 - Do not create Linear issues.
 - Do not comment on Linear issues.
 - Do not send Slack messages.
+- Slack DMs require `./send_daily_standup_dms.sh --send --yes` or the explicit workflow flag.
 - Do not process non-standup meetings unless the user explicitly changes scope.
 - Do not process more than one standup for the target date without warning.
 - Keep transcripts out of committed raw outputs; only draft summaries/proposals are written.

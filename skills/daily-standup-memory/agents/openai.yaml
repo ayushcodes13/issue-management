@@ -1,4 +1,4 @@
 interface:
   display_name: "Daily Standup Memory"
-  short_description: "Process today's Granola Daily-Standup transcript, wait for it to stabilize, compare with Linear, and write draft proposals."
-  default_prompt: "Run the daily standup memory workflow for today's Daily-Standup, wait for the note and transcript to stabilize, review it against active Linear issues, and write draft proposals without mutating Linear or sending Slack messages."
+  short_description: "Process today's Granola Daily-Standup transcript, wait for it to stabilize, compare with Linear, and write proposal plus DM drafts."
+  default_prompt: "Run the daily standup memory workflow for today's Daily-Standup, wait for the note and transcript to stabilize, review it against active Linear issues, and write proposal plus DM drafts without mutating Linear or sending Slack messages unless explicitly enabled."

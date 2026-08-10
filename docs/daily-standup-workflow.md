@@ -57,3 +57,40 @@ The GitHub workflow is:
 It runs Monday-Friday at `11:15 IST`, then waits up to four hours for today's
 standup note to appear and stabilize. This avoids processing a partial
 transcript if standup runs late.
+
+The scheduled run uploads `results/daily-standup-memory` as a GitHub Actions
+artifact. It does not commit generated result files back to the repository.
+
+## Slack DMs
+
+The daily run always writes DM drafts:
+
+```text
+results/daily-standup-memory/dm-drafts.json
+results/daily-standup-memory/dms/*.md
+```
+
+Preview locally:
+
+```bash
+./send_daily_standup_dms.sh
+```
+
+Validate Slack user resolution without sending:
+
+```bash
+./send_daily_standup_dms.sh --validate-users
+```
+
+Send only after review:
+
+```bash
+./send_daily_standup_dms.sh --send --yes
+```
+
+The GitHub workflow can send DMs only when explicitly enabled:
+
+- Manual dispatch input: `send_slack_dms=true`
+- Or repo variable: `DAILY_STANDUP_SEND_SLACK_DMS=true`
+
+Default is off.

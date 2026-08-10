@@ -103,6 +103,7 @@ DAILY_STANDUP_MAX_WAIT_SECONDS=14400
 DAILY_STANDUP_POLL_SECONDS=300
 DAILY_STANDUP_STABLE_SECONDS=600
 DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
+DAILY_STANDUP_SEND_SLACK_DMS=false
 ```
 
 Azure OpenAI uses the `gpt-5.5` deployment by default:
@@ -175,8 +176,32 @@ The scheduled workflow is:
 ```
 
 It runs Monday-Friday at `11:15 IST`, then waits for today's standup note to
-appear and stabilize before processing. It commits the latest
-`results/daily-standup-memory` output and uploads it as an artifact.
+appear and stabilize before processing. It uploads
+`results/daily-standup-memory` as an artifact and does not commit generated
+results back to the repository.
+
+The daily run also writes per-person Slack DM drafts:
+
+```text
+results/daily-standup-memory/dm-drafts.json
+results/daily-standup-memory/dms/*.md
+```
+
+Preview without sending:
+
+```bash
+./send_daily_standup_dms.sh
+```
+
+Send only after review:
+
+```bash
+./send_daily_standup_dms.sh --send --yes
+```
+
+The GitHub workflow sends DMs only when manual dispatch sets
+`send_slack_dms=true` or the repo variable `DAILY_STANDUP_SEND_SLACK_DMS=true`.
+The default is off.
 
 ## General Work Memory API Runner
 

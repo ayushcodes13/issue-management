@@ -12,9 +12,13 @@ on:
         description: "Target standup date in YYYY-MM-DD, or today"
         required: false
         default: "today"
+      send_slack_dms:
+        description: "Send generated daily standup DM drafts to Slack"
+        required: false
+        default: "false"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   daily-standup-memory:
@@ -47,15 +51,12 @@ jobs:
           GRANOLA_MAX_PAGES: "10"
         run: ./run_daily_standup_memory.sh
 
-      - name: Save latest daily standup results
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/daily-standup-memory
-          if ! git diff --cached --quiet; then
-            git commit -m "Update daily standup memory results"
-            git push
-          fi
+      - name: Optionally send Daily-Standup Slack DMs
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
+        run: ./send_daily_standup_dms.sh --send --yes
 
       - uses: actions/upload-artifact@v4
         with:

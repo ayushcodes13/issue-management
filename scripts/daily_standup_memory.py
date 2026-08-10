@@ -225,11 +225,14 @@ def write_outputs(out_dir, args, since_iso, target_date, selected, detailed_note
         "limitations": analysis.get("limitations") or [],
     }
     raw_index = build_daily_raw_index(since_iso, target_date, selected, detailed_note, issues, proposals, args)
+    dm_drafts = build_dm_drafts(proposals, target_date)
 
     (out_dir / "summary.md").write_text(render_summary(payload, analysis), encoding="utf-8")
     (out_dir / "report.md").write_text(render_report(payload, raw_index, analysis), encoding="utf-8")
     (out_dir / "proposals.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     (out_dir / "raw-index.json").write_text(json.dumps(raw_index, indent=2) + "\n", encoding="utf-8")
+    (out_dir / "dm-drafts.json").write_text(json.dumps(dm_drafts, indent=2) + "\n", encoding="utf-8")
+    write_dm_markdown(out_dir / "dms", dm_drafts)
 
 
 def build_daily_raw_index(since_iso, target_date, selected, detailed_note, issues, proposals, args):
@@ -258,6 +261,100 @@ def build_daily_raw_index(since_iso, target_date, selected, detailed_note, issue
             "issuesReferencedByProposals": referenced_issues,
         },
     }
+
+
+def build_dm_drafts(proposals, target_date):
+    by_owner = {}
+    for proposal in proposals:
+        owner = proposal.get("owner") or "Unassigned"
+        if owner == "Unassigned":
+            continue
+        by_owner.setdefault(owner, []).append(proposal)
+
+    drafts = []
+    for owner, items in sorted(by_owner.items()):
+        text = render_dm_text(owner, items, target_date)
+        drafts.append(
+            {
+                "recipient": owner,
+                "kind": "daily_standup_memory",
+                "targetDate": target_date.isoformat(),
+                "itemCount": len(items),
+                "items": [dm_item(item) for item in items],
+                "text": text,
+            }
+        )
+    return drafts
+
+
+def dm_item(proposal):
+    target = proposal.get("targetLinearIssue") or {}
+    change = proposal.get("proposedLinearChange") or {}
+    return {
+        "proposalId": proposal.get("id") or "",
+        "category": proposal.get("category") or "",
+        "confidence": proposal.get("confidence") or "",
+        "targetIssueId": target.get("identifier") or "",
+        "targetIssueTitle": target.get("title") or "",
+        "targetIssueUrl": target.get("url") or "",
+        "proposedAction": change.get("action") or "none",
+        "evidenceSummary": proposal.get("evidenceSummary") or "",
+        "suggestedSlackMessage": proposal.get("suggestedSlackMessage") or "",
+        "draftText": change.get("draftText") or "",
+    }
+
+
+def render_dm_text(owner, proposals, target_date):
+    lines = [
+        f"Hi {owner}, today's standup produced a few Linear memory suggestions for you.",
+        "",
+        "Nothing has been changed in Linear. Please review these as drafts.",
+        "",
+    ]
+    for index, proposal in enumerate(proposals[:5], start=1):
+        target = proposal.get("targetLinearIssue") or {}
+        change = proposal.get("proposedLinearChange") or {}
+        issue_id = target.get("identifier") or "new issue"
+        action = change.get("action") or "none"
+        evidence = proposal.get("evidenceSummary") or "No evidence summary provided."
+        lines.extend(
+            [
+                f"{index}. `{proposal.get('category')}` / `{issue_id}` / `{action}`",
+                f"   {evidence}",
+            ]
+        )
+        if target.get("url"):
+            lines.append(f"   {target.get('url')}")
+        if proposal.get("suggestedSlackMessage"):
+            lines.append(f"   Suggested review note: {proposal.get('suggestedSlackMessage')}")
+        lines.append("")
+
+    if len(proposals) > 5:
+        lines.append(f"...and {len(proposals) - 5} more draft item(s) in the daily standup report.")
+        lines.append("")
+
+    lines.extend(
+        [
+            f"Date: {target_date.isoformat()}",
+            "This is a helper draft, not a judgement. Reply/review before anything is written to Linear.",
+        ]
+    )
+    return "\n".join(lines).rstrip()
+
+
+def write_dm_markdown(out_dir, drafts):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for child in out_dir.iterdir():
+        if child.is_file():
+            child.unlink()
+    for draft in drafts:
+        slug = slugify(draft["recipient"])
+        (out_dir / f"{slug}.md").write_text(draft["text"] + "\n", encoding="utf-8")
+
+
+def slugify(value):
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return slug or "unknown"
 
 
 if __name__ == "__main__":
