@@ -206,8 +206,9 @@ under:
 results/daily-standup-memory/
 ```
 
-The daily run deliberately does not send Slack messages and does not mutate
-Linear. It only creates draft proposals for human review.
+The daily run deliberately does not mutate Linear. It creates draft proposals
+and per-person Slack DM drafts for human review. Slack DMs are not sent unless
+the explicit send command or workflow flag is used.
 
 Decision rule:
 

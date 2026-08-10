@@ -16,12 +16,12 @@ import shutil
 import sys
 import time as time_module
 from collections import Counter
-from datetime import datetime, time, timedelta, timezone
+from datetime import datetime, time, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from lib.granola import get_note, list_notes, note_payload_for_ai, safe_note_metadata
-from lib.linear import fetch_active_issues, owner_of, status_of
+from lib.linear import fetch_active_issues, status_of
 from lib.work_memory_ai import generate_work_memory_proposals
 from work_memory_api import normalize_proposals, render_report, render_summary, safe_issue_metadata
 

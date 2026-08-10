@@ -12,8 +12,8 @@ nudge.
 state/history.json
 ```
 
-This file is committed to the repo and is not replaced when `results/` is
-regenerated.
+This file is committed intentionally when repeat-suppression state should be
+preserved. It is not replaced when `results/` is regenerated.
 
 ## Current Behavior
 
@@ -21,6 +21,8 @@ regenerated.
 - Dry runs do not write to `state/history.json`.
 - `./send_dms.sh --send --yes` writes to `state/history.json` only after a DM
   send succeeds.
+- If the state change should persist for future machines or workflows, commit
+  `state/history.json` deliberately.
 - Suppressed repeats are written to `results/friction-notes.md`.
 
 ## Shape

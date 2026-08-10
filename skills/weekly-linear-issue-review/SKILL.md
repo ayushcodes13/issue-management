@@ -23,7 +23,7 @@ The flow is:
 2. Read `docs/how-we-use-linear.md`.
 3. Send all active issues plus the local SOP text to Azure OpenAI in one batched call.
 4. Ask Azure OpenAI to return useful suggestions only, without treating omitted issues as clean.
-5. Replace the contents of `results/` with the latest report and DM drafts.
+5. Replace the local `results/` artifacts with the latest report and DM drafts.
 6. Read `state/history.json` to suppress repeated DM draft items.
 7. Post only `results/summary.md` to Slack when explicitly asked or when a send flag is enabled.
 
@@ -144,7 +144,7 @@ Important: `./run.sh` does not send DMs. `./post.sh` does not send DMs. Only
 
 ## Results
 
-Each run replaces these files:
+Each run replaces these generated files locally:
 
 - `results/summary.md`
 - `results/dms/*.md`
@@ -173,6 +173,9 @@ DM suggestions use two tiers:
 `state/history.json` is not replaced during normal runs. It is reserved for
 tracking successfully sent DM suggestions so the same issue/category is not
 nudge-sent to the same person twice.
+
+Generated `results/` artifacts are ignored by git. GitHub Actions should upload
+them as build artifacts, not commit them back to `main`.
 
 Do not describe this as a deterministic compliance report. It is an AI-assisted review prompt grounded in the local SOP.
 

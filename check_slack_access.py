@@ -1,3 +1,4 @@
+import argparse
 import os
 from pathlib import Path
 
@@ -18,6 +19,7 @@ def load_env():
 
 
 def main():
+    args = parse_args()
     load_env()
     token = os.environ.get("SLACK_BOT_TOKEN")
     channel = os.environ.get("SLACK_CHANNEL_ID")
@@ -54,6 +56,20 @@ def main():
     except SlackApiError as exc:
         print("conversations_info:", exc.response.get("error"))
 
+    if not args.send:
+        print("post_test: skipped; pass --send to post a smoke-test message")
+        return
+
+    post_smoke_message(client, channel)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Check Slack bot access without posting by default.")
+    parser.add_argument("--send", action="store_true", help="Post a smoke-test message after access checks pass.")
+    return parser.parse_args()
+
+
+def post_smoke_message(client, channel):
     try:
         client.chat_postMessage(
             channel=channel,

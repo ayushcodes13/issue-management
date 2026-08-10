@@ -1,122 +1,31 @@
-# Weekly Linear Review
+# Issue Management
 
-Simple weekly Linear issue review.
+Read-only Linear and Granola workflows for keeping work context visible without automatically changing Linear.
 
-The run is read-only for Linear. It fetches active issues, asks Azure OpenAI to review them against the local SOP Markdown, writes the latest report and DM drafts into `results/`, and can post the short no-name summary to one Slack channel.
+## What This Repo Does
 
-The source of truth is the repo copy of the SOP:
+- Weekly Linear SOP review: fetches active Linear issues, reviews them against `docs/how-we-use-linear.md` with Azure OpenAI, and writes report/DM drafts locally.
+- Daily Standup Memory: fetches today's Granola `Daily-Standup`, compares it with active Linear issues, and writes proposal/DM drafts locally.
+- Slack posting and DM sending are always explicit. Dry-run is the default.
+- Generated reports live under `results/` locally or as GitHub Actions artifacts. They are not committed to git.
+
+## Source Of Truth
+
+The Linear rules come from:
 
 ```text
 docs/how-we-use-linear.md
 ```
 
-Do not use the public Notion URL. Do not add rules that are not stated in that file.
+Do not use the public Notion URL during runs. If the SOP changes, update this Markdown copy first.
 
-For the broader Granola, Linear, GitHub, and Slack orchestration design, see:
+For the broader Granola, Linear, GitHub, and Slack design, see:
 
 ```text
 docs/central-work-orchestrator.md
 ```
 
-## Files
-
-```text
-skills/weekly-linear-issue-review/SKILL.md
-skills/weekly-linear-issue-review/scripts/run-review.sh
-skills/weekly-linear-issue-review/scripts/post-summary.sh
-docs/how-we-use-linear.md
-docs/central-work-orchestrator.md
-scripts/review.py
-scripts/post.py
-scripts/send_dms.py
-scripts/daily_standup_memory.py
-scripts/work_memory_api.py
-run_daily_standup_memory.sh
-run_work_memory_api.sh
-run_standup_coverage.sh
-results/
-state/history.json
-```
-
-## Secrets
-
-Required:
-
-```text
-LINEAR_API_KEY
-```
-
-Required for the scheduled Work Memory API runner:
-
-```text
-GRANOLA_API_KEY
-LINEAR_API_KEY
-AZURE_OPENAI_API_KEY
-```
-
-Required only for Slack posting:
-
-```text
-SLACK_BOT_TOKEN
-SLACK_CHANNEL_ID
-```
-
-DM sending also requires these Slack bot scopes:
-
-```text
-chat:write
-im:write
-users:read
-```
-
-Required for review generation:
-
-```text
-AZURE_OPENAI_API_KEY
-```
-
-Optional:
-
-```text
-SOP_DOC_PATH=docs/how-we-use-linear.md
-WORK_MEMORY_MEETING_LIMIT=20
-WORK_MEMORY_OUT_DIR=results/work-memory
-WORK_MEMORY_DAYS=7
-GRANOLA_API_URL=https://public-api.granola.ai/v1
-GRANOLA_PAGE_SIZE=30
-GRANOLA_MAX_PAGES=10
-WORK_MEMORY_INCLUDE_TRANSCRIPT=false
-GRANOLA_FOLDER_ID=
-GRANOLA_FOLDER_IDS=
-GRANOLA_TITLE_INCLUDE_REGEX=
-GRANOLA_TITLE_EXCLUDE_REGEX=
-GRANOLA_ATTENDEE_EMAIL_DOMAIN=
-GRANOLA_OWNER_EMAIL=
-STANDUP_COVERAGE_DAYS=60
-STANDUP_COVERAGE_TIMEZONE=Asia/Kolkata
-STANDUP_TITLE_REGEX=^Daily[- ]Stand[- ]?up$|^Daily-Standup$
-STANDUP_COVERAGE_OUT_DIR=results/standup-coverage
-DAILY_STANDUP_DATE=today
-DAILY_STANDUP_TIMEZONE=Asia/Kolkata
-DAILY_STANDUP_TITLE_REGEX=^Daily[- ]Stand[- ]?up$|^Daily-Standup$
-DAILY_STANDUP_MAX_WAIT_SECONDS=14400
-DAILY_STANDUP_POLL_SECONDS=300
-DAILY_STANDUP_STABLE_SECONDS=600
-DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
-DAILY_STANDUP_SEND_SLACK_DMS=false
-```
-
-Azure OpenAI uses the `gpt-5.5` deployment by default:
-
-```text
-AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
-AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
-AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
-```
-
-If `AZURE_OPENAI_API_KEY` is missing, the run writes a "no AI review" report instead of pretending local checks are enough.
-
-## Local Run
+## Setup
 
 ```bash
 python3 -m venv .venv
@@ -125,30 +34,119 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Fill `.env`, then run:
+Fill `.env` with the secrets needed for the workflow you are running.
+
+Core secrets:
+
+```text
+LINEAR_API_KEY
+AZURE_OPENAI_API_KEY
+```
+
+Daily standup and work-memory secrets:
+
+```text
+GRANOLA_API_KEY
+LINEAR_API_KEY
+AZURE_OPENAI_API_KEY
+```
+
+Slack secrets:
+
+```text
+SLACK_BOT_TOKEN
+SLACK_CHANNEL_ID
+```
+
+Slack DM sending also needs bot scopes:
+
+```text
+chat:write
+im:write
+users:read
+```
+
+Azure defaults:
+
+```text
+AZURE_OPENAI_4_1_MODELS_ENDPOINT=https://alerts-sweden-central.openai.azure.com/
+AZURE_OPENAI_4_1_MODELS_VERSION=2025-03-01-preview
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
+```
+
+## Weekly Linear Review
+
+Run locally:
 
 ```bash
 ./run.sh
 ```
 
-To post the latest summary to Slack:
+Outputs:
+
+```text
+results/summary.md
+results/owners.md
+results/issues.md
+results/report.md
+results/dm-drafts.json
+results/dms/*.md
+results/friction-notes.md
+```
+
+Post only the short no-name summary to Slack:
 
 ```bash
 ./post.sh
 ```
 
-`./post.sh` posts only `results/summary.md`. It does not send DM drafts.
-
-To preview generated weekly Linear DMs without sending anything:
+Preview DM drafts without sending:
 
 ```bash
 ./send_dms.sh
 ```
 
-## Daily Standup Memory Runner
+Validate Slack user resolution without sending:
 
-This is the daily Granola-to-Linear workflow. It uses exactly one note: today's
-`Daily-Standup` in `Asia/Kolkata`.
+```bash
+./send_dms.sh --validate-users
+```
+
+Send reviewed DM drafts:
+
+```bash
+./send_dms.sh --send --yes
+```
+
+Send one reviewed draft:
+
+```bash
+./send_dms.sh --recipient "Devayush Rout" --send --yes
+```
+
+Safety:
+
+- `./run.sh` does not post to Slack.
+- `./post.sh` posts only `results/summary.md`.
+- `./post.sh` does not send DMs.
+- Only `./send_dms.sh --send --yes` sends weekly review DMs.
+- Successful weekly DM sends update `state/history.json` for repeat suppression.
+
+## Daily Standup Memory
+
+Run locally:
+
+```bash
+./run_daily_standup_memory.sh
+```
+
+Fast local smoke test:
+
+```bash
+./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
+```
+
+Flow:
 
 ```text
 Granola API today's Daily-Standup transcript
@@ -157,40 +155,27 @@ Granola API today's Daily-Standup transcript
   -> results/daily-standup-memory/*
 ```
 
-Run locally:
-
-```bash
-./run_daily_standup_memory.sh
-```
-
-For local smoke tests without waiting for note stability:
-
-```bash
-./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
-```
-
-The scheduled workflow is:
+Outputs:
 
 ```text
-.github/workflows/daily-standup-memory.yml
-```
-
-It runs Monday-Friday at `11:15 IST`, then waits for today's standup note to
-appear and stabilize before processing. It uploads
-`results/daily-standup-memory` as an artifact and does not commit generated
-results back to the repository.
-
-The daily run also writes per-person Slack DM drafts:
-
-```text
+results/daily-standup-memory/summary.md
+results/daily-standup-memory/report.md
+results/daily-standup-memory/proposals.json
+results/daily-standup-memory/raw-index.json
 results/daily-standup-memory/dm-drafts.json
 results/daily-standup-memory/dms/*.md
 ```
 
-Preview without sending:
+Preview Daily Standup DMs without sending:
 
 ```bash
 ./send_daily_standup_dms.sh
+```
+
+Validate Slack user resolution without sending:
+
+```bash
+./send_daily_standup_dms.sh --validate-users
 ```
 
 Send only after review:
@@ -199,34 +184,21 @@ Send only after review:
 ./send_daily_standup_dms.sh --send --yes
 ```
 
-The GitHub workflow sends DMs only when manual dispatch sets
-`send_slack_dms=true` or the repo variable `DAILY_STANDUP_SEND_SLACK_DMS=true`.
-The default is off.
+The GitHub workflow runs Monday-Friday at `11:15 IST`, waits for today's standup note to stabilize, then uploads `results/daily-standup-memory` as an artifact. It does not commit generated results back to the repository.
+
+The workflow sends DMs only when explicitly enabled:
+
+- Manual dispatch input: `send_slack_dms=true`
+- Or repo variable: `DAILY_STANDUP_SEND_SLACK_DMS=true`
+
+Default is off.
 
 ## General Work Memory API Runner
 
-This is a lower-level manual runner for broader Granola note review. The daily
-standup workflow should be used for the scheduled production path.
-
-```text
-Granola API
-  -> Linear GraphQL API
-  -> Azure OpenAI
-  -> results/work-memory/*
-```
-
-Run locally:
+Use this for broader Granola note review. The daily standup runner is the scheduled path.
 
 ```bash
 ./run_work_memory_api.sh
-```
-
-Required env:
-
-```text
-GRANOLA_API_KEY
-LINEAR_API_KEY
-AZURE_OPENAI_API_KEY
 ```
 
 Outputs:
@@ -238,144 +210,54 @@ results/work-memory/proposals.json
 results/work-memory/raw-index.json
 ```
 
-### Granola Privacy Workaround
-
-If someone uses a private Granola workspace/service with many irrelevant or
-sensitive meetings, do not point the weekly runner at everything.
-
-Use an opt-in input:
+Optional Granola filters:
 
 ```text
-Preferred: put relevant notes into a Granola folder and set GRANOLA_FOLDER_ID
-or GRANOLA_FOLDER_IDS.
+GRANOLA_FOLDER_ID=
+GRANOLA_FOLDER_IDS=
+GRANOLA_TITLE_INCLUDE_REGEX=
+GRANOLA_TITLE_EXCLUDE_REGEX=
+GRANOLA_ATTENDEE_EMAIL_DOMAIN=
+GRANOLA_OWNER_EMAIL=
 ```
 
-Optional metadata filters can further reduce what gets fetched in detail:
+## Standup Coverage Check
+
+Check whether accessible Granola `Daily-Standup` notes cover recent weekdays:
+
+```bash
+./run_standup_coverage.sh
+```
+
+Outputs:
 
 ```text
-GRANOLA_TITLE_INCLUDE_REGEX="standup|linear|validation|hdfc"
-GRANOLA_TITLE_EXCLUDE_REGEX="1:1|personal|hiring"
-GRANOLA_ATTENDEE_EMAIL_DOMAIN=bynd.ai
-GRANOLA_OWNER_EMAIL=nikhil@bynd.ai
+results/standup-coverage/summary.md
+results/standup-coverage/coverage.json
 ```
 
-The API runner applies these filters on note metadata first. Only selected notes
-are fetched in detail and sent to Azure OpenAI.
+## GitHub Actions
 
-To validate that draft recipients resolve to Slack users without sending:
-
-```bash
-./send_dms.sh --validate-users
-```
-
-To send one reviewed draft:
-
-```bash
-./send_dms.sh --recipient "Devayush Rout" --send --yes
-```
-
-To send every reviewed draft:
-
-```bash
-./send_dms.sh --send --yes
-```
-
-Successful DM sends update `state/history.json` for issue-level nudges. Dry-runs
-never update state.
-
-## End-to-End DM Workflow
-
-DMs are implemented end to end, but they are not automatic by default.
-
-1. `./run.sh`
-   Fetches Linear issues, sends all active issues plus the SOP to Azure OpenAI,
-   and generates:
-   - `results/summary.md`
-   - `results/dms/*.md`
-   - `results/dm-drafts.json`
-   - `results/report.md`
-
-2. `./send_dms.sh`
-   Previews generated DMs only. It shows who would receive messages and sends
-   nothing.
-
-3. `./send_dms.sh --validate-users`
-   Checks Slack user resolution for draft recipients and sends nothing.
-
-4. `./send_dms.sh --send --yes`
-   Sends each generated DM draft, opens Slack DMs as needed, and updates
-   `state/history.json` after successful issue-level DM sends.
-
-To send only one person:
-
-```bash
-./send_dms.sh --recipient "Devayush Rout" --send --yes
-```
-
-Safety summary:
-
-- `./run.sh` does not send DMs.
-- `./post.sh` does not send DMs.
-- Only `./send_dms.sh --send --yes` sends DMs.
-
-## Results
-
-`results/` is committed to the repo. Each run replaces the folder contents with the latest report.
-
-```text
-results/summary.md
-results/dms/*.md
-results/dm-drafts.json
-results/friction-notes.md
-results/owners.md
-results/issues.md
-results/report.md
-results/data.json
-results/linear.json
-results/slack.json
-```
-
-Use `summary.md` for the public/shadow Slack post. It contains aggregate counts only and no owner names.
-
-Use `results/dms/` for per-person DM drafts. Issue-suggestion drafts are capped at three items. If someone has no issue-level nudge but the AI produced a useful owner note, the draft can be a light "no specific nudge this week" message.
-
-If the AI has a positive owner note and no action item, the draft can simply say
-good work this week and that there is nothing specific to clean up in Linear
-from this review.
-
-DM suggestions use two tiers:
-
-- `should_have`: missing description, Definition of done, or Acceptance criteria
-  on Todo/In Progress work; work that should move back to Backlog until scoped;
-  or more than three In Progress items.
-- `nice_to_have`: missing labels or missing priority.
-
-Silence is acceptable when there is no genuinely useful nudge.
-
-Use `owners.md` for owner-specific follow-ups, `issues.md` for issue-specific edits, `friction-notes.md` for repeat-suppression notes, and `report.md` for the full review.
-
-`state/history.json` is committed and not replaced each run. It is used to suppress repeat DM items once actual DM sending starts updating state.
-
-## GitHub Action
-
-The GitHub Actions cron is disabled. The workflow can still be run manually from
-the Actions tab:
+Weekly review:
 
 ```text
 .github/workflows/weekly-review.yml
 ```
 
-It writes the new `results/`, commits the updated results back to `main`, and uploads the same folder as an artifact.
+Daily standup memory:
 
-Manual workflow runs use the `post_to_slack` input. Keep it `false` unless you
-explicitly want the short summary posted to Slack.
+```text
+.github/workflows/daily-standup-memory.yml
+```
 
-## Safety
+Both workflows upload generated `results/` content as artifacts. Neither workflow commits generated result files back to `main`.
+
+## Safety Rules
 
 - No Linear mutations.
 - No Linear comments.
 - No auto-assignment.
 - No status changes.
 - Public Slack summary has no owner names.
-- DM drafts are generated locally but not sent by `post.sh`.
-- DM sending requires `./send_dms.sh --send --yes`.
+- DM drafts are generated but not sent unless the relevant `--send --yes` command or explicit workflow flag is used.
+- `.env`, MCP tokens, virtualenvs, caches, and generated `results/` files stay out of git.
