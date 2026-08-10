@@ -1,0 +1,95 @@
+{
+  "run": {
+    "mode": "daily-standup-read-only",
+    "since": "2026-08-09T18:30:00Z",
+    "targetDate": "2026-08-10",
+    "meetingLimit": 1,
+    "includeTranscript": true,
+    "stableSeconds": 0
+  },
+  "granola": {
+    "selectedStandup": {
+      "id": "not_qG82W4Ujo7bzFg",
+      "title": "Daily-Standup",
+      "created_at": "2026-08-10T04:59:21.168Z",
+      "updated_at": "2026-08-10T07:18:36.416Z",
+      "web_url": "",
+      "owner": {
+        "name": "Nikhil",
+        "email": "nikhil@bynd.ai"
+      },
+      "attendees_count": 0,
+      "calendar_event": {
+        "event_title": "",
+        "organiser": "",
+        "scheduled_start_time": "",
+        "scheduled_end_time": "",
+        "invitees_count": 0
+      }
+    },
+    "notesInspected": [
+      {
+        "id": "not_qG82W4Ujo7bzFg",
+        "title": "Daily-Standup",
+        "created_at": "2026-08-10T04:59:21.168Z",
+        "updated_at": "2026-08-10T07:18:36.416Z",
+        "web_url": "https://notes.granola.ai/d/59c7a4b2-8e9a-4a1a-b87d-705805c19b8c",
+        "owner": {
+          "name": "Nikhil",
+          "email": "nikhil@bynd.ai"
+        },
+        "attendees_count": 11,
+        "calendar_event": {
+          "event_title": "Daily-Standup",
+          "organiser": "nikhil@bynd.ai",
+          "scheduled_start_time": "2026-08-10T10:30:00+05:30",
+          "scheduled_end_time": "2026-08-10T11:00:00+05:30",
+          "invitees_count": 12
+        }
+      }
+    ],
+    "transcriptEntries": 357
+  },
+  "linear": {
+    "activeIssueCountsByStatus": {
+      "In Progress": 15,
+      "Todo": 17,
+      "Backlog": 42,
+      "In Review": 1
+    },
+    "issuesReferencedByProposals": [
+      {
+        "identifier": "BYN-153",
+        "title": "Recommend OpenRouter adoption for internal inference",
+        "status": "Todo",
+        "owner": "Mrinal Kanwar",
+        "url": "https://linear.app/byndai/issue/BYN-153/recommend-openrouter-adoption-for-internal-inference",
+        "project": ""
+      },
+      {
+        "identifier": "BYN-140",
+        "title": "Compute false negative rate for latest Phase 1 validation report",
+        "status": "In Progress",
+        "owner": "Devayush Rout",
+        "url": "https://linear.app/byndai/issue/BYN-140/compute-false-negative-rate-for-latest-phase-1-validation-report",
+        "project": "Validation Phase 1+2 v1 deployment"
+      },
+      {
+        "identifier": "BYN-135",
+        "title": "Compare and Evaluate data from parallel monitor to intelligence newsletters",
+        "status": "In Progress",
+        "owner": "Sanidhya",
+        "url": "https://linear.app/byndai/issue/BYN-135/compare-and-evaluate-data-from-parallel-monitor-to-intelligence",
+        "project": "Intelligence"
+      },
+      {
+        "identifier": "BYN-132",
+        "title": "Switching harness from Claude AgentSDK to an open harness",
+        "status": "Backlog",
+        "owner": "Piyush Khurana",
+        "url": "https://linear.app/byndai/issue/BYN-132/switching-harness-from-claude-agentsdk-to-an-open-harness",
+        "project": ""
+      }
+    ]
+  }
+}

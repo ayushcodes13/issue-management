@@ -1,0 +1,189 @@
+{
+  "run": {
+    "mode": "daily-standup-read-only",
+    "targetDate": "2026-08-10",
+    "since": "2026-08-09T18:30:00Z",
+    "meetingLimit": 1,
+    "includeTranscript": true,
+    "source": "azure-openai"
+  },
+  "counts": {
+    "granolaNotesListed": 1,
+    "granolaNotesSelected": 1,
+    "granolaNotesInspected": 1,
+    "linearIssuesReviewed": 75,
+    "proposals": 6
+  },
+  "proposals": [
+    {
+      "id": "granola-not_qG82W4Ujo7bzFg-byn140-validation-22-report-fn-rates",
+      "category": "add_context_to_existing_issue",
+      "confidence": "high",
+      "owner": "Devayush Rout",
+      "sourceMeetingIds": [
+        "not_qG82W4Ujo7bzFg"
+      ],
+      "sourceMeetingTitles": [
+        "Daily-Standup"
+      ],
+      "targetLinearIssue": {
+        "identifier": "BYN-140",
+        "title": "Compute false negative rate for latest Phase 1 validation report",
+        "url": "https://linear.app/byndai/issue/BYN-140/compute-false-negative-rate-for-latest-phase-1-validation-report"
+      },
+      "evidenceSummary": "Mrinal reported initial validation results on one report and said the next useful step is to run all 22 blob-backed reports, with Devayush taking over testing and computing false-negative rates per report. The meeting also noted that the latest blob results should be used and that Piyush needs full markdown context for the regression set.",
+      "rationale": "BYN-140 already tracks false-negative-rate work for the validation service, but the meeting appears to broaden the testing target from one latest report to all 22 reports and adds concrete inputs and handoffs.",
+      "suggestedSlackMessage": "Devayush, approve updating BYN-140 with the 22-report validation follow-up from standup: use latest blob-backed results, compute per-report false-negative rates, and coordinate with Piyush on the regression input?",
+      "proposedLinearChange": {
+        "action": "update_issue",
+        "draftText": "Proposed description update:\n\nDefinition of done:\nFalse-negative rates are computed for each of the 22 latest blob-backed validation reports, with a summary shared for review.\n\nAcceptance criteria:\n- Use the latest blob-backed validation outputs, not older runs.\n- Run the validation service across the 22-report set and confirm the service can handle the batch input.\n- For each report, record total facts, flagged facts, false negatives, false positives if observed, and false-negative rate.\n- Include the validator's current error bucket classification in the review summary.\n- Coordinate with Piyush on using full markdown context for the regression set.\n- Share the final summary with Mrinal and Nikhil for signoff on the residual error-rate discussion."
+      },
+      "requiresApproval": true,
+      "status": "draft"
+    },
+    {
+      "id": "granola-not_qG82W4Ujo7bzFg-byn153-openrouter-already-covered",
+      "category": "already_in_linear",
+      "confidence": "high",
+      "owner": "Mrinal Kanwar",
+      "sourceMeetingIds": [
+        "not_qG82W4Ujo7bzFg"
+      ],
+      "sourceMeetingTitles": [
+        "Daily-Standup"
+      ],
+      "targetLinearIssue": {
+        "identifier": "BYN-153",
+        "title": "Recommend OpenRouter adoption for internal inference",
+        "url": "https://linear.app/byndai/issue/BYN-153/recommend-openrouter-adoption-for-internal-inference"
+      },
+      "evidenceSummary": "The standup covered the OpenRouter spike: lower inference cost than Azure-hosted Luna, wider model availability, rate-limit and uptime advantages, and the need to keep inference swappable for client-specific deployment requirements.",
+      "rationale": "The active Linear issue already captures the same owner, spike output, major cost numbers, adoption concerns, and downstream consumers. No extra Linear proposal is needed from this meeting.",
+      "suggestedSlackMessage": "Mrinal, the OpenRouter standup discussion looks covered by BYN-153. No Linear edit proposed unless you want to add more detail after the spike.",
+      "proposedLinearChange": {
+        "action": "none",
+        "draftText": ""
+      },
+      "requiresApproval": true,
+      "status": "draft"
+    },
+    {
+      "id": "granola-not_qG82W4Ujo7bzFg-byn132-byn138-harness-owner-review",
+      "category": "needs_human_review",
+      "confidence": "medium",
+      "owner": "Nikhil",
+      "sourceMeetingIds": [
+        "not_qG82W4Ujo7bzFg"
+      ],
+      "sourceMeetingTitles": [
+        "Daily-Standup"
+      ],
+      "targetLinearIssue": {
+        "identifier": "BYN-132",
+        "title": "Switching harness from Claude AgentSDK to an open harness",
+        "url": "https://linear.app/byndai/issue/BYN-132/switching-harness-from-claude-agentsdk-to-an-open-harness"
+      },
+      "evidenceSummary": "The meeting discussed investigating migration away from the Claude Agent SDK because it limits model choice. Shashank was named for the investigation, while BYN-132 is assigned to Piyush and BYN-138 also contains a similar evaluation under Shashank.",
+      "rationale": "There appear to be overlapping Linear issues and a possible owner mismatch. This should be reviewed before adding more issue text or creating duplicate work.",
+      "suggestedSlackMessage": "Nikhil, can you confirm ownership for the open-harness investigation? Standup sounded like Shashank should evaluate options, while BYN-132 is assigned to Piyush and BYN-138 has overlapping scope.",
+      "proposedLinearChange": {
+        "action": "none",
+        "draftText": "Human review question: should BYN-132 remain assigned to Piyush, be reassigned, or be linked/merged with BYN-138's agent-architecture evaluation?"
+      },
+      "requiresApproval": true,
+      "status": "draft"
+    },
+    {
+      "id": "granola-not_qG82W4Ujo7bzFg-create-prop-equity-one-pager-gaps",
+      "category": "create_new_linear_issue",
+      "confidence": "high",
+      "owner": "Aditya Singh",
+      "sourceMeetingIds": [
+        "not_qG82W4Ujo7bzFg"
+      ],
+      "sourceMeetingTitles": [
+        "Daily-Standup"
+      ],
+      "targetLinearIssue": {
+        "identifier": "",
+        "title": "Fix Prop Equity one-pager export and editing gaps",
+        "url": ""
+      },
+      "evidenceSummary": "The Prop Equity one-pager frontend is deployed, and the remaining client-facing gaps are clickable source links, HTML export, and inline text editing. Nikhil planned to share it with Prop Equity for feedback.",
+      "rationale": "This is forward-looking client-facing work with specific outcomes. No active Linear issue in the supplied list appears to track these one-pager gaps.",
+      "suggestedSlackMessage": "Aditya, approve creating a Linear issue for the remaining Prop Equity one-pager gaps: clickable source links, HTML export, and inline text editing?",
+      "proposedLinearChange": {
+        "action": "create_issue",
+        "draftText": "Title: Fix Prop Equity one-pager export and editing gaps\nOwner: Aditya Singh\nStatus: Backlog\nLabels: Improvement, Intelligence\nProject: Intelligence\n\nDefinition of done:\nThe Prop Equity one-pager supports the client-facing export and editing behaviours needed before broader feedback is acted on.\n\nAcceptance criteria:\n- Source hyperlinks in the one-pager are clickable in the generated output.\n- The one-pager can be exported as HTML.\n- Inline text editing is available for the generated one-pager content.\n- Nikhil can review the updated flow before or alongside Prop Equity feedback."
+      },
+      "requiresApproval": true,
+      "status": "draft"
+    },
+    {
+      "id": "granola-not_qG82W4Ujo7bzFg-create-gt-demo-readiness",
+      "category": "create_new_linear_issue",
+      "confidence": "medium",
+      "owner": "Shashank Rajak",
+      "sourceMeetingIds": [
+        "not_qG82W4Ujo7bzFg"
+      ],
+      "sourceMeetingTitles": [
+        "Daily-Standup"
+      ],
+      "targetLinearIssue": {
+        "identifier": "",
+        "title": "Prepare GT-format company report for review and demo access decision",
+        "url": ""
+      },
+      "evidenceSummary": "The team discussed a likely GT banking group demo later this week, a need for reports to be in good shape before access is shared, a planned issue-by-issue review sync, and a requested GT-format report review for another company.",
+      "rationale": "The demo/readiness decision is client-facing and time-sensitive. Existing report architecture and QA issues cover parts of the work, but no active issue clearly tracks the GT demo readiness outcome.",
+      "suggestedSlackMessage": "Shashank, approve creating a short GT demo readiness issue so the report review, known issues, and access-sharing decision are tracked in one place?",
+      "proposedLinearChange": {
+        "action": "create_issue",
+        "draftText": "Title: Prepare GT-format company report for review and demo access decision\nOwner: Shashank Rajak\nStatus: Backlog\nLabels: Reports, Chore\nProject: Company Reports\n\nDefinition of done:\nA GT-format company report is reviewed, known demo-blocking issues are captured or resolved, and Nikhil has enough confidence to decide whether to share access for the GT banking group demo.\n\nAcceptance criteria:\n- Prepare a representative GT-format report for review.\n- Capture the known report issues from the Nikhil/Shashank/Mrinal review sync.\n- Link any larger defects or follow-ups to existing report-quality issues where appropriate.\n- Record the final access-sharing recommendation before the GT demo."
+      },
+      "requiresApproval": true,
+      "status": "draft"
+    },
+    {
+      "id": "granola-not_qG82W4Ujo7bzFg-byn135-parallel-poc-next-step",
+      "category": "add_context_to_existing_issue",
+      "confidence": "medium",
+      "owner": "Sanidhya",
+      "sourceMeetingIds": [
+        "not_qG82W4Ujo7bzFg"
+      ],
+      "sourceMeetingTitles": [
+        "Daily-Standup"
+      ],
+      "targetLinearIssue": {
+        "identifier": "BYN-135",
+        "title": "Compare and Evaluate data from parallel monitor to intelligence newsletters",
+        "url": "https://linear.app/byndai/issue/BYN-135/compare-and-evaluate-data-from-parallel-monitor-to-intelligence"
+      },
+      "evidenceSummary": "Sanidhya reported that Parallel comparisons for Prop Equity and Telecom newsletters look comparable, and the next step is to build a POC newsletter plus review Prop Equity and InvesTech monitoring comparisons with Nikhil.",
+      "rationale": "BYN-135 already tracks the Parallel monitor comparison. The meeting adds a concrete follow-up that may belong as a comment or as a follow-on issue after BYN-135 is closed.",
+      "suggestedSlackMessage": "Sanidhya, approve adding a note to BYN-135 that the Parallel comparison looks comparable and the proposed next step is a POC newsletter plus a short review with Nikhil?",
+      "proposedLinearChange": {
+        "action": "add_comment",
+        "draftText": "Standup follow-up for BYN-135: Parallel monitor results for Prop Equity and Telecom were described as comparable. Proposed next step is to build a POC newsletter and do a short review with Nikhil on the Prop Equity and InvesTech monitoring comparisons. If the comparison work is considered complete, create a separate follow-on issue for the POC newsletter rather than expanding this one."
+      },
+      "requiresApproval": true,
+      "status": "draft"
+    }
+  ],
+  "filterReport": {
+    "inputNotes": "today-only lookup",
+    "selectedNotes": 1,
+    "excludedCounts": {},
+    "activeFilters": {
+      "targetDate": "2026-08-10",
+      "titleRegex": "^Daily[- ]Stand[- ]?up$|^Daily-Standup$"
+    }
+  },
+  "limitations": [
+    "Only one Granola detail record was provided, and the transcript text is truncated.",
+    "Some Linear issue descriptions are truncated in the input, so a few overlaps may be hidden.",
+    "The output is a draft proposal set for human approval; no Linear or Slack action is implied."
+  ]
+}
