@@ -131,6 +131,8 @@ def normalize_proposals(proposals):
         item.setdefault("owner", "Unassigned")
         item.setdefault("sourceMeetingIds", [])
         item.setdefault("sourceMeetingTitles", [])
+        item.setdefault("mentionedTodo", "")
+        item.setdefault("workingOn", "")
         item.setdefault("targetLinearIssue", {"identifier": "", "title": "", "url": ""})
         item.setdefault("evidenceSummary", "")
         item.setdefault("rationale", "")
@@ -229,6 +231,7 @@ def write_outputs(out_dir, since_iso, note_index, filtered_notes, detailed_notes
             "linearIssuesReviewed": len(issues),
             "proposals": len(proposals),
         },
+        "tokenUsage": analysis.get("tokenUsage") or {},
         "proposals": proposals,
         "filterReport": filter_report,
         "limitations": analysis.get("limitations") or [],
@@ -315,6 +318,17 @@ def render_summary(payload, analysis):
             issue_id = target.get("identifier") or "no target"
             lines.append(f"- `{proposal.get('category')}` / {issue_id}: {proposal.get('evidenceSummary')}")
         lines.append("")
+    token_usage = payload.get("tokenUsage") or {}
+    estimated = token_usage.get("estimatedBreakdown") or {}
+    provider = token_usage.get("providerUsage") or {}
+    if estimated:
+        lines.append("Token estimate:")
+        for key in ("granola", "linear", "sop", "promptInstructionsAndTemplate", "fullPrompt", "output"):
+            item = estimated.get(key) or {}
+            lines.append(f"- {key}: ~{item.get('approxTokens', 0)} tokens ({item.get('chars', 0)} chars)")
+        if provider:
+            lines.append(f"- provider usage: {json.dumps(provider, sort_keys=True)}")
+        lines.append("")
     lines.append("No Slack messages were sent and no Linear changes were made.")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -367,6 +381,18 @@ def render_report(payload, raw_index, analysis):
     if limitations:
         lines.extend(["", "## Limitations", ""])
         lines.extend(f"- {item}" for item in limitations)
+    token_usage = payload.get("tokenUsage") or {}
+    estimated = token_usage.get("estimatedBreakdown") or {}
+    provider = token_usage.get("providerUsage") or {}
+    if estimated:
+        lines.extend(["", "## Token Usage", ""])
+        lines.append(token_usage.get("estimateMethod") or "Approximate token estimate.")
+        lines.append("")
+        for key in ("granola", "linear", "sop", "promptInstructionsAndTemplate", "fullPrompt", "output"):
+            item = estimated.get(key) or {}
+            lines.append(f"- {key}: ~{item.get('approxTokens', 0)} tokens ({item.get('chars', 0)} chars)")
+        if provider:
+            lines.append(f"- Provider usage: `{json.dumps(provider, sort_keys=True)}`")
     lines.extend(["", "No Slack messages were sent and no Linear changes were made."])
     return "\n".join(lines).rstrip() + "\n"
 

@@ -16,7 +16,9 @@ def generate_work_memory_proposals(notes, issues, since_iso, meeting_limit):
     if not config["api_key"]:
         return fallback_result("AZURE_OPENAI_API_KEY is not set", since_iso, meeting_limit)
 
-    prompt = build_prompt(notes, issue_payloads(issues), load_sop_text(), since_iso, meeting_limit)
+    issue_context = issue_payloads(issues)
+    sop_text = load_sop_text()
+    prompt = build_prompt(notes, issue_context, sop_text, since_iso, meeting_limit)
     try:
         body = request_azure_response(config, prompt)
     except (TimeoutError, urllib.error.URLError, ConnectionError) as exc:
@@ -26,13 +28,16 @@ def generate_work_memory_proposals(notes, issues, since_iso, meeting_limit):
         return fallback_result(f"Azure OpenAI API failed with HTTP {exc.code}: {detail[:500]}", since_iso, meeting_limit)
 
     try:
-        parsed = json.loads(extract_response_text(json.loads(body)))
+        response = json.loads(body)
+        output_text = extract_response_text(response)
+        parsed = json.loads(output_text)
     except (json.JSONDecodeError, RuntimeError) as exc:
         return fallback_result(f"Could not parse Azure OpenAI response: {exc}", since_iso, meeting_limit)
 
     parsed.setdefault("runSummary", {})
     parsed.setdefault("proposals", [])
     parsed.setdefault("limitations", [])
+    parsed["tokenUsage"] = build_token_usage(notes, issue_context, sop_text, prompt, output_text, response)
     parsed["source"] = "azure-openai"
     return parsed
 
@@ -102,6 +107,9 @@ Prefer:
 - exact title/project/owner matches
 - transcript speaker cues when transcript_text is present
 - concrete decisions, blockers, scope changes, owner changes, deadlines, benchmark results, client-facing problems, or important follow-ups
+- concrete person mentions: if a person is mentioned with a task, blocker,
+  needed input, or follow-up, create a separate proposal for that person even if
+  the same context also belongs on another Linear issue
 
 Suppress:
 - casual status updates with no decision
@@ -171,3 +179,46 @@ def fallback_result(reason, since_iso, meeting_limit):
         "proposals": [],
         "limitations": [reason, f"Requested since={since_iso}, meeting_limit={meeting_limit}"],
     }
+
+
+def build_token_usage(notes, issues, sop_text, prompt, output_text, response):
+    granola_json = json.dumps(notes, indent=2)
+    linear_json = json.dumps(issues, indent=2)
+    prompt_overhead_chars = max(0, len(prompt) - len(granola_json) - len(linear_json) - len(sop_text))
+    usage = response.get("usage") or {}
+    return {
+        "estimateMethod": "chars_div_4_approximation_for_breakdown; provider_usage_when_available_for_actual_totals",
+        "estimatedBreakdown": {
+            "granola": token_size(granola_json),
+            "linear": token_size(linear_json),
+            "sop": token_size(sop_text),
+            "promptInstructionsAndTemplate": token_size_by_chars(prompt_overhead_chars),
+            "fullPrompt": token_size(prompt),
+            "output": token_size(output_text),
+        },
+        "providerUsage": usage,
+    }
+
+
+def token_size(text):
+    return {
+        "chars": len(text or ""),
+        "approxTokens": approx_tokens(text or ""),
+    }
+
+
+def token_size_by_chars(chars):
+    return {
+        "chars": chars,
+        "approxTokens": approx_tokens_from_chars(chars),
+    }
+
+
+def approx_tokens(text):
+    return approx_tokens_from_chars(len(text or ""))
+
+
+def approx_tokens_from_chars(chars):
+    if chars <= 0:
+        return 0
+    return max(1, round(chars / 4))

@@ -212,6 +212,7 @@ def write_outputs(out_dir, args, since_iso, target_date, selected, detailed_note
             "linearIssuesReviewed": len(issues),
             "proposals": len(proposals),
         },
+        "tokenUsage": analysis.get("tokenUsage") or {},
         "proposals": proposals,
         "filterReport": {
             "inputNotes": "today-only lookup",

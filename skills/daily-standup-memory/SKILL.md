@@ -46,6 +46,7 @@ The daily runner:
 8. Sends the one standup transcript plus Linear context to Azure OpenAI.
 9. Writes local draft proposals to `results/daily-standup-memory/`.
 10. Writes per-person Slack DM drafts, but does not send them unless explicitly enabled.
+11. Writes token usage estimates for Granola, Linear, SOP/prompt text, full prompt, and output.
 
 ## Schedule
 
@@ -105,6 +106,10 @@ results/daily-standup-memory/dms/*.md
 
 The output is a draft queue. A proposal can recommend adding context to an
 existing Linear issue, creating a new issue, or marking work as already tracked.
+
+`proposals.json`, `summary.md`, and `report.md` include token accounting. The
+per-section breakdown is an approximate `chars / 4` estimate; provider usage is
+included when Azure returns it.
 
 Slack DM text should be human-readable. Do not expose internal proposal labels
 such as `already_in_linear`, `create_new_linear_issue`, or `none` in the message
