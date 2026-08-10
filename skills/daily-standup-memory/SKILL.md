@@ -1,0 +1,115 @@
+---
+name: daily-standup-memory
+description: Run Bynd's daily standup-to-Linear memory workflow. Use when asked to process today's Granola Daily-Standup, wait for the standup note/transcript to appear and stabilize, compare the one standup transcript with active Linear issues, generate draft Linear update/create proposals, inspect standup coverage, or manage the daily standup GitHub workflow.
+---
+
+# Daily Standup Memory
+
+## Purpose
+
+Use this skill for the daily Granola `Daily-Standup` to Linear proposal workflow.
+
+The workflow processes exactly one meeting: the target date's `Daily-Standup`
+note in `Asia/Kolkata`. It does not scan every meeting by default.
+
+## Default Command
+
+From the repo root:
+
+```bash
+./run_daily_standup_memory.sh
+```
+
+Local smoke test without waiting:
+
+```bash
+./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
+```
+
+Coverage check:
+
+```bash
+./run_standup_coverage.sh --days 60
+```
+
+## Run Behavior
+
+The daily runner:
+
+1. Computes the target date in `Asia/Kolkata` unless `--date YYYY-MM-DD` is given.
+2. Lists Granola notes created since local midnight for that date.
+3. Filters to title `Daily-Standup`.
+4. Waits if the note is not available yet.
+5. Fetches the note with transcript detail.
+6. Waits for the note signature to remain stable before processing.
+7. Fetches active Linear issues.
+8. Sends the one standup transcript plus Linear context to Azure OpenAI.
+9. Writes local draft proposals to `results/daily-standup-memory/`.
+
+## Schedule
+
+GitHub workflow:
+
+```text
+.github/workflows/daily-standup-memory.yml
+```
+
+Schedule:
+
+```text
+05:45 UTC Monday-Friday = 11:15 IST Monday-Friday
+```
+
+The workflow waits up to four hours for today's standup to appear and stabilize.
+This protects against late standups and partial transcripts.
+
+## Required Environment
+
+```text
+GRANOLA_API_KEY
+LINEAR_API_KEY
+AZURE_OPENAI_API_KEY
+AZURE_OPENAI_4_1_MODELS_ENDPOINT
+AZURE_OPENAI_4_1_MODELS_VERSION
+AZURE_OPENAI_4_1_MODELS_DEPLOYMENT
+```
+
+Optional:
+
+```text
+DAILY_STANDUP_DATE=today
+DAILY_STANDUP_TIMEZONE=Asia/Kolkata
+DAILY_STANDUP_TITLE_REGEX=^Daily[- ]Stand[- ]?up$|^Daily-Standup$
+DAILY_STANDUP_MAX_WAIT_SECONDS=14400
+DAILY_STANDUP_POLL_SECONDS=300
+DAILY_STANDUP_STABLE_SECONDS=600
+DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
+GRANOLA_PAGE_SIZE=30
+GRANOLA_MAX_PAGES=10
+```
+
+## Results
+
+Read:
+
+```text
+results/daily-standup-memory/summary.md
+results/daily-standup-memory/report.md
+results/daily-standup-memory/proposals.json
+results/daily-standup-memory/raw-index.json
+```
+
+The output is a draft queue. A proposal can recommend adding context to an
+existing Linear issue, creating a new issue, or marking work as already tracked.
+
+## Safety
+
+- Do not mutate Linear.
+- Do not create Linear issues.
+- Do not comment on Linear issues.
+- Do not send Slack messages.
+- Do not process non-standup meetings unless the user explicitly changes scope.
+- Do not process more than one standup for the target date without warning.
+- Keep transcripts out of committed raw outputs; only draft summaries/proposals are written.
+
+Linear writes and Slack sends require a separate approval workflow.
