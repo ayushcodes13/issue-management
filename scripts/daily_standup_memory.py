@@ -388,11 +388,11 @@ def short_linear_follow_up(proposal):
     issue = target_issue_id(target)
 
     if category == "add_context_to_existing_issue" and issue:
-        return f"update {issue}."
+        return f"tracked in {issue}; add context if useful."
     if category == "create_new_linear_issue":
         return "possible new issue."
     if category == "already_in_linear" and issue:
-        return f"already covered by {issue}."
+        return f"already tracked in {issue}."
     if category == "not_linear_worthy":
         return "no update needed."
     if category == "needs_human_review":

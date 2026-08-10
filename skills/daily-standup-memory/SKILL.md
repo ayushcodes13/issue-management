@@ -129,7 +129,7 @@ Use this simple Slack DM shape:
 Hi <person>,
 
 Here are suggested todos from today's standup:
-- <short todo>. Linear: <update BYN-123 / possible new issue / already covered by BYN-123 / no update needed / needs quick human review>.
+- <short todo>. Linear: <tracked in BYN-123; add context if useful / possible new issue / already tracked in BYN-123 / no update needed / needs quick human review>.
 
 Please take 5 minutes to keep Linear clean and up to date today.
 

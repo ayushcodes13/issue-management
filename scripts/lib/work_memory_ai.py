@@ -136,6 +136,15 @@ Useful proposal categories:
 - not_linear_worthy
 - needs_human_review
 
+Category decision rules:
+- Use `already_in_linear` when an active Linear issue already captures the work
+  and the standup does not add a meaningful new detail, decision, blocker, or
+  deadline.
+- Use `add_context_to_existing_issue` only when the existing issue is related
+  but today's standup adds useful new context that should probably be appended.
+- Use `create_new_linear_issue` only when the work is important and no existing
+  active issue clearly tracks it.
+
 Prefer:
 - explicit Linear issue IDs mentioned in notes
 - exact title/project/owner matches
