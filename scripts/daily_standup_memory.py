@@ -406,6 +406,7 @@ def sentence(value):
     text = (value or "").strip()
     if not text:
         return ""
+    text = text[0].upper() + text[1:]
     if text[-1] in ".!?":
         return text
     return f"{text}."

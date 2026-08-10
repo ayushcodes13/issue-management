@@ -20,6 +20,7 @@ from lib.linear import labels_of, owner_of, priority_of, status_of
 DEFAULT_AZURE_ENDPOINT = "https://alerts-sweden-central.openai.azure.com/"
 DEFAULT_AZURE_API_VERSION = "2025-03-01-preview"
 DEFAULT_AZURE_DEPLOYMENT = "gpt-5.5"
+DEFAULT_AZURE_TIMEOUT_SECONDS = 600
 DEFAULT_SOP_DOC_PATH = "docs/how-we-use-linear.md"
 
 NETWORK_ERRORS = (TimeoutError, urllib.error.URLError, ConnectionError)
@@ -106,7 +107,7 @@ def request_azure_response(config, prompt):
         },
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=180) as response:
+    with urllib.request.urlopen(request, timeout=config["timeout_seconds"]) as response:
         return response.read().decode("utf-8")
 
 
@@ -128,6 +129,7 @@ def azure_config():
             or os.environ.get("AZURE_OPENAI_API_MODEL")
             or DEFAULT_AZURE_DEPLOYMENT
         ),
+        "timeout_seconds": int(os.environ.get("AZURE_OPENAI_TIMEOUT_SECONDS", str(DEFAULT_AZURE_TIMEOUT_SECONDS))),
     }
 
 
