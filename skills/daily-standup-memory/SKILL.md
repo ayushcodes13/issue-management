@@ -106,6 +106,11 @@ results/daily-standup-memory/dms/*.md
 The output is a draft queue. A proposal can recommend adding context to an
 existing Linear issue, creating a new issue, or marking work as already tracked.
 
+Slack DM text should be human-readable. Do not expose internal proposal labels
+such as `already_in_linear`, `create_new_linear_issue`, or `none` in the message
+body. Map them to plain-language phrases like "Looks already covered in Linear"
+or "Possible new Linear issue".
+
 ## Safety
 
 - Do not mutate Linear.
