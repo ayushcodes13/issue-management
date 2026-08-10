@@ -28,7 +28,6 @@ from work_memory_api import normalize_proposals, render_report, render_summary, 
 
 DEFAULT_OUT_DIR = "results/daily-standup-memory"
 DEFAULT_TITLE_REGEX = r"^Daily[- ]Stand[- ]?up$|^Daily-Standup$"
-DEFAULT_MAX_DM_ITEMS = 10
 
 
 def main():
@@ -322,23 +321,18 @@ def dm_item(proposal):
 
 
 def render_dm_text(owner, proposals, target_date):
-    visible_proposals = proposals[:DEFAULT_MAX_DM_ITEMS]
     lines = [
         f"Hi {owner},",
         "",
         "Here are the things from today's standup that mentioned you:",
         "",
     ]
-    lines.extend(bullets(mentioned_todo(proposal) for proposal in visible_proposals))
+    lines.extend(bullets(mentioned_todo(proposal) for proposal in proposals))
     lines.extend(["", "This is what it sounds like you are working on:", ""])
-    lines.extend(bullets(working_on(proposal) for proposal in visible_proposals))
+    lines.extend(bullets(working_on(proposal) for proposal in proposals))
     lines.extend(["", "Linear follow-up:", ""])
-    lines.extend(bullets(linear_follow_up(proposal) for proposal in visible_proposals))
+    lines.extend(bullets(linear_follow_up(proposal) for proposal in proposals))
     lines.append("")
-
-    if len(proposals) > DEFAULT_MAX_DM_ITEMS:
-        lines.append(f"- Plus {len(proposals) - DEFAULT_MAX_DM_ITEMS} more item(s) in the daily standup report.")
-        lines.append("")
 
     lines.extend(
         [

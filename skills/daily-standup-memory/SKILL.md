@@ -110,8 +110,9 @@ existing Linear issue, creating a new issue, or marking work as already tracked.
 The proposal step should prefer recall over brevity: if one person has several
 distinct workstreams mentioned in standup, create separate proposals for those
 distinct workstreams instead of collapsing them into one item.
-Daily DMs show up to 10 items per person so a busy standup does not hide
-important same-day work behind a summary line.
+Daily DMs include every extracted item for that person. There is no item cap:
+if a person has many same-day workstreams, keep one DM for that person and list
+all of them clearly.
 
 `proposals.json`, `summary.md`, and `report.md` include token accounting. The
 per-section breakdown is an approximate `chars / 4` estimate; provider usage is

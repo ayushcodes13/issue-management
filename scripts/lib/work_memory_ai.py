@@ -95,9 +95,24 @@ Coverage rule:
   one extra review item.
 - Do not collapse unrelated workstreams just because the same person owns them.
 - If one person has four distinct tasks, create four proposals for that person.
-- If a person is mentioned with a concrete task, blocker, needed input, or
-  follow-up, create a separate proposal for that person even if the same context
-  also belongs on another Linear issue.
+- Create a separate proposal for a person only when they are the likely owner:
+  they said they are doing it, someone assigned it to them, they are blocked on
+  it, or the work clearly sits in their current ownership.
+- A person being mentioned as context, as the source of examples, as a reviewer,
+  or inside another person's task is not enough to make them the owner.
+- If a task says another person should do it, assign it to that other person
+  even if the topic concerns someone else's work.
+- If a person says they need input, examples, data, files, access, or a review
+  from someone else, assign the "send/provide/share/review" follow-up to the
+  person expected to provide it. Only assign the downstream work to the requester
+  if the downstream work is also clearly active and worth tracking.
+- When you split that dependency, do not duplicate the provider's task in the
+  requester's wording. For example, if Devayush must send full markdown to
+  Piyush, Devayush's proposal can say "share the full markdown"; Piyush's
+  separate proposal should say "build the regression set from the latest
+  validation results" and only mention the markdown as a dependency if needed.
+- If ownership is unclear, set owner to "Unassigned" and category to
+  "needs_human_review" instead of guessing.
 - Keep related sub-tasks together only when they are clearly part of the same
   outcome.
 
