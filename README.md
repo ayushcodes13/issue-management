@@ -29,6 +29,11 @@ docs/central-work-orchestrator.md
 scripts/review.py
 scripts/post.py
 scripts/send_dms.py
+scripts/daily_standup_memory.py
+scripts/work_memory_api.py
+run_daily_standup_memory.sh
+run_work_memory_api.sh
+run_standup_coverage.sh
 results/
 state/history.json
 ```
@@ -39,6 +44,14 @@ Required:
 
 ```text
 LINEAR_API_KEY
+```
+
+Required for the scheduled Work Memory API runner:
+
+```text
+GRANOLA_API_KEY
+LINEAR_API_KEY
+AZURE_OPENAI_API_KEY
 ```
 
 Required only for Slack posting:
@@ -66,6 +79,30 @@ Optional:
 
 ```text
 SOP_DOC_PATH=docs/how-we-use-linear.md
+WORK_MEMORY_MEETING_LIMIT=20
+WORK_MEMORY_OUT_DIR=results/work-memory
+WORK_MEMORY_DAYS=7
+GRANOLA_API_URL=https://public-api.granola.ai/v1
+GRANOLA_PAGE_SIZE=30
+GRANOLA_MAX_PAGES=10
+WORK_MEMORY_INCLUDE_TRANSCRIPT=false
+GRANOLA_FOLDER_ID=
+GRANOLA_FOLDER_IDS=
+GRANOLA_TITLE_INCLUDE_REGEX=
+GRANOLA_TITLE_EXCLUDE_REGEX=
+GRANOLA_ATTENDEE_EMAIL_DOMAIN=
+GRANOLA_OWNER_EMAIL=
+STANDUP_COVERAGE_DAYS=60
+STANDUP_COVERAGE_TIMEZONE=Asia/Kolkata
+STANDUP_TITLE_REGEX=^Daily[- ]Stand[- ]?up$|^Daily-Standup$
+STANDUP_COVERAGE_OUT_DIR=results/standup-coverage
+DAILY_STANDUP_DATE=today
+DAILY_STANDUP_TIMEZONE=Asia/Kolkata
+DAILY_STANDUP_TITLE_REGEX=^Daily[- ]Stand[- ]?up$|^Daily-Standup$
+DAILY_STANDUP_MAX_WAIT_SECONDS=14400
+DAILY_STANDUP_POLL_SECONDS=300
+DAILY_STANDUP_STABLE_SECONDS=600
+DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
 ```
 
 Azure OpenAI uses the `gpt-5.5` deployment by default:
@@ -101,11 +138,104 @@ To post the latest summary to Slack:
 
 `./post.sh` posts only `results/summary.md`. It does not send DM drafts.
 
-To preview generated DMs without sending anything:
+To preview generated weekly Linear DMs without sending anything:
 
 ```bash
 ./send_dms.sh
 ```
+
+## Daily Standup Memory Runner
+
+This is the daily Granola-to-Linear workflow. It uses exactly one note: today's
+`Daily-Standup` in `Asia/Kolkata`.
+
+```text
+Granola API today's Daily-Standup transcript
+  -> Linear GraphQL API active issues
+  -> Azure OpenAI
+  -> results/daily-standup-memory/*
+```
+
+Run locally:
+
+```bash
+./run_daily_standup_memory.sh
+```
+
+For local smoke tests without waiting for note stability:
+
+```bash
+./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
+```
+
+The scheduled workflow is:
+
+```text
+.github/workflows/daily-standup-memory.yml
+```
+
+It runs Monday-Friday at `11:15 IST`, then waits for today's standup note to
+appear and stabilize before processing. It commits the latest
+`results/daily-standup-memory` output and uploads it as an artifact.
+
+## General Work Memory API Runner
+
+This is a lower-level manual runner for broader Granola note review. The daily
+standup workflow should be used for the scheduled production path.
+
+```text
+Granola API
+  -> Linear GraphQL API
+  -> Azure OpenAI
+  -> results/work-memory/*
+```
+
+Run locally:
+
+```bash
+./run_work_memory_api.sh
+```
+
+Required env:
+
+```text
+GRANOLA_API_KEY
+LINEAR_API_KEY
+AZURE_OPENAI_API_KEY
+```
+
+Outputs:
+
+```text
+results/work-memory/summary.md
+results/work-memory/report.md
+results/work-memory/proposals.json
+results/work-memory/raw-index.json
+```
+
+### Granola Privacy Workaround
+
+If someone uses a private Granola workspace/service with many irrelevant or
+sensitive meetings, do not point the weekly runner at everything.
+
+Use an opt-in input:
+
+```text
+Preferred: put relevant notes into a Granola folder and set GRANOLA_FOLDER_ID
+or GRANOLA_FOLDER_IDS.
+```
+
+Optional metadata filters can further reduce what gets fetched in detail:
+
+```text
+GRANOLA_TITLE_INCLUDE_REGEX="standup|linear|validation|hdfc"
+GRANOLA_TITLE_EXCLUDE_REGEX="1:1|personal|hiring"
+GRANOLA_ATTENDEE_EMAIL_DOMAIN=bynd.ai
+GRANOLA_OWNER_EMAIL=nikhil@bynd.ai
+```
+
+The API runner applies these filters on note metadata first. Only selected notes
+are fetched in detail and sent to Azure OpenAI.
 
 To validate that draft recipients resolve to Slack users without sending:
 

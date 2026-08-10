@@ -1,0 +1,63 @@
+name: Daily Standup Memory
+
+on:
+  schedule:
+    # 11:15 IST, Monday-Friday. The runner then waits for today's standup note
+    # to appear and stabilize, so a slightly late standup does not produce a
+    # partial transcript run.
+    - cron: "45 5 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Target standup date in YYYY-MM-DD, or today"
+        required: false
+        default: "today"
+
+permissions:
+  contents: write
+
+jobs:
+  daily-standup-memory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run today's Daily-Standup memory review
+        env:
+          GRANOLA_API_KEY: ${{ secrets.GRANOLA_API_KEY }}
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_4_1_MODELS_ENDPOINT: "https://alerts-sweden-central.openai.azure.com/"
+          AZURE_OPENAI_4_1_MODELS_VERSION: "2025-03-01-preview"
+          AZURE_OPENAI_4_1_MODELS_DEPLOYMENT: "gpt-5.5"
+          DAILY_STANDUP_DATE: ${{ inputs.date || 'today' }}
+          DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
+          DAILY_STANDUP_MAX_WAIT_SECONDS: "14400"
+          DAILY_STANDUP_POLL_SECONDS: "300"
+          DAILY_STANDUP_STABLE_SECONDS: "600"
+          DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
+          GRANOLA_PAGE_SIZE: "30"
+          GRANOLA_MAX_PAGES: "10"
+        run: ./run_daily_standup_memory.sh
+
+      - name: Save latest daily standup results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/daily-standup-memory
+          if ! git diff --cached --quiet; then
+            git commit -m "Update daily standup memory results"
+            git push
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: daily-standup-memory
+          path: results/daily-standup-memory
