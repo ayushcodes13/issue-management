@@ -187,11 +187,14 @@ Hi <person>,
 
 Here are a few suggestions from an AI review of your Linear issues:
 
-- <issue link inline>: <one-line suggestion>.
+- <clickable issue key, e.g. BYN-123>: <one-line suggestion>.
 ```
 
-Do not include a separate intro paragraph, separate link lines, "Noticed",
-"SOP reference", positive/no-action notes, or repeated wording.
+Render Slack links with the issue key as the visible text, e.g.
+`<https://linear.app/...|BYN-123>`, so Slack shows a clean `BYN-123` link and
+can unfurl the Linear issue card. Do not include a separate intro paragraph,
+separate link lines, long issue-title link text, "Noticed", "SOP reference",
+positive/no-action notes, or repeated wording.
 
 ## Safety
 

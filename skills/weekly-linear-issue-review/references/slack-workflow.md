@@ -44,9 +44,11 @@ Rules:
 - Issue-suggestion drafts have max three items per person.
 - Do not send positive/no-action DMs.
 - Start with: "Here are a few suggestions from an AI review of your Linear issues:"
-- Each item should be one line: inline issue link plus one concrete fix.
-- Do not include separate link lines, "Noticed", "SOP reference", or explanatory
-  paragraphs.
+- Each item should be one line: clickable issue key plus one concrete fix.
+- Use Slack mrkdwn links with the issue key as visible text, e.g.
+  `<https://linear.app/...|BYN-123>`, and allow Linear link unfurls in DMs.
+- Do not include separate link lines, long issue-title link text, "Noticed",
+  "SOP reference", or explanatory paragraphs.
 - DM the assignee; if unassigned, fall back to the creator.
 - Never repeat the same issue/category to the same person; see
   `state-tracking.md`.

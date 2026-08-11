@@ -144,7 +144,7 @@ def post_dm(client, channel_id, text):
         client.chat_postMessage(
             channel=channel_id,
             text=text,
-            unfurl_links=False,
+            unfurl_links=True,
             unfurl_media=False,
         )
     except SlackApiError as exc:

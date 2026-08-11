@@ -343,12 +343,10 @@ def render_dm_text(recipient, items):
 
 def inline_issue_link(item):
     issue_id = item.get("issueId") or "Issue"
-    title = item.get("title") or ""
-    label = f"{issue_id}: {title}" if title else issue_id
     url = item.get("url")
     if url:
-        return f"<{url}|{label}>"
-    return label
+        return f"<{url}|{issue_id}>"
+    return issue_id
 
 
 def sentence(value):
