@@ -51,3 +51,8 @@ Silence is better than a positive/no-action check-in.
 DM suggestions should be one line each: inline issue link plus one concrete
 next edit. Do not include separate "Noticed", "SOP reference", or explanatory
 paragraphs in the DM.
+
+Assume recipients do not have the SOP open. Avoid unexplained SOP field names
+in the DM copy. Explain what to add in plain language, such as "what question
+this spike should answer", "how long you will spend", and "what decision or doc
+should come out".

@@ -337,7 +337,7 @@ def render_dm_text(recipient, items):
         "",
     ]
     for item in items:
-        lines.append(f"- {inline_issue_link(item)}: {sentence(item.get('nextEdit'))}")
+        lines.append(f"- {inline_issue_link(item)}: {sentence(human_next_edit(item.get('nextEdit')))}")
     return "\n".join(lines)
 
 
@@ -356,6 +356,46 @@ def sentence(value):
     if text[-1] in ".!?":
         return text
     return f"{text}."
+
+
+def human_next_edit(value):
+    text = (value or "").strip()
+    if not text:
+        return text
+
+    exact_rewrites = {
+        "Add 'Question to answer', 'Timebox', and 'Output' headings.": (
+            "Add the exact question this spike should answer, how long you will spend, "
+            "and what decision, doc, or follow-up should come out"
+        ),
+        "Add 'Question to answer', 'Timebox', and 'Output', or move it back to Todo if it is paused.": (
+            "Add the exact question this spike should answer, how long you will spend, "
+            "and what decision, doc, or follow-up should come out; if it is paused, move it back to Todo"
+        ),
+    }
+    if text in exact_rewrites:
+        return exact_rewrites[text]
+
+    replacements = (
+        ("Add a Definition of done and Acceptance criteria for ", "Add one sentence saying what done means and 2-3 checks for "),
+        ("Add a Definition of done plus Acceptance criteria for ", "Add one sentence saying what done means and 2-3 checks for "),
+        ("Add a Definition of done plus checks for ", "Add one sentence saying what done means, plus checks for "),
+        ("Add a Definition of done saying ", "Add one sentence that says "),
+        ("Add a Definition of done that says ", "Add one sentence that says "),
+        ("Add a Definition of done and ", "Add one sentence saying what done means and "),
+        ("Add type/product labels plus a Definition of done and Acceptance criteria", "Add type/product labels, one sentence saying what done means, and 2-3 checks"),
+        ("Add labels, priority, a Definition of done, and 2-3 Acceptance criteria", "Add labels, priority, one sentence saying what done means, and 2-3 checks"),
+        ("Add type/product labels and 2-3 Acceptance criteria", "Add type/product labels and 2-3 checks"),
+        ("Replace the scoping note with a Definition of done and Acceptance criteria", "Replace the scoping note with one sentence saying what done means and 2-3 checks"),
+        ("Definition of done", "one sentence saying what done means"),
+        ("Acceptance criteria", "2-3 checks"),
+        ("Question to answer", "the exact question to answer"),
+        ("Timebox", "how long you will spend"),
+        ("Output", "what result should come out"),
+    )
+    for old, new in replacements:
+        text = text.replace(old, new)
+    return text
 
 
 def render_owner_note_dm_text(note):

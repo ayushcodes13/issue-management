@@ -49,6 +49,9 @@ Rules:
   `<https://linear.app/...|BYN-123>`, and allow Linear link unfurls in DMs.
 - Do not include separate link lines, long issue-title link text, "Noticed",
   "SOP reference", or explanatory paragraphs.
+- Explain the actual edit instead of only naming SOP fields. For example,
+  explain "add the exact question, time limit, and expected result" instead of
+  saying "add Question to answer, Timebox, and Output".
 - DM the assignee; if unassigned, fall back to the creator.
 - Never repeat the same issue/category to the same person; see
   `state-tracking.md`.

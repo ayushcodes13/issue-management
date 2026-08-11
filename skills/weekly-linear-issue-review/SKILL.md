@@ -196,6 +196,12 @@ can unfurl the Linear issue card. Do not include a separate intro paragraph,
 separate link lines, long issue-title link text, "Noticed", "SOP reference",
 positive/no-action notes, or repeated wording.
 
+Write suggestions as if the recipient does not have the SOP open. Explain the
+actual edit, not only the internal field name. For example, prefer "add the
+exact question this spike should answer, how long you will spend, and what
+decision or doc should come out" over "add Question to answer, Timebox, and
+Output".
+
 ## Safety
 
 - Do not mutate Linear.

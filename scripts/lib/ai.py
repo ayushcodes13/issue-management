@@ -192,6 +192,9 @@ Message tone guidance:
 - If an owner has should_have findings, make the issue note direct but gentle.
 - Do not create positive/no-action owner notes. If there is nothing useful to say to someone, omit them.
 - Keep suggestedNextEdit short enough to fit in one Slack bullet.
+- Do not assume recipients know the SOP wording. Explain the actual edit in
+  plain English instead of only naming fields like "Definition of done",
+  "Acceptance criteria", "Question to answer", "Timebox", or "Output".
 
 Return only valid JSON in this exact shape:
 {{
