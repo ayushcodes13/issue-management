@@ -190,11 +190,11 @@ Here are a few suggestions from an AI review of your Linear issues:
 - <clickable issue key, e.g. BYN-123>: <one-line suggestion>.
 ```
 
-Render Slack links with the issue key as the visible text, e.g.
-`<https://linear.app/...|BYN-123>`, so Slack shows a clean `BYN-123` link and
-can unfurl the Linear issue card. Do not include a separate intro paragraph,
-separate link lines, long issue-title link text, "Noticed", "SOP reference",
-positive/no-action notes, or repeated wording.
+Use Slack mrkdwn internally as `<https://linear.app/...|BYN-123>` so the sent
+message renders as a blue clickable `BYN-123` with the URL hidden. When showing
+previews to users, render it as a normal clickable `BYN-123`, not raw angle
+bracket syntax. Do not include separate link lines, long issue-title link text,
+"Noticed", "SOP reference", positive/no-action notes, or repeated wording.
 
 Write suggestions as if the recipient does not have the SOP open. Explain the
 actual edit, not only the internal field name. For example, prefer "add the

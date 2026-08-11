@@ -337,11 +337,11 @@ def render_dm_text(recipient, items):
         "",
     ]
     for item in items:
-        lines.append(f"- {inline_issue_link(item)}: {sentence(human_next_edit(item.get('nextEdit')))}")
+        lines.append(f"- {inline_issue_key_link(item)}: {sentence(human_next_edit(item.get('nextEdit')))}")
     return "\n".join(lines)
 
 
-def inline_issue_link(item):
+def inline_issue_key_link(item):
     issue_id = item.get("issueId") or "Issue"
     url = item.get("url")
     if url:

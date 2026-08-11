@@ -45,10 +45,11 @@ Rules:
 - Do not send positive/no-action DMs.
 - Start with: "Here are a few suggestions from an AI review of your Linear issues:"
 - Each item should be one line: clickable issue key plus one concrete fix.
-- Use Slack mrkdwn links with the issue key as visible text, e.g.
-  `<https://linear.app/...|BYN-123>`, and allow Linear link unfurls in DMs.
-- Do not include separate link lines, long issue-title link text, "Noticed",
-  "SOP reference", or explanatory paragraphs.
+- Use Slack mrkdwn internally as `<https://linear.app/...|BYN-123>` so the sent
+  message renders as a blue clickable `BYN-123` with the URL hidden. Do not show
+  raw angle-bracket syntax in human previews.
+- Do not include separate link lines, "Noticed", "SOP reference", or
+  explanatory paragraphs.
 - Explain the actual edit instead of only naming SOP fields. For example,
   explain "add the exact question, time limit, and expected result" instead of
   saying "add Question to answer, Timebox, and Output".
