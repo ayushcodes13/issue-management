@@ -42,16 +42,11 @@ Rules:
 - Only people with useful suggestions get a draft.
 - Silence is better than noise; do not create a DM just to prove the bot ran.
 - Issue-suggestion drafts have max three items per person.
-- If the AI has an owner note but no issue-level nudge, generate a short "no
-  specific nudge this week" draft with the useful focus items.
-- If the AI has a positive owner note and no useful action item, generate a
-  human positive check-in: good work this week, nothing specific to clean up in
-  Linear from this review.
-- If a DM has only `nice_to_have` suggestions, open with light praise before the
-  suggestions. If it has `should_have` suggestions, make the nudge direct but
-  gentle.
-- Each item should include the issue link, what was noticed, one concrete fix,
-  and the SOP section/reference.
+- Do not send positive/no-action DMs.
+- Start with: "Here are a few suggestions from an AI review of your Linear issues:"
+- Each item should be one line: inline issue link plus one concrete fix.
+- Do not include separate link lines, "Noticed", "SOP reference", or explanatory
+  paragraphs.
 - DM the assignee; if unassigned, fall back to the creator.
 - Never repeat the same issue/category to the same person; see
   `state-tracking.md`.

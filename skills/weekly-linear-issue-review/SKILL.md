@@ -159,8 +159,9 @@ Each run replaces these generated files locally:
 
 Use `owners.md` for `show <name>`.
 Use `issues.md` for `improve <issue id>`.
-Use `results/dms/` for per-person DM drafts. Some drafts may be light owner-note
-messages when there is no specific issue-level nudge.
+Use `results/dms/` for per-person DM drafts. Only people with useful
+issue-level suggestions should get drafts; if there is nothing to say, send
+nothing.
 Use `report.md` for the full review.
 
 DM suggestions use two tiers:
@@ -178,6 +179,19 @@ Generated `results/` artifacts are ignored by git. GitHub Actions should upload
 them as build artifacts, not commit them back to `main`.
 
 Do not describe this as a deterministic compliance report. It is an AI-assisted review prompt grounded in the local SOP.
+
+DM copy should be short:
+
+```text
+Hi <person>,
+
+Here are a few suggestions from an AI review of your Linear issues:
+
+- <issue link inline>: <one-line suggestion>.
+```
+
+Do not include a separate intro paragraph, separate link lines, "Noticed",
+"SOP reference", positive/no-action notes, or repeated wording.
 
 ## Safety
 

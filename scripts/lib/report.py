@@ -76,7 +76,6 @@ def build_dm_drafts_with_analysis(issues, findings, analysis, history):
         by_recipient[recipient].append(item)
 
     drafts = []
-    recipients_with_issue_items = set(by_recipient)
     for recipient in sorted(by_recipient):
         items = by_recipient[recipient][:MAX_DM_ITEMS]
         drafts.append(
@@ -88,7 +87,6 @@ def build_dm_drafts_with_analysis(issues, findings, analysis, history):
                 "text": render_dm_text(recipient, items),
             }
         )
-    drafts.extend(owner_note_drafts(analysis, recipients_with_issue_items))
     return drafts, suppressed
 
 
@@ -332,28 +330,34 @@ def render_friction_notes(suppressed):
 
 
 def render_dm_text(recipient, items):
-    if items and all(item.get("tier") == "nice_to_have" for item in items):
-        lines = [
-            f"Hi {recipient}, your Linear issues mostly look okay from this week's SOP review.",
-            "A couple of small nice-to-have cleanups could make them easier to scan:",
-            "",
-        ]
-    else:
-        lines = [
-            f"Hi {recipient}, here are a few Linear SOP suggestions from this week's AI-assisted review.",
-            "These are the items most worth tightening so the work is easier to start or verify.",
-            "",
-        ]
-    for idx, item in enumerate(items, start=1):
-        lines.append(f"{idx}. {item.get('issueId')}: {item.get('title')}")
-        if item.get("url"):
-            lines.append(f"   Link: {item.get('url')}")
-        lines.append(f"   Noticed: {item.get('noticed')}")
-        lines.append(f"   One-line fix: {item.get('nextEdit')}")
-        lines.append(f"   SOP reference: {item.get('sopSection')}")
-        lines.append("")
-    lines.append("If a rule seems wrong or slows you down, raise it at standup or the Friday review.")
+    lines = [
+        f"Hi {recipient},",
+        "",
+        "Here are a few suggestions from an AI review of your Linear issues:",
+        "",
+    ]
+    for item in items:
+        lines.append(f"- {inline_issue_link(item)}: {sentence(item.get('nextEdit'))}")
     return "\n".join(lines)
+
+
+def inline_issue_link(item):
+    issue_id = item.get("issueId") or "Issue"
+    title = item.get("title") or ""
+    label = f"{issue_id}: {title}" if title else issue_id
+    url = item.get("url")
+    if url:
+        return f"<{url}|{label}>"
+    return label
+
+
+def sentence(value):
+    text = (value or "").strip()
+    if not text:
+        return "Make the smallest useful cleanup."
+    if text[-1] in ".!?":
+        return text
+    return f"{text}."
 
 
 def render_owner_note_dm_text(note):

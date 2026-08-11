@@ -189,10 +189,9 @@ Priority tiers:
 - future_only: cross-referencing GitHub activity against tickets is a future idea; do not create findings for it yet.
 
 Message tone guidance:
-- If an owner only has nice_to_have findings, make the owner note praise-first and light.
 - If an owner has should_have findings, make the issue note direct but gentle.
-- If an owner has no genuinely useful issue-level nudge and their Linear issues look healthy enough, include a positive owner note with messageKind "positive_no_action". It should sound human, e.g. "good work this week, nothing to do in Linear from this review."
-- Do not force positive notes for everyone. Only include them when there is a real basis in the issues reviewed.
+- Do not create positive/no-action owner notes. If there is nothing useful to say to someone, omit them.
+- Keep suggestedNextEdit short enough to fit in one Slack bullet.
 
 Return only valid JSON in this exact shape:
 {{
