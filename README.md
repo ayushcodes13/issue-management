@@ -146,6 +146,16 @@ Fast local smoke test:
 ./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
 ```
 
+List the Granola note titles visible to the current API key without fetching
+transcripts:
+
+```bash
+set -a
+source .env
+set +a
+python3 scripts/granola_preflight.py --date today --days 3
+```
+
 Flow:
 
 ```text
@@ -218,6 +228,58 @@ gh workflow run daily-standup-memory.yml \
 
 This validates Granola, Linear, Azure OpenAI, and artifact generation. The
 scheduled production run still uses the 15-minute transcript quiet period.
+
+If the action fails before Linear/Azure, check the `Granola metadata preflight`
+step first. It prints only note titles/timestamps and tells you whether the
+configured `GRANOLA_API_KEY` can see a matching `Daily-Standup` for the target
+date. If the note exists in the Granola app but not in this preflight, the
+problem is API-key workspace/access or the title/date filter, not GitHub.
+
+## Local Weekday Scheduler
+
+GitHub Actions can still be used for smoke tests, but the free local fallback is
+macOS `launchd`. It runs on your Mac, so it is only reliable while your laptop is
+awake and online.
+
+Install the local scheduler:
+
+```bash
+./scripts/install_launchd_daily_standup.sh
+```
+
+Manual trigger:
+
+```bash
+launchctl start com.bynd.daily-standup-memory
+```
+
+Disable:
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.bynd.daily-standup-memory.plist
+```
+
+Logs:
+
+```text
+logs/daily-standup-memory.out.log
+logs/daily-standup-memory.err.log
+```
+
+The scheduled command is:
+
+```bash
+./run_daily_standup_auto.sh
+```
+
+It runs the daily standup workflow and sends Slack DMs only when this env var is
+set:
+
+```text
+DAILY_STANDUP_SEND_SLACK_DMS=true
+```
+
+Keep it `false` for dry-run/artifact-only mode.
 
 The Action is intentionally verbose. Read it like this:
 

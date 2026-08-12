@@ -136,19 +136,20 @@ def prepare_out_dir(out_dir):
 
 def wait_for_standup(args, start_utc, target_date, tz):
     deadline = time_module.monotonic() + args.max_wait_seconds
-    last_candidates = []
+    last_notes = []
     while True:
         notes = list_notes(created_after=start_utc, page_size=args.page_size, max_pages=args.max_pages)
+        last_notes = notes
         candidates = filter_standups(notes, target_date, tz, args.title_regex)
         if candidates:
             if len(candidates) > 1:
                 print(f"WARNING: found {len(candidates)} standups for {target_date}; using the latest note.", file=sys.stderr)
             return candidates[-1]
-        last_candidates = candidates
         if time_module.monotonic() >= deadline:
+            visible = summarize_visible_notes(last_notes, tz)
             raise RuntimeError(
                 f"No Daily-Standup note found for {target_date.isoformat()} after waiting "
-                f"{args.max_wait_seconds} seconds. Last candidate count: {len(last_candidates)}"
+                f"{args.max_wait_seconds} seconds. Accessible note titles in the lookup window: {visible}"
             )
         print(f"No Daily-Standup found yet for {target_date}; sleeping {args.poll_seconds}s...")
         time_module.sleep(args.poll_seconds)
@@ -172,6 +173,26 @@ def filter_standups(notes, target_date, tz, title_regex):
         selected.append(item)
     selected.sort(key=lambda note: note["_local_created_at"])
     return selected
+
+
+def summarize_visible_notes(notes, tz, limit=12):
+    if not notes:
+        return "none"
+    values = []
+    for note in notes[:limit]:
+        created_at = note.get("created_at") or note.get("createdAt") or ""
+        local_date = ""
+        if created_at:
+            try:
+                created = datetime.fromisoformat(created_at.replace("Z", "+00:00")).astimezone(tz)
+                local_date = created.strftime("%Y-%m-%d")
+            except ValueError:
+                local_date = created_at[:10]
+        title = (note.get("title") or "Untitled").strip()
+        values.append(f"{local_date}: {title}" if local_date else title)
+    if len(notes) > limit:
+        values.append(f"...and {len(notes) - limit} more")
+    return "; ".join(values)
 
 
 def wait_for_stable_detail(note_id, args):

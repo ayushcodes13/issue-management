@@ -79,6 +79,16 @@ jobs:
           echo "out_dir=${DAILY_STANDUP_OUT_DIR}"
           echo "send_slack_dms=${WORKFLOW_SEND_SLACK_DMS}"
 
+          mkdir -p "${DAILY_STANDUP_OUT_DIR}"
+          {
+            echo "# Daily Standup Memory Run Status"
+            echo
+            echo "- Event: \`${GITHUB_EVENT_NAME}\`"
+            echo "- Date: \`${DAILY_STANDUP_DATE}\`"
+            echo "- Send Slack DMs: \`${WORKFLOW_SEND_SLACK_DMS}\`"
+            echo "- Started: \`$(date -u +"%Y-%m-%dT%H:%M:%SZ")\`"
+          } > "${DAILY_STANDUP_OUT_DIR}/run-status.md"
+
           missing=0
           for key in GRANOLA_API_KEY LINEAR_API_KEY AZURE_OPENAI_API_KEY; do
             if [ -z "${!key:-}" ]; then
@@ -103,6 +113,20 @@ jobs:
           if [ "${missing}" -ne 0 ]; then
             exit 1
           fi
+
+      - name: Granola metadata preflight
+        env:
+          GRANOLA_API_KEY: ${{ secrets.GRANOLA_API_KEY }}
+          DAILY_STANDUP_DATE: ${{ inputs.date || 'today' }}
+          DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
+          DAILY_STANDUP_TITLE_REGEX: "^Daily[- ]Stand[- ]?up$|^Daily-Standup$"
+          GRANOLA_PAGE_SIZE: "30"
+          GRANOLA_MAX_PAGES: "10"
+          GRANOLA_PREFLIGHT_DAYS: "3"
+          GRANOLA_PREFLIGHT_LIMIT: "20"
+        run: |
+          set -euo pipefail
+          python3 scripts/granola_preflight.py
 
       - name: Run today's Daily-Standup memory review
         timeout-minutes: 90
