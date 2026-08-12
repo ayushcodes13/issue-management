@@ -48,7 +48,7 @@ The daily runner:
 10. Writes per-person Slack DM drafts, but does not send them unless explicitly enabled.
 11. Writes token usage estimates for Granola, Linear, SOP/prompt text, full prompt, and output.
 
-## Schedule
+## GitHub Workflow
 
 GitHub workflow:
 
@@ -56,13 +56,8 @@ GitHub workflow:
 .github/workflows/daily-standup-memory.yml
 ```
 
-Schedule:
-
-```text
-05:00 UTC Monday-Friday = 10:30 IST Monday-Friday
-```
-
-The workflow waits up to four hours for today's standup to appear. After the
+This workflow is manual-only. It has no cron/schedule trigger. When manually
+dispatched, it waits up to four hours for today's standup to appear. After the
 note appears, it treats the standup as ended only when the transcript has been
 unchanged for 15 minutes. This handles standups with no fixed end time. It also
 requires at least 1000 transcript characters by default so an empty or barely
@@ -148,7 +143,7 @@ Thank you for reading.
 - Do not create Linear issues.
 - Do not comment on Linear issues.
 - Do not send Slack messages.
-- Slack DMs require `./send_daily_standup_dms.sh --send --yes` or the explicit workflow flag.
+- Slack DMs require `./send_daily_standup_dms.sh --send --yes` or the explicit manual workflow flag.
 - Do not process non-standup meetings unless the user explicitly changes scope.
 - Do not process more than one standup for the target date without warning.
 - Keep transcripts out of committed raw outputs; only draft summaries/proposals are written.

@@ -9,10 +9,12 @@ Read-only Linear and Granola workflows for keeping work context visible without 
 - Slack posting and DM sending are always explicit. Dry-run is the default.
 - Generated reports live under `results/` locally or as GitHub Actions artifacts. They are not committed to git.
 
-Scheduled automation:
+Automation status:
 
-- The only scheduled GitHub workflow is Daily Standup Memory.
-- The weekly Linear SOP review is manual-only. It has no cron/schedule trigger.
+- Both GitHub workflows are manual-only.
+- There are no cron/schedule triggers in this repo.
+- Daily Standup Memory can still wait for the Granola transcript to stabilize
+  after a manual run starts.
 
 ## Source Of Truth
 
@@ -81,8 +83,8 @@ AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
 
 ## Weekly Linear Review
 
-This workflow is manual-only. Do not schedule it while the daily automation is
-focused on Granola standup follow-ups.
+This workflow is manual-only. Do not schedule it until the team decides where
+these workflows should run reliably outside GitHub Actions.
 
 Run locally:
 
@@ -202,24 +204,20 @@ Send only after review:
 ./send_daily_standup_dms.sh --send --yes
 ```
 
-The GitHub workflow runs Monday-Friday at `10:30 IST`, waits for today's standup note to appear, then waits until the transcript has been unchanged for 15 minutes before generating drafts. This is how the automation handles a standup with no fixed end time: "ended" means Granola stopped changing the transcript for 15 minutes. It does not commit generated results back to the repository.
+The GitHub workflow is manual-only. When manually dispatched, it can wait for
+today's standup note to appear, then wait until the transcript has been
+unchanged for 15 minutes before generating drafts. This is how the workflow
+handles a standup with no fixed end time: "ended" means Granola stopped changing
+the transcript for 15 minutes. It does not commit generated results back to the
+repository.
 
 The runner also requires at least `1000` transcript characters by default before processing, so it does not send DMs from an empty or barely-started note. Override with `DAILY_STANDUP_MIN_TRANSCRIPT_CHARS` only for unusually short standups.
 
-The workflow sends DMs only when explicitly enabled:
+The workflow sends DMs only when explicitly enabled on manual dispatch:
 
 - Manual dispatch input: `send_slack_dms=true`
-- Or repo variable: `DAILY_STANDUP_SEND_SLACK_DMS=true`
 
 Default is off.
-
-For fully automatic weekday sends, set the GitHub repository variable:
-
-```text
-DAILY_STANDUP_SEND_SLACK_DMS=true
-```
-
-Keep it unset or `false` to generate artifacts only.
 
 For a GitHub Actions smoke test that does not send Slack DMs and does not wait
 15 minutes:
@@ -235,59 +233,13 @@ gh workflow run daily-standup-memory.yml \
 ```
 
 This validates Granola, Linear, Azure OpenAI, and artifact generation. The
-scheduled production run still uses the 15-minute transcript quiet period.
+normal manual run still uses the 15-minute transcript quiet period.
 
 If the action fails before Linear/Azure, check the `Granola metadata preflight`
 step first. It prints only note titles/timestamps and tells you whether the
 configured `GRANOLA_API_KEY` can see a matching `Daily-Standup` for the target
 date. If the note exists in the Granola app but not in this preflight, the
 problem is API-key workspace/access or the title/date filter, not GitHub.
-
-## Local Weekday Scheduler
-
-GitHub Actions can still be used for smoke tests, but the free local fallback is
-macOS `launchd`. It runs on your Mac, so it is only reliable while your laptop is
-awake and online.
-
-Install the local scheduler:
-
-```bash
-./scripts/install_launchd_daily_standup.sh
-```
-
-Manual trigger:
-
-```bash
-launchctl start com.bynd.daily-standup-memory
-```
-
-Disable:
-
-```bash
-launchctl unload ~/Library/LaunchAgents/com.bynd.daily-standup-memory.plist
-```
-
-Logs:
-
-```text
-logs/daily-standup-memory.out.log
-logs/daily-standup-memory.err.log
-```
-
-The scheduled command is:
-
-```bash
-./run_daily_standup_auto.sh
-```
-
-It runs the daily standup workflow and sends Slack DMs only when this env var is
-set:
-
-```text
-DAILY_STANDUP_SEND_SLACK_DMS=true
-```
-
-Keep it `false` for dry-run/artifact-only mode.
 
 The Action is intentionally verbose. Read it like this:
 
@@ -306,8 +258,7 @@ Validate Slack recipients before sending
   Runs only when sending is enabled. Resolves every recipient before any DM is sent.
 
 Optionally send Daily-Standup Slack DMs
-  Runs only when `send_slack_dms=true` on manual dispatch or
-  `DAILY_STANDUP_SEND_SLACK_DMS=true` as a repo variable.
+  Runs only when `send_slack_dms=true` on manual dispatch.
 
 Upload artifact
   Runs even on failure, so partial results/log context are easier to inspect.
@@ -319,7 +270,7 @@ for the transcript stability window. For a fast no-send health check, use
 
 ## General Work Memory API Runner
 
-Use this for broader Granola note review. The daily standup runner is the scheduled path.
+Use this for broader Granola note review. It is manual-only.
 
 ```bash
 ./run_work_memory_api.sh

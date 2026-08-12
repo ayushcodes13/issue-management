@@ -1,8 +1,8 @@
 name: Manual Weekly Linear Issue Review
 
 on:
-  # Manual only. Do not add a schedule here while the daily automation is focused
-  # only on Granola Daily-Standup -> Linear suggestions -> Slack DMs.
+  # Manual only. Do not add a schedule until the team decides where these
+  # workflows should run reliably outside GitHub Actions.
   workflow_dispatch:
     inputs:
       post_to_slack:

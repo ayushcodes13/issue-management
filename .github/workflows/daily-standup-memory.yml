@@ -1,10 +1,8 @@
-name: Daily Standup Memory
+name: Manual Daily Standup Memory
 
 on:
-  schedule:
-    # 10:30 IST, Monday-Friday. The runner waits for today's standup note to
-    # appear, then sends only after the transcript has been stable for 15 min.
-    - cron: "0 5 * * 1-5"
+  # Manual only. Do not add a schedule until the team decides where this should
+  # run reliably outside GitHub Actions.
   workflow_dispatch:
     inputs:
       date:
@@ -64,7 +62,7 @@ jobs:
           DAILY_STANDUP_STABLE_SECONDS: ${{ inputs.stable_seconds || '900' }}
           DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: ${{ inputs.min_transcript_chars || '1000' }}
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
-          WORKFLOW_SEND_SLACK_DMS: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+          WORKFLOW_SEND_SLACK_DMS: ${{ inputs.send_slack_dms == 'true' }}
         run: |
           set -euo pipefail
 
@@ -194,14 +192,14 @@ jobs:
           PY
 
       - name: Validate Slack recipients before sending
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+        if: ${{ inputs.send_slack_dms == 'true' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
         run: ./send_daily_standup_dms.sh --validate-users
 
       - name: Optionally send Daily-Standup Slack DMs
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+        if: ${{ inputs.send_slack_dms == 'true' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
@@ -211,7 +209,7 @@ jobs:
         if: always()
         env:
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
-          WORKFLOW_SEND_SLACK_DMS: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+          WORKFLOW_SEND_SLACK_DMS: ${{ inputs.send_slack_dms == 'true' }}
         run: |
           set -euo pipefail
           {

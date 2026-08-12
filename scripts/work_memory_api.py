@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Scheduled API-based Work Memory runner.
+"""Manual API-based Work Memory runner.
 
-This is the production/scheduled path. It does not use Codex CLI or MCP. It
-uses Granola API, Linear GraphQL API, and Azure OpenAI to write draft proposal
-artifacts under results/work-memory.
+This does not use Codex CLI or MCP. It uses Granola API, Linear GraphQL API,
+and Azure OpenAI to write draft proposal artifacts under results/work-memory.
 """
 
 import argparse
