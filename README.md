@@ -212,7 +212,8 @@ gh workflow run daily-standup-memory.yml \
   --ref main \
   -f date=today \
   -f send_slack_dms=false \
-  -f stable_seconds=0
+  -f stable_seconds=0 \
+  -f max_wait_seconds=300
 ```
 
 This validates Granola, Linear, Azure OpenAI, and artifact generation. The

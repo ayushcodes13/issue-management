@@ -23,6 +23,10 @@ on:
         description: "Minimum transcript chars before processing"
         required: false
         default: "1000"
+      max_wait_seconds:
+        description: "Max wait for note/stability. Use 300 for smoke tests."
+        required: false
+        default: "14400"
 
 permissions:
   contents: read
@@ -35,6 +39,8 @@ jobs:
   daily-standup-memory:
     runs-on: ubuntu-latest
     timeout-minutes: 300
+    env:
+      PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -53,7 +59,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           DAILY_STANDUP_DATE: ${{ inputs.date || 'today' }}
           DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
-          DAILY_STANDUP_MAX_WAIT_SECONDS: "14400"
+          DAILY_STANDUP_MAX_WAIT_SECONDS: ${{ inputs.max_wait_seconds || '14400' }}
           DAILY_STANDUP_POLL_SECONDS: "60"
           DAILY_STANDUP_STABLE_SECONDS: ${{ inputs.stable_seconds || '900' }}
           DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: ${{ inputs.min_transcript_chars || '1000' }}
@@ -99,6 +105,7 @@ jobs:
           fi
 
       - name: Run today's Daily-Standup memory review
+        timeout-minutes: 90
         env:
           GRANOLA_API_KEY: ${{ secrets.GRANOLA_API_KEY }}
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
@@ -108,7 +115,7 @@ jobs:
           AZURE_OPENAI_4_1_MODELS_DEPLOYMENT: "gpt-5.5"
           DAILY_STANDUP_DATE: ${{ inputs.date || 'today' }}
           DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
-          DAILY_STANDUP_MAX_WAIT_SECONDS: "14400"
+          DAILY_STANDUP_MAX_WAIT_SECONDS: ${{ inputs.max_wait_seconds || '14400' }}
           DAILY_STANDUP_POLL_SECONDS: "60"
           DAILY_STANDUP_STABLE_SECONDS: ${{ inputs.stable_seconds || '900' }}
           DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: ${{ inputs.min_transcript_chars || '1000' }}
