@@ -9,6 +9,11 @@ Read-only Linear and Granola workflows for keeping work context visible without 
 - Slack posting and DM sending are always explicit. Dry-run is the default.
 - Generated reports live under `results/` locally or as GitHub Actions artifacts. They are not committed to git.
 
+Scheduled automation:
+
+- The only scheduled GitHub workflow is Daily Standup Memory.
+- The weekly Linear SOP review is manual-only. It has no cron/schedule trigger.
+
 ## Source Of Truth
 
 The Linear rules come from:
@@ -75,6 +80,9 @@ AZURE_OPENAI_4_1_MODELS_DEPLOYMENT=gpt-5.5
 ```
 
 ## Weekly Linear Review
+
+This workflow is manual-only. Do not schedule it while the daily automation is
+focused on Granola standup follow-ups.
 
 Run locally:
 

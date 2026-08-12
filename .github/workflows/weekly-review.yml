@@ -1,6 +1,8 @@
-name: Weekly Linear Issue Review
+name: Manual Weekly Linear Issue Review
 
 on:
+  # Manual only. Do not add a schedule here while the daily automation is focused
+  # only on Granola Daily-Standup -> Linear suggestions -> Slack DMs.
   workflow_dispatch:
     inputs:
       post_to_slack:
