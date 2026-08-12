@@ -203,6 +203,49 @@ DAILY_STANDUP_SEND_SLACK_DMS=true
 
 Keep it unset or `false` to generate artifacts only.
 
+For a GitHub Actions smoke test that does not send Slack DMs and does not wait
+15 minutes:
+
+```bash
+gh workflow run daily-standup-memory.yml \
+  --repo ayushcodes13/issue-management \
+  --ref main \
+  -f date=today \
+  -f send_slack_dms=false \
+  -f stable_seconds=0
+```
+
+This validates Granola, Linear, Azure OpenAI, and artifact generation. The
+scheduled production run still uses the 15-minute transcript quiet period.
+
+The Action is intentionally verbose. Read it like this:
+
+```text
+Preflight configuration
+  Verifies required secrets exist and prints non-secret timing config.
+
+Run today's Daily-Standup memory review
+  Waits for the Granola note, waits for transcript stability, fetches Linear,
+  calls Azure OpenAI, and writes local artifacts.
+
+Validate generated draft outputs
+  Fails early if expected files are missing or malformed.
+
+Validate Slack recipients before sending
+  Runs only when sending is enabled. Resolves every recipient before any DM is sent.
+
+Optionally send Daily-Standup Slack DMs
+  Runs only when `send_slack_dms=true` on manual dispatch or
+  `DAILY_STANDUP_SEND_SLACK_DMS=true` as a repo variable.
+
+Upload artifact
+  Runs even on failure, so partial results/log context are easier to inspect.
+```
+
+If the Action appears to be "stuck" in the review step, it is usually waiting
+for the transcript stability window. For a fast no-send health check, use
+`stable_seconds=0`.
+
 ## General Work Memory API Runner
 
 Use this for broader Granola note review. The daily standup runner is the scheduled path.

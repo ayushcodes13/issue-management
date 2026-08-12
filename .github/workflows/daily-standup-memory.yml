@@ -15,9 +15,21 @@ on:
         description: "Send generated daily standup DM drafts to Slack"
         required: false
         default: "false"
+      stable_seconds:
+        description: "Transcript quiet period before processing. Use 0 for no-send smoke tests."
+        required: false
+        default: "900"
+      min_transcript_chars:
+        description: "Minimum transcript chars before processing"
+        required: false
+        default: "1000"
 
 permissions:
   contents: read
+
+concurrency:
+  group: daily-standup-memory
+  cancel-in-progress: false
 
 jobs:
   daily-standup-memory:
@@ -30,7 +42,61 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Preflight configuration
+        env:
+          GRANOLA_API_KEY: ${{ secrets.GRANOLA_API_KEY }}
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          DAILY_STANDUP_DATE: ${{ inputs.date || 'today' }}
+          DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
+          DAILY_STANDUP_MAX_WAIT_SECONDS: "14400"
+          DAILY_STANDUP_POLL_SECONDS: "60"
+          DAILY_STANDUP_STABLE_SECONDS: ${{ inputs.stable_seconds || '900' }}
+          DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: ${{ inputs.min_transcript_chars || '1000' }}
+          DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
+          WORKFLOW_SEND_SLACK_DMS: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+        run: |
+          set -euo pipefail
+
+          echo "Daily Standup Memory preflight"
+          echo "event=${GITHUB_EVENT_NAME}"
+          echo "date=${DAILY_STANDUP_DATE}"
+          echo "timezone=${DAILY_STANDUP_TIMEZONE}"
+          echo "poll_seconds=${DAILY_STANDUP_POLL_SECONDS}"
+          echo "stable_seconds=${DAILY_STANDUP_STABLE_SECONDS}"
+          echo "min_transcript_chars=${DAILY_STANDUP_MIN_TRANSCRIPT_CHARS}"
+          echo "max_wait_seconds=${DAILY_STANDUP_MAX_WAIT_SECONDS}"
+          echo "out_dir=${DAILY_STANDUP_OUT_DIR}"
+          echo "send_slack_dms=${WORKFLOW_SEND_SLACK_DMS}"
+
+          missing=0
+          for key in GRANOLA_API_KEY LINEAR_API_KEY AZURE_OPENAI_API_KEY; do
+            if [ -z "${!key:-}" ]; then
+              echo "::error::Missing required secret ${key}"
+              missing=1
+            else
+              echo "${key}=set"
+            fi
+          done
+
+          if [ "${WORKFLOW_SEND_SLACK_DMS}" = "true" ]; then
+            if [ -z "${SLACK_BOT_TOKEN:-}" ]; then
+              echo "::error::SLACK_BOT_TOKEN is required when Slack sending is enabled"
+              missing=1
+            else
+              echo "SLACK_BOT_TOKEN=set"
+            fi
+          else
+            echo "Slack sending disabled for this run."
+          fi
+
+          if [ "${missing}" -ne 0 ]; then
+            exit 1
+          fi
 
       - name: Run today's Daily-Standup memory review
         env:
@@ -44,12 +110,64 @@ jobs:
           DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
           DAILY_STANDUP_MAX_WAIT_SECONDS: "14400"
           DAILY_STANDUP_POLL_SECONDS: "60"
-          DAILY_STANDUP_STABLE_SECONDS: "900"
-          DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: "1000"
+          DAILY_STANDUP_STABLE_SECONDS: ${{ inputs.stable_seconds || '900' }}
+          DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: ${{ inputs.min_transcript_chars || '1000' }}
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
           GRANOLA_PAGE_SIZE: "30"
           GRANOLA_MAX_PAGES: "10"
-        run: ./run_daily_standup_memory.sh
+        run: |
+          set -euo pipefail
+          ./run_daily_standup_memory.sh
+
+      - name: Validate generated draft outputs
+        env:
+          DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
+        run: |
+          set -euo pipefail
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          out_dir = Path(os.environ["DAILY_STANDUP_OUT_DIR"])
+          required = [
+              "summary.md",
+              "report.md",
+              "proposals.json",
+              "raw-index.json",
+              "dm-drafts.json",
+          ]
+          missing = [name for name in required if not (out_dir / name).exists()]
+          if missing:
+              raise SystemExit(f"Missing expected output files: {', '.join(missing)}")
+
+          proposals_payload = json.loads((out_dir / "proposals.json").read_text())
+          dm_drafts = json.loads((out_dir / "dm-drafts.json").read_text())
+          counts = proposals_payload.get("counts") or {}
+          token_usage = proposals_payload.get("tokenUsage") or {}
+          provider_usage = token_usage.get("providerUsage") or {}
+
+          print("Generated output validation")
+          print(f"active_linear_issues={counts.get('linearIssuesReviewed')}")
+          print(f"proposals={counts.get('proposals')}")
+          print(f"dm_drafts={len(dm_drafts)}")
+          print(f"analysis_source={proposals_payload.get('run', {}).get('source')}")
+          if provider_usage:
+              print(f"provider_total_tokens={provider_usage.get('total_tokens')}")
+
+          if counts.get("linearIssuesReviewed", 0) <= 0:
+              raise SystemExit("No Linear issues were reviewed.")
+          if not isinstance(dm_drafts, list):
+              raise SystemExit("dm-drafts.json is not a list.")
+          PY
+
+      - name: Validate Slack recipients before sending
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
+        run: ./send_daily_standup_dms.sh --validate-users
 
       - name: Optionally send Daily-Standup Slack DMs
         if: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
@@ -58,7 +176,29 @@ jobs:
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
         run: ./send_daily_standup_dms.sh --send --yes
 
+      - name: Write workflow summary
+        if: always()
+        env:
+          DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
+          WORKFLOW_SEND_SLACK_DMS: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_slack_dms == 'true') || vars.DAILY_STANDUP_SEND_SLACK_DMS == 'true' }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Daily Standup Memory"
+            echo
+            echo "- Send Slack DMs: \`${WORKFLOW_SEND_SLACK_DMS}\`"
+            echo "- Output dir: \`${DAILY_STANDUP_OUT_DIR}\`"
+            echo
+            if [ -f "${DAILY_STANDUP_OUT_DIR}/summary.md" ]; then
+              cat "${DAILY_STANDUP_OUT_DIR}/summary.md"
+            else
+              echo "No summary file was generated."
+            fi
+          } >> "${GITHUB_STEP_SUMMARY}"
+
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: daily-standup-memory
           path: results/daily-standup-memory
+          if-no-files-found: warn
