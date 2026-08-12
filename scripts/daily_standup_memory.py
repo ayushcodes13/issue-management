@@ -9,6 +9,7 @@ Read-only:
 """
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -229,12 +230,33 @@ def transcript_char_count(note):
 def note_signature(note):
     transcript = note.get("transcript") or []
     return {
-        "updated_at": note.get("updated_at") or note.get("updatedAt"),
-        "summary_text_chars": len(note.get("summary_text") or ""),
-        "summary_markdown_chars": len(note.get("summary_markdown") or ""),
         "transcript_entries": len(transcript) if isinstance(transcript, list) else 0,
+        "transcript_chars": transcript_char_count(note),
+        "transcript_digest": transcript_digest(transcript),
         "last_transcript_text": last_transcript_text(transcript),
     }
+
+
+def transcript_digest(transcript):
+    if not isinstance(transcript, list):
+        return ""
+    digest = hashlib.sha256()
+    for entry in transcript:
+        if not isinstance(entry, dict):
+            continue
+        speaker = speaker_for_digest(entry.get("speaker"))
+        text = entry.get("text") or entry.get("content") or entry.get("utterance") or ""
+        start = entry.get("start_time") or entry.get("startTime") or ""
+        digest.update(f"{speaker}\t{start}\t{text}\n".encode("utf-8", errors="replace"))
+    return digest.hexdigest()
+
+
+def speaker_for_digest(speaker):
+    if isinstance(speaker, str):
+        return speaker
+    if isinstance(speaker, dict):
+        return speaker.get("name") or speaker.get("email") or speaker.get("attribution") or speaker.get("source") or ""
+    return ""
 
 
 def last_transcript_text(transcript):
