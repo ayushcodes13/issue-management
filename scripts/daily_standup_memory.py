@@ -29,6 +29,9 @@ from work_memory_api import normalize_proposals, render_report, render_summary, 
 DEFAULT_OUT_DIR = "results/daily-standup-memory"
 DEFAULT_TITLE_REGEX = r"^Daily[- ]Stand[- ]?up$|^Daily-Standup$"
 DEFAULT_MAX_TRANSCRIPT_CHARS = 60000
+DEFAULT_MIN_TRANSCRIPT_CHARS = 1000
+DEFAULT_POLL_SECONDS = 60
+DEFAULT_STABLE_SECONDS = 900
 
 
 def main():
@@ -83,7 +86,11 @@ def parse_args():
     parser.add_argument("--title-regex", default=os.environ.get("DAILY_STANDUP_TITLE_REGEX", DEFAULT_TITLE_REGEX))
     parser.add_argument("--page-size", type=int, default=int(os.environ.get("GRANOLA_PAGE_SIZE", "30")))
     parser.add_argument("--max-pages", type=int, default=int(os.environ.get("GRANOLA_MAX_PAGES", "10")))
-    parser.add_argument("--poll-seconds", type=int, default=int(os.environ.get("DAILY_STANDUP_POLL_SECONDS", "300")))
+    parser.add_argument(
+        "--poll-seconds",
+        type=int,
+        default=int(os.environ.get("DAILY_STANDUP_POLL_SECONDS", str(DEFAULT_POLL_SECONDS))),
+    )
     parser.add_argument(
         "--max-wait-seconds",
         type=int,
@@ -93,7 +100,7 @@ def parse_args():
     parser.add_argument(
         "--stable-seconds",
         type=int,
-        default=int(os.environ.get("DAILY_STANDUP_STABLE_SECONDS", "600")),
+        default=int(os.environ.get("DAILY_STANDUP_STABLE_SECONDS", str(DEFAULT_STABLE_SECONDS))),
         help="How long the note signature must remain unchanged before processing.",
     )
     parser.add_argument("--out-dir", default=os.environ.get("DAILY_STANDUP_OUT_DIR", DEFAULT_OUT_DIR))
@@ -102,6 +109,12 @@ def parse_args():
         type=int,
         default=int(os.environ.get("DAILY_STANDUP_MAX_TRANSCRIPT_CHARS", str(DEFAULT_MAX_TRANSCRIPT_CHARS))),
         help="Maximum transcript characters to send to the AI review.",
+    )
+    parser.add_argument(
+        "--min-transcript-chars",
+        type=int,
+        default=int(os.environ.get("DAILY_STANDUP_MIN_TRANSCRIPT_CHARS", str(DEFAULT_MIN_TRANSCRIPT_CHARS))),
+        help="Minimum transcript text required before the standup can be treated as ready.",
     )
     return parser.parse_args()
 
@@ -163,7 +176,7 @@ def filter_standups(notes, target_date, tz, title_regex):
 
 def wait_for_stable_detail(note_id, args):
     detail = get_note(note_id, include_transcript=True)
-    if args.stable_seconds <= 0:
+    if args.stable_seconds <= 0 and transcript_ready(detail, args):
         return detail
 
     stable_since = time_module.monotonic()
@@ -179,12 +192,38 @@ def wait_for_stable_detail(note_id, args):
             previous_signature = current_signature
             stable_since = time_module.monotonic()
             print("Standup note changed; restarting stability timer.")
-        elif time_module.monotonic() - stable_since >= args.stable_seconds:
+        elif time_module.monotonic() - stable_since >= args.stable_seconds and transcript_ready(current, args):
             return current
+        elif time_module.monotonic() - stable_since >= args.stable_seconds:
+            print(
+                "Standup note is stable but transcript is still below the minimum "
+                f"({transcript_char_count(current)}/{args.min_transcript_chars} chars); continuing to wait."
+            )
 
         if time_module.monotonic() >= deadline:
+            if not transcript_ready(current, args):
+                raise RuntimeError(
+                    "Daily-Standup transcript did not reach the minimum size before timeout "
+                    f"({transcript_char_count(current)}/{args.min_transcript_chars} chars)."
+                )
             print("WARNING: stability wait timed out; using latest fetched note detail.", file=sys.stderr)
             return current
+
+
+def transcript_ready(note, args):
+    return transcript_char_count(note) >= args.min_transcript_chars
+
+
+def transcript_char_count(note):
+    transcript = note.get("transcript") or []
+    if not isinstance(transcript, list):
+        return 0
+    total = 0
+    for entry in transcript:
+        if not isinstance(entry, dict):
+            continue
+        total += len(entry.get("text") or entry.get("content") or entry.get("utterance") or "")
+    return total
 
 
 def note_signature(note):
@@ -264,6 +303,7 @@ def build_daily_raw_index(since_iso, target_date, selected, detailed_note, issue
             "meetingLimit": 1,
             "includeTranscript": True,
             "stableSeconds": args.stable_seconds,
+            "minTranscriptChars": args.min_transcript_chars,
             "maxTranscriptChars": args.max_transcript_chars,
         },
         "granola": {

@@ -184,7 +184,9 @@ Send only after review:
 ./send_daily_standup_dms.sh --send --yes
 ```
 
-The GitHub workflow runs Monday-Friday at `11:15 IST`, waits for today's standup note to stabilize, then uploads `results/daily-standup-memory` as an artifact. It does not commit generated results back to the repository.
+The GitHub workflow runs Monday-Friday at `10:30 IST`, waits for today's standup note to appear, then waits until the transcript has been unchanged for 15 minutes before generating drafts. This is how the automation handles a standup with no fixed end time: "ended" means Granola stopped changing the transcript for 15 minutes. It does not commit generated results back to the repository.
+
+The runner also requires at least `1000` transcript characters by default before processing, so it does not send DMs from an empty or barely-started note. Override with `DAILY_STANDUP_MIN_TRANSCRIPT_CHARS` only for unusually short standups.
 
 The workflow sends DMs only when explicitly enabled:
 
@@ -192,6 +194,14 @@ The workflow sends DMs only when explicitly enabled:
 - Or repo variable: `DAILY_STANDUP_SEND_SLACK_DMS=true`
 
 Default is off.
+
+For fully automatic weekday sends, set the GitHub repository variable:
+
+```text
+DAILY_STANDUP_SEND_SLACK_DMS=true
+```
+
+Keep it unset or `false` to generate artifacts only.
 
 ## General Work Memory API Runner
 

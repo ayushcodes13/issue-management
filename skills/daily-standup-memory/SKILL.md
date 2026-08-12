@@ -59,11 +59,14 @@ GitHub workflow:
 Schedule:
 
 ```text
-05:45 UTC Monday-Friday = 11:15 IST Monday-Friday
+05:00 UTC Monday-Friday = 10:30 IST Monday-Friday
 ```
 
-The workflow waits up to four hours for today's standup to appear and stabilize.
-This protects against late standups and partial transcripts.
+The workflow waits up to four hours for today's standup to appear. After the
+note appears, it treats the standup as ended only when the transcript has been
+unchanged for 15 minutes. This handles standups with no fixed end time. It also
+requires at least 1000 transcript characters by default so an empty or barely
+started note does not produce DMs.
 
 ## Required Environment
 
@@ -83,8 +86,9 @@ DAILY_STANDUP_DATE=today
 DAILY_STANDUP_TIMEZONE=Asia/Kolkata
 DAILY_STANDUP_TITLE_REGEX=^Daily[- ]Stand[- ]?up$|^Daily-Standup$
 DAILY_STANDUP_MAX_WAIT_SECONDS=14400
-DAILY_STANDUP_POLL_SECONDS=300
-DAILY_STANDUP_STABLE_SECONDS=600
+DAILY_STANDUP_POLL_SECONDS=60
+DAILY_STANDUP_STABLE_SECONDS=900
+DAILY_STANDUP_MIN_TRANSCRIPT_CHARS=1000
 DAILY_STANDUP_OUT_DIR=results/daily-standup-memory
 DAILY_STANDUP_SEND_SLACK_DMS=false
 DAILY_STANDUP_MAX_TRANSCRIPT_CHARS=60000

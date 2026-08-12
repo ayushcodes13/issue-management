@@ -331,13 +331,20 @@ def render_friction_notes(suppressed):
 
 def render_dm_text(recipient, items):
     lines = [
-        f"Hi {recipient},",
-        "",
-        "Here are a few suggestions from an AI review of your Linear issues:",
+        f"Hi {recipient}, here are a few Linear SOP suggestions from this week's AI-assisted review.",
+        "These are the items most worth tightening so the work is easier to start or verify.",
         "",
     ]
-    for item in items:
-        lines.append(f"- {inline_issue_key_link(item)}: {sentence(human_next_edit(item.get('nextEdit')))}")
+    for index, item in enumerate(items, start=1):
+        lines.extend(
+            [
+                f"{index}. {inline_issue_key_link(item)}: {item.get('title') or 'Untitled issue'}",
+                f"   Noticed: {sentence(human_noticed(item.get('noticed')))}",
+                f"   Suggestions: {sentence(human_next_edit(item.get('nextEdit')))}",
+                "",
+            ]
+        )
+    lines.append("If a rule seems wrong or slows you down, raise it at standup or the Friday review.")
     return "\n".join(lines)
 
 
@@ -392,6 +399,22 @@ def human_next_edit(value):
         ("Question to answer", "the exact question to answer"),
         ("Timebox", "how long you will spend"),
         ("Output", "what result should come out"),
+    )
+    for old, new in replacements:
+        text = text.replace(old, new)
+    return text
+
+
+def human_noticed(value):
+    text = (value or "").strip()
+    if not text:
+        return "This could be easier to pick up with a little more context."
+    replacements = (
+        ("Definition of done", "a clear finished state"),
+        ("Acceptance criteria", "2-3 checks"),
+        ("timebox", "how long the research should take"),
+        ("explicit output", "the expected final result"),
+        ("Output", "expected final result"),
     )
     for old, new in replacements:
         text = text.replace(old, new)

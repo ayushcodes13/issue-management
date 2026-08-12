@@ -2,10 +2,9 @@ name: Daily Standup Memory
 
 on:
   schedule:
-    # 11:15 IST, Monday-Friday. The runner then waits for today's standup note
-    # to appear and stabilize, so a slightly late standup does not produce a
-    # partial transcript run.
-    - cron: "45 5 * * 1-5"
+    # 10:30 IST, Monday-Friday. The runner waits for today's standup note to
+    # appear, then sends only after the transcript has been stable for 15 min.
+    - cron: "0 5 * * 1-5"
   workflow_dispatch:
     inputs:
       date:
@@ -44,8 +43,9 @@ jobs:
           DAILY_STANDUP_DATE: ${{ inputs.date || 'today' }}
           DAILY_STANDUP_TIMEZONE: "Asia/Kolkata"
           DAILY_STANDUP_MAX_WAIT_SECONDS: "14400"
-          DAILY_STANDUP_POLL_SECONDS: "300"
-          DAILY_STANDUP_STABLE_SECONDS: "600"
+          DAILY_STANDUP_POLL_SECONDS: "60"
+          DAILY_STANDUP_STABLE_SECONDS: "900"
+          DAILY_STANDUP_MIN_TRANSCRIPT_CHARS: "1000"
           DAILY_STANDUP_OUT_DIR: "results/daily-standup-memory"
           GRANOLA_PAGE_SIZE: "30"
           GRANOLA_MAX_PAGES: "10"
