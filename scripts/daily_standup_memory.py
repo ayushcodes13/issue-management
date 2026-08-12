@@ -128,6 +128,8 @@ def parse_target_date(value, tz):
 def prepare_out_dir(out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
     for child in out_dir.iterdir():
+        if child.name == "run-status.md":
+            continue
         if child.is_file():
             child.unlink()
         elif child.is_dir():
