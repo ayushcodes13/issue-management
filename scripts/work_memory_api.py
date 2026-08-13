@@ -296,7 +296,7 @@ def render_summary(payload, analysis):
     lines = [
         "# Work Memory API Draft",
         "",
-        "Read-only scheduled-path run completed with Granola API, Linear API, and Azure OpenAI.",
+        "Read-only manual API run completed with Granola API, Linear API, and Azure OpenAI.",
         "",
         f"- Granola notes listed: {counts['granolaNotesListed']}",
         f"- Granola notes selected after filters: {counts['granolaNotesSelected']}",

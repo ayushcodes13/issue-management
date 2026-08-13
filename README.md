@@ -156,6 +156,20 @@ Fast local smoke test:
 ./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
 ```
 
+Run from a local Granola export instead of the Granola API. Use `--context-file`
+for previous-day notes; context files help continuity but should not create
+drafts by themselves.
+
+```bash
+./run_daily_standup_memory.sh \
+  --date 2026-08-13 \
+  --transcript-file "/Users/devayushrout/Downloads/granola notes august 13.rtf" \
+  --context-file "/Users/devayushrout/Downloads/granola notes august 12.rtf" \
+  --out-dir results/daily-standup-memory-2026-08-13 \
+  --stable-seconds 0 \
+  --max-wait-seconds 0
+```
+
 List the Granola note titles visible to the current API key without fetching
 transcripts:
 

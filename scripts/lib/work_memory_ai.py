@@ -75,9 +75,9 @@ def load_sop_text():
 
 
 def build_prompt(notes, issues, sop_text, since_iso, meeting_limit):
-    return f"""You are Bynd's scheduled Work Memory proposal generator.
+    return f"""You are Bynd's Work Memory proposal generator.
 
-This is the production API path. Do not assume Codex, MCP, browser OAuth, Slack, or human-local context exists.
+This is the API path. Do not assume Codex, MCP, browser OAuth, Slack, or human-local context exists.
 
 Inputs:
 - Granola notes fetched through the Granola API since {since_iso}
@@ -87,6 +87,11 @@ Inputs:
 Your task:
 Extract the concrete work mentioned in the meeting, assign it to the right
 person, compare it with Linear, and create useful draft proposals.
+
+Some Granola payloads may be marked `"contextOnly": true`. Use those notes only
+to understand continuity from previous days and to avoid noisy duplicate
+suggestions. Do not create proposals solely from context-only notes. Create
+today's proposals only from the non-context payloads.
 
 The output will be turned into a Slack DM, so use simple human wording and avoid internal labels in any user-facing text.
 DMs should be short enough for busy people to read. Each proposal becomes one

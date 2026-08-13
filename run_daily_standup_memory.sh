@@ -31,6 +31,20 @@ fi
 
 "${python_bin}" scripts/daily_standup_memory.py "$@"
 
+out_dir="${DAILY_STANDUP_OUT_DIR:-results/daily-standup-memory}"
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --out-dir)
+      shift
+      out_dir="${1:-${out_dir}}"
+      ;;
+    --out-dir=*)
+      out_dir="${1#*=}"
+      ;;
+  esac
+  shift || true
+done
+
 echo
 echo "Daily Standup Memory summary:"
-echo "$(pwd)/${DAILY_STANDUP_OUT_DIR:-results/daily-standup-memory}/summary.md"
+echo "$(pwd)/${out_dir}/summary.md"

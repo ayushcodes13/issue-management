@@ -26,6 +26,18 @@ Local smoke test without waiting:
 ./run_daily_standup_memory.sh --stable-seconds 0 --max-wait-seconds 0
 ```
 
+Local Granola export with previous-day context:
+
+```bash
+./run_daily_standup_memory.sh \
+  --date 2026-08-13 \
+  --transcript-file "/Users/devayushrout/Downloads/granola notes august 13.rtf" \
+  --context-file "/Users/devayushrout/Downloads/granola notes august 12.rtf" \
+  --out-dir results/daily-standup-memory-2026-08-13 \
+  --stable-seconds 0 \
+  --max-wait-seconds 0
+```
+
 Coverage check:
 
 ```bash
@@ -39,7 +51,7 @@ The daily runner:
 1. Computes the target date in `Asia/Kolkata` unless `--date YYYY-MM-DD` is given.
 2. Lists Granola notes created since local midnight for that date.
 3. Filters to title `Daily-Standup`.
-4. Waits if the note is not available yet.
+4. Waits if the note is not available yet, unless `--transcript-file` is used.
 5. Fetches the note with transcript detail.
 6. Waits for the note signature to remain stable before processing.
 7. Fetches active Linear issues.
@@ -90,6 +102,16 @@ DAILY_STANDUP_MAX_TRANSCRIPT_CHARS=60000
 GRANOLA_PAGE_SIZE=30
 GRANOLA_MAX_PAGES=10
 ```
+
+Local-file options:
+
+```text
+--transcript-file path/to/todays-notes.rtf
+--context-file path/to/previous-day-notes.rtf
+```
+
+Context files are continuity context only. Do not create proposals solely from
+context files.
 
 ## Results
 

@@ -13,6 +13,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import time as time_module
 from collections import Counter
@@ -50,23 +51,41 @@ def main():
     )
 
     print(f"Looking for exactly one Daily-Standup on {target_date.isoformat()} ({args.timezone})...")
-    selected = wait_for_standup(args, start_utc, target_date, tz)
-    print(f"Selected standup: {selected.get('title')} ({selected.get('created_at')})")
+    if args.transcript_file:
+        selected, detailed_note = load_note_from_transcript_file(args.transcript_file, target_date)
+        print(f"Loaded standup transcript file: {args.transcript_file}")
+    else:
+        selected = wait_for_standup(args, start_utc, target_date, tz)
+        print(f"Selected standup: {selected.get('title')} ({selected.get('created_at')})")
 
-    detailed_note = wait_for_stable_detail(selected["id"], args)
-    print("Fetched stable standup detail with transcript.")
+        detailed_note = wait_for_stable_detail(selected["id"], args)
+        print("Fetched stable standup detail with transcript.")
 
     print("Fetching active Linear issues...")
     issues = fetch_active_issues()
     print(f"Fetched {len(issues)} active Linear issues.")
 
-    note_payloads = [
+    note_payloads = []
+    for context_file in args.context_file:
+        context_payload = note_payload_for_ai(
+            load_context_note_from_file(context_file),
+            include_transcript=True,
+            max_transcript_chars=args.max_transcript_chars,
+        )
+        context_payload["contextOnly"] = True
+        context_payload["contextPurpose"] = "Previous-day context only. Do not create proposals solely from this note."
+        note_payloads.append(context_payload)
+
+    current_payload = (
         note_payload_for_ai(
             detailed_note,
             include_transcript=True,
             max_transcript_chars=args.max_transcript_chars,
         )
-    ]
+    )
+    current_payload["contextOnly"] = False
+    note_payloads.append(current_payload)
+
     print("Generating standup-to-Linear draft proposals with Azure OpenAI...")
     analysis = generate_work_memory_proposals(note_payloads, issues, start_utc, 1)
     proposals = normalize_proposals(analysis.get("proposals") or [])
@@ -115,6 +134,17 @@ def parse_args():
         type=int,
         default=int(os.environ.get("DAILY_STANDUP_MIN_TRANSCRIPT_CHARS", str(DEFAULT_MIN_TRANSCRIPT_CHARS))),
         help="Minimum transcript text required before the standup can be treated as ready.",
+    )
+    parser.add_argument(
+        "--transcript-file",
+        default=os.environ.get("DAILY_STANDUP_TRANSCRIPT_FILE", ""),
+        help="Local text/RTF transcript file to use instead of fetching today's note from Granola.",
+    )
+    parser.add_argument(
+        "--context-file",
+        action="append",
+        default=[],
+        help="Local text/RTF note file used as context only. Can be passed multiple times.",
     )
     return parser.parse_args()
 
@@ -195,6 +225,50 @@ def summarize_visible_notes(notes, tz, limit=12):
     if len(notes) > limit:
         values.append(f"...and {len(notes) - limit} more")
     return "; ".join(values)
+
+
+def load_note_from_transcript_file(path, target_date):
+    text = read_local_note_file(path)
+    note_id = f"local-daily-standup-{target_date.isoformat()}"
+    created_at = f"{target_date.isoformat()}T00:00:00+05:30"
+    note = {
+        "id": note_id,
+        "title": "Daily-Standup",
+        "created_at": created_at,
+        "updated_at": created_at,
+        "web_url": "",
+        "transcript": [{"speaker": "Granola notes", "text": text}],
+    }
+    return dict(note), note
+
+
+def load_context_note_from_file(path):
+    text = read_local_note_file(path)
+    stem = Path(path).stem
+    return {
+        "id": f"local-context-{slugify(stem)}",
+        "title": stem,
+        "created_at": "",
+        "updated_at": "",
+        "web_url": "",
+        "transcript": [{"speaker": "Previous notes context", "text": text}],
+    }
+
+
+def read_local_note_file(path):
+    source = Path(path).expanduser()
+    if not source.exists():
+        raise RuntimeError(f"Local note file not found: {source}")
+    if source.suffix.lower() == ".rtf":
+        try:
+            return subprocess.check_output(
+                ["textutil", "-convert", "txt", "-stdout", str(source)],
+                text=True,
+                stderr=subprocess.PIPE,
+            ).strip()
+        except (FileNotFoundError, subprocess.CalledProcessError) as exc:
+            raise RuntimeError(f"Could not convert RTF file with textutil: {source}") from exc
+    return source.read_text(encoding="utf-8").strip()
 
 
 def wait_for_stable_detail(note_id, args):

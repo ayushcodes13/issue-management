@@ -1,4 +1,4 @@
-"""Read-only Granola API client for scheduled work-memory runs."""
+"""Read-only Granola API client for work-memory runs."""
 
 import json
 import os
