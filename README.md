@@ -341,6 +341,12 @@ Daily standup memory:
 
 Both workflows upload generated `results/` content as artifacts. Neither workflow commits generated result files back to `main`.
 
+## Hosting and runtime
+
+No Vercel deployment is configured or needed for the current workflow. This repository contains read-only CLI/reporting scripts and manual GitHub Actions workflows; it has no web application for Vercel to serve.
+
+Run the scripts locally with the documented Python environment, or use the repository's manual GitHub Actions workflows. The workflows require their configured Linear, Granola, Azure OpenAI, or Slack credentials to be stored as GitHub Actions secrets and write reports as workflow artifacts. They are manual-only and have no cron schedule; do not expose these credential-backed workflows as unauthenticated public endpoints.
+
 ## Safety Rules
 
 - No Linear mutations.
